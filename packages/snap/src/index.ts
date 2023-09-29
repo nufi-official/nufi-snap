@@ -1,18 +1,7 @@
 import { OnRpcRequestHandler, JsonRpcRequest } from '@metamask/snaps-types';
 import { entropyToMnemonic } from 'bip39';
-
+import { SLIP10Node } from '@metamask/key-tree';
 import cardanoCryptoJs from 'cardano-crypto.js';
-
-const getEntropy = async () => {
-  const entropy = await snap.request({
-    method: 'snap_getEntropy',
-    params: {
-      version: 1,
-    },
-  });
-  // remove leading 0x
-  return entropy.slice(2);
-};
 
 const cardanoApi = {
   getPublicKey: async (
@@ -21,18 +10,34 @@ const cardanoApi = {
     const params = (request.params || []) as Record<string, unknown>[];
     const accountIndex = params[0].accountIndex as number;
 
-    const entropy = await getEntropy();
+    const cardanoNode = await snap.request({
+      method: 'snap_getBip32Entropy',
+      params: {
+        path: ['m', "1852'", "1815'"],
+        curve: 'ed25519',
+      },
+    });
+    const cardanoSlip10Node = await SLIP10Node.fromJSON(cardanoNode);
+
+    const cardanoAccount = await cardanoSlip10Node.derive([
+      `slip10:${accountIndex}'`,
+    ]);
+
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const entropy = cardanoAccount.privateKey!.slice(2); // remove 0x
     const mnemonic = entropyToMnemonic(entropy);
     const parentWalletSecret = await cardanoCryptoJs.mnemonicToRootKeypair(
       mnemonic,
       1,
     );
     const parentWalletPublicKey = parentWalletSecret.slice(64, 128);
+
     const childWalletPublic = cardanoCryptoJs.derivePublic(
       parentWalletPublicKey,
       accountIndex,
       1,
     );
+
     return {
       xPubKeyHex: Buffer.from(childWalletPublic).toString('hex'),
       accountIndex,

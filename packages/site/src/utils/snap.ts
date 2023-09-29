@@ -56,11 +56,18 @@ export const getSnap = async (version?: string): Promise<Snap | undefined> => {
  * Invoke the "hello" method from the example snap.
  */
 
-export const sendHello = async () => {
-  await window.ethereum.request({
+export const getCardanoPubKey = async () => {
+  const result = await window.ethereum.request({
     method: 'wallet_invokeSnap',
-    params: { snapId: defaultSnapOrigin, request: { method: 'hello' } },
+    params: {
+      snapId: defaultSnapOrigin,
+      request: {
+        method: 'cardano__getPublicKey',
+        params: [{ accountIndex: 0 }],
+      },
+    },
   });
+  console.log('cardano pub key result', result);
 };
 
 export const isLocalSnap = (snapId: string) => snapId.startsWith('local:');

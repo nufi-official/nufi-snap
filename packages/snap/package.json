@@ -28,10 +28,7 @@
   "dependencies": {
     "@metamask/key-tree": "^9.0.0",
     "@metamask/snaps-types": "^2.0.0",
-    "@metamask/snaps-ui": "^2.0.0",
-    "bip39": "^3.1.0",
-    "buffer": "^6.0.3",
-    "cardano-crypto.js": "^6.1.2"
+    "@metamask/snaps-ui": "^2.0.0"
   },
   "devDependencies": {
     "@jest/globals": "^29.5.0",

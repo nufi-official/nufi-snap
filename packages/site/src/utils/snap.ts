@@ -70,4 +70,24 @@ export const getCardanoPubKey = async () => {
   console.log('cardano pub key result', result);
 };
 
+export const signCardanoMessage = async () => {
+  const result = await window.ethereum.request({
+    method: 'wallet_invokeSnap',
+    params: {
+      snapId: defaultSnapOrigin,
+      request: {
+        method: 'cardano__signMessage',
+        params: [
+          {
+            messageHex:
+              'dddfa88d51516d28f421b85ef9b89e5372ee76e4d8d2de30a5aaae60c88a0f74',
+            derivationPath: ['m', "1852'", "1815'", "0'", '2', '0'],
+          },
+        ],
+      },
+    },
+  });
+  console.log('cardano signature result', result);
+};
+
 export const isLocalSnap = (snapId: string) => snapId.startsWith('local:');

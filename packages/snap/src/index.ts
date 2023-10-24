@@ -1,11 +1,12 @@
 import { OnRpcRequestHandler, JsonRpcRequest } from '@metamask/snaps-types';
+import { assertIsGetAccountXPubKeyRequestParams } from './utils';
 
 const cardanoApi = {
   getAccountXPubKey: async (
     request: JsonRpcRequest,
   ): Promise<{ xPubKeyHex: string; accountIndex: number }> => {
-    const params = (request.params || []) as Record<string, unknown>[];
-    const accountIndex = params[0].accountIndex as number;
+    assertIsGetAccountXPubKeyRequestParams(request.params);
+    const { accountIndex } = request.params[0];
 
     return {
       xPubKeyHex: 'deadbeef', // TODO: derive xPubKeyHex
@@ -35,6 +36,6 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
     case 'cardano__getAccountXPubKey':
       return cardanoApi.getAccountXPubKey(request);
     default:
-      throw new Error('Method not found.');
+      throw new Error(`Method not found. ${request.method}`);
   }
 };

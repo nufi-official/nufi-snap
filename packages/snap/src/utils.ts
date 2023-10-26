@@ -1,5 +1,12 @@
 import { JsonRpcRequest } from '@metamask/snaps-types';
-import type { GetAccountXPubKeyRequestParams } from './types';
+import type {
+  GetAccountXPubKeyRequestParams,
+  SignMessageRequestParams,
+} from './types';
+import {
+  CARDANO_DERIVATION_PATH_COINTYPE,
+  CARDANO_DERIVATION_PATH_PURPOSE,
+} from './constants';
 
 /**
  * Checks if the given params is an array of length one.
@@ -40,6 +47,20 @@ function isHardened(num: number): boolean {
 }
 
 /**
+ * Hardens a number.
+ *
+ * @param num - The number to harden.
+ * @throws If the number is already hardened.
+ * @returns The hardened number.
+ */
+function harden(num: number): number {
+  if (isHardened(num)) {
+    throw new Error('Number is already hardened');
+  }
+  return HARDENED_THRESHOLD + num;
+}
+
+/**
  * Asserts that the given params are valid for the "cardano__getAccountXPubKey" method.
  *
  * @param params - The params to validate.
@@ -66,6 +87,48 @@ export function assertIsGetAccountXPubKeyRequestParams(
   if (!isHardened(params[0].hardenedAccountIndex)) {
     throw new Error(
       `Account ${params[0].hardenedAccountIndex} is not hardened.`,
+    );
+  }
+}
+
+/**
+ * Asserts that the given params are valid for the "cardano__signMessage" method.
+ *
+ * @param params - The params to validate.
+ * @throws If the params are invalid.
+ */
+export function assertIsSignMessageRequestParams(
+  params: JsonRpcRequest['params'],
+): asserts params is SignMessageRequestParams {
+  if (
+    !(
+      isParamsArrayOfLengthOne(params) &&
+      isParamsObject(params[0]) &&
+      'messageHex' in params[0] &&
+      typeof params[0].messageHex === 'string' &&
+      'hardenedDerivationPath' in params[0] &&
+      Array.isArray(params[0].hardenedDerivationPath) &&
+      params[0].hardenedDerivationPath.every((path) => typeof path === 'number')
+    )
+  ) {
+    throw new Error(
+      `Invalid params for "cardano__signMessage" method. ${JSON.stringify(
+        params,
+      )} `,
+    );
+  }
+  const { hardenedDerivationPath } = params[0];
+  if (
+    !(
+      hardenedDerivationPath[0] === harden(CARDANO_DERIVATION_PATH_PURPOSE) &&
+      hardenedDerivationPath[1] === harden(CARDANO_DERIVATION_PATH_COINTYPE) &&
+      isHardened(hardenedDerivationPath[2])
+    )
+  ) {
+    throw new Error(
+      `Derivation path has hardened, in form [${harden(
+        CARDANO_DERIVATION_PATH_PURPOSE,
+      )}, ${harden(CARDANO_DERIVATION_PATH_COINTYPE)}, hardened<accountIndex>]`,
     );
   }
 }

@@ -104,4 +104,77 @@ describe('onRpcRequest', () => {
       expect(responseError).toBeDefined();
     });
   });
+
+  describe('cardano__signMessage', () => {
+    it('should sign message', async () => {
+      const { request } = await installSnap();
+
+      const origin = 'Jest';
+      const { response: actualResponse } = await request({
+        method: 'cardano__signMessage',
+        origin,
+        params: [
+          {
+            messageHex: 'deadbeef',
+            hardenedDerivationPath: [2147485500, 2147485463, 2147483648, 2, 0],
+          },
+        ],
+      });
+
+      const expectedResponse = {
+        result: {
+          signatureHex:
+            '74402c41dc50a9ea241f446de59c290937e0ad92a97961465a820e05ba5e44161b3785bd30d10dfc372a7c99d75b39b1befc9e25f0905aaa261295b6c7618802',
+          xPubKeyHex:
+            'e3e87ef2d7c2f9b74d52d1f73c8850de92daacc0c86dc0df13a77c910594b2f978d5075c0ba03b82fc1ac55e799cb6ab95b692504c5cf405afde626fefb3655f',
+        },
+      };
+
+      expect(JSON.stringify(actualResponse)).toStrictEqual(
+        JSON.stringify(expectedResponse),
+      );
+    });
+
+    it('should fail for unhardened path', async () => {
+      const { request } = await installSnap();
+
+      const origin = 'Jest';
+      const { response: actualResponse } = await request({
+        method: 'cardano__signMessage',
+        origin,
+        params: [
+          {
+            messageHex: 'deadbeef',
+            hardenedDerivationPath: [2147485500, 2147485463, 0, 2, 0],
+          },
+        ],
+      });
+
+      const responseError =
+        'error' in actualResponse ? actualResponse.error : undefined;
+
+      expect(responseError).toBeDefined();
+    });
+
+    it('should fail for unsupported path', async () => {
+      const { request } = await installSnap();
+
+      const origin = 'Jest';
+      const { response: actualResponse } = await request({
+        method: 'cardano__signMessage',
+        origin,
+        params: [
+          {
+            messageHex: 'deadbeef',
+            hardenedDerivationPath: [10, 2147485463, 2147483648, 2, 0],
+          },
+        ],
+      });
+
+      const responseError =
+        'error' in actualResponse ? actualResponse.error : undefined;
+
+      expect(responseError).toBeDefined();
+    });
+  });
 });

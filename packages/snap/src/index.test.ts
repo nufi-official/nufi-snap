@@ -1,36 +1,7 @@
 import { installSnap } from '@metamask/snaps-jest';
 import { expect } from '@jest/globals';
-import { panel, text } from '@metamask/snaps-ui';
 
 describe('onRpcRequest', () => {
-  describe('hello', () => {
-    it('shows a confirmation dialog', async () => {
-      const { request } = await installSnap();
-
-      const origin = 'Jest';
-      const response = request({
-        method: 'hello',
-        origin,
-      });
-
-      const ui = await response.getInterface();
-      expect(ui.type).toBe('confirmation');
-      expect(ui).toRender(
-        panel([
-          text(`Hello, **${origin}**!`),
-          text('This custom confirmation is just for display purposes.'),
-          text(
-            'But you can edit the snap source code to make it do something, if you want to!',
-          ),
-        ]),
-      );
-
-      await ui.ok();
-
-      expect(await response).toRespondWith(true);
-    });
-  });
-
   it('throws an error if the requested method does not exist', async () => {
     const { request, close } = await installSnap();
 
@@ -52,5 +23,69 @@ describe('onRpcRequest', () => {
     });
 
     await close();
+  });
+
+  describe('cardano__getAccountXPubKey', () => {
+    it('should get account 0 xPubKey', async () => {
+      const { request } = await installSnap();
+
+      const origin = 'Jest';
+      const { response: actualResponse } = await request({
+        method: 'cardano__getAccountXPubKey',
+        origin,
+        params: [{ accountIndex: 0 }],
+      });
+
+      const expectedResponse = {
+        result: {
+          xPubKeyHex:
+            '45e962fd03b3b0fbf2fc43abe967b32b1bca8402ec26f7672759d15329615457f3c1b3980f305fa2a7fc0a10c3c1e5e66055a79d623b7baaf0aa137cfc247bef',
+          accountIndex: 0,
+        },
+      };
+
+      expect(JSON.stringify(actualResponse)).toStrictEqual(
+        JSON.stringify(expectedResponse),
+      );
+    });
+
+    it('should get account 1 xPubKey', async () => {
+      const { request } = await installSnap();
+
+      const origin = 'Jest';
+      const { response: actualResponse } = await request({
+        method: 'cardano__getAccountXPubKey',
+        origin,
+        params: [{ accountIndex: 1 }],
+      });
+
+      const expectedResponse = {
+        result: {
+          xPubKeyHex:
+            'e74783fee957dbdd5db7dcae4d0d8ce173684f28696adfa5ec9dcff2b8feab3f9b0ce18136c5a9b5fcb2f393d008b4892b96730b9d191d0b605629a6075ba95f',
+          accountIndex: 1,
+        },
+      };
+
+      expect(JSON.stringify(actualResponse)).toStrictEqual(
+        JSON.stringify(expectedResponse),
+      );
+    });
+
+    it('should return response containing error for invalid account index', async () => {
+      const { request } = await installSnap();
+
+      const origin = 'Jest';
+      const { response: actualResponse } = await request({
+        method: 'cardano__getAccountXPubKey',
+        origin,
+        params: [{ accountIndex: 'foo' }],
+      });
+
+      const responseError =
+        'error' in actualResponse ? actualResponse.error : undefined;
+
+      expect(responseError).toBeDefined();
+    });
   });
 });

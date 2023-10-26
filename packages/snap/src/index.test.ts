@@ -34,8 +34,10 @@ describe('onRpcRequest', () => {
   it('throws an error if the requested method does not exist', async () => {
     const { request, close } = await installSnap();
 
+    const method = 'foo';
+
     const response = await request({
-      method: 'foo',
+      method,
     });
 
     expect(response).toRespondWithError({
@@ -43,7 +45,7 @@ describe('onRpcRequest', () => {
       message: 'Internal JSON-RPC error.',
       data: {
         cause: {
-          message: 'Method not found.',
+          message: `Method not found. ${method}`,
           stack: expect.any(String),
         },
       },

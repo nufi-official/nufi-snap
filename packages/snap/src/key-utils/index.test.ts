@@ -1,6 +1,6 @@
 import { expect } from '@jest/globals';
 import { SLIP10Node } from '@metamask/key-tree';
-import { accountIndexToDerivationPath, slip10NodeToBip32PrivateKey } from '.';
+import { slip10NodeToBip32PrivateKey } from '.';
 
 const slip10Node = {
   privateKeyBytes: new Uint8Array(Array(32).keys()),
@@ -27,22 +27,6 @@ describe('key-utils', () => {
       expect(() =>
         slip10NodeToBip32PrivateKey(slip10NodeWithoutPrivateKey),
       ).toThrow('Missing private key bytes');
-    });
-  });
-
-  describe('accountIndexToDerivationPath', () => {
-    it('should return an array with the hardened account index', () => {
-      const accountIndex = 42;
-      const expectedDerivationPath = [42 + 0x80000000];
-      const actualDerivationPath = accountIndexToDerivationPath(accountIndex);
-      expect(actualDerivationPath).toStrictEqual(expectedDerivationPath);
-    });
-
-    it('should throw an error if the account index is already hardened', () => {
-      const accountIndex = 42 + 0x80000000;
-      expect(() => accountIndexToDerivationPath(accountIndex)).toThrow(
-        'Number is already hardened',
-      );
     });
   });
 });

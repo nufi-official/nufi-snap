@@ -63,7 +63,7 @@ export const getCardanoAccountXPubKey = async () => {
       snapId: defaultSnapOrigin,
       request: {
         method: 'cardano__getAccountXPubKey',
-        params: [{ accountIndex: 0 }],
+        params: [{ hardenedAccountIndex: 2147483649 }],
       },
     },
   });

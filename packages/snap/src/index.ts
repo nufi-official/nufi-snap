@@ -1,7 +1,6 @@
 import { OnRpcRequestHandler, JsonRpcRequest } from '@metamask/snaps-types';
 import { assertIsGetAccountXPubKeyRequestParams } from './utils';
 import {
-  accountIndexToDerivationPath,
   getMetamaskCardanoSLIP10Node,
   slip10NodeToBip32PrivateKey,
 } from './key-utils';
@@ -9,22 +8,22 @@ import {
 const cardanoApi = {
   getAccountXPubKey: async (
     request: JsonRpcRequest,
-  ): Promise<{ xPubKeyHex: string; accountIndex: number }> => {
+  ): Promise<{ xPubKeyHex: string; hardenedAccountIndex: number }> => {
     assertIsGetAccountXPubKeyRequestParams(request.params);
-    const { accountIndex } = request.params[0];
+    const { hardenedAccountIndex } = request.params[0];
 
     const cardanoSLIP10Node = await getMetamaskCardanoSLIP10Node();
 
     const cardanoBip32PrivateKey =
       slip10NodeToBip32PrivateKey(cardanoSLIP10Node);
 
-    const accountPrivateKey = await cardanoBip32PrivateKey.derive(
-      accountIndexToDerivationPath(accountIndex),
-    );
+    const accountPrivateKey = await cardanoBip32PrivateKey.derive([
+      hardenedAccountIndex,
+    ]);
 
     return {
       xPubKeyHex: (await accountPrivateKey.toPublic()).hex(),
-      accountIndex,
+      hardenedAccountIndex,
     };
   },
 };

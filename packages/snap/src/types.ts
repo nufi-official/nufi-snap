@@ -1,1 +1,1 @@
-export type GetAccountXPubKeyRequestParams = [{ accountIndex: number }];
+export type GetAccountXPubKeyRequestParams = [{ hardenedAccountIndex: number }];

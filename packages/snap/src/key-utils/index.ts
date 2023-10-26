@@ -49,39 +49,3 @@ export async function getMetamaskCardanoSLIP10Node(): Promise<SLIP10Node> {
     }),
   );
 }
-
-const HARDENED_THRESHOLD = 0x80000000;
-
-/**
- * Determines if a number is hardened.
- *
- * @param num - The number to check.
- * @returns True if the number is hardened, false otherwise.
- */
-function isHardened(num: number): boolean {
-  return num >= HARDENED_THRESHOLD;
-}
-
-/**
- * Hardens a number.
- *
- * @param num - The number to harden.
- * @throws If the number is already hardened.
- * @returns The hardened number.
- */
-function harden(num: number): number {
-  if (isHardened(num)) {
-    throw new Error('Number is already hardened');
-  }
-  return HARDENED_THRESHOLD + num;
-}
-
-/**
- * Converts an account index to a derivation path.
- *
- * @param accountIndex - The account index to convert.
- * @returns The converted derivation path.
- */
-export function accountIndexToDerivationPath(accountIndex: number): number[] {
-  return [harden(accountIndex)];
-}

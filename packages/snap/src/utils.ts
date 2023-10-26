@@ -27,6 +27,18 @@ function isParamsObject(param: unknown): param is Record<string, unknown> {
   );
 }
 
+const HARDENED_THRESHOLD = 0x80000000;
+
+/**
+ * Determines if a number is hardened.
+ *
+ * @param num - The number to check.
+ * @returns True if the number is hardened, false otherwise.
+ */
+function isHardened(num: number): boolean {
+  return num >= HARDENED_THRESHOLD;
+}
+
 /**
  * Asserts that the given params are valid for the "cardano__getAccountXPubKey" method.
  *
@@ -37,16 +49,23 @@ export function assertIsGetAccountXPubKeyRequestParams(
   params: JsonRpcRequest['params'],
 ): asserts params is GetAccountXPubKeyRequestParams {
   if (
-    isParamsArrayOfLengthOne(params) &&
-    isParamsObject(params[0]) &&
-    'accountIndex' in params[0] &&
-    typeof params[0].accountIndex === 'number'
+    !(
+      isParamsArrayOfLengthOne(params) &&
+      isParamsObject(params[0]) &&
+      'hardenedAccountIndex' in params[0] &&
+      typeof params[0].hardenedAccountIndex === 'number'
+    )
   ) {
-    return;
+    throw new Error(
+      `Invalid params for "cardano__getAccountXPubKey" method. ${JSON.stringify(
+        params,
+      )} `,
+    );
   }
-  throw new Error(
-    `Invalid params for "cardano__getAccountXPubKey" method. ${JSON.stringify(
-      params,
-    )} `,
-  );
+
+  if (!isHardened(params[0].hardenedAccountIndex)) {
+    throw new Error(
+      `Account ${params[0].hardenedAccountIndex} is not hardened.`,
+    );
+  }
 }

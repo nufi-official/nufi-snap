@@ -1,6 +1,7 @@
 import { JsonRpcRequest } from '@metamask/snaps-types';
 import type {
   GetExtendedPublicKeyRequestParams,
+  SignMessageRequestParams,
   SupportedCardanoDerivationPath,
 } from './types';
 import {
@@ -93,6 +94,37 @@ export function assertIsGetExtendedPublicKeyRequestParams(
     ) {
       throw new Error(
         `Invalid params for "cardano__getExtendedPublicKey" method. ${JSON.stringify(
+          params,
+        )} `,
+      );
+    }
+  });
+}
+
+/**
+ * Asserts that the given params are valid for the "cardano__signMessage" method.
+ *
+ * @param params - The params to validate.
+ * @throws If the params are invalid.
+ */
+export function assertIsSignMessageRequestParams(
+  params: JsonRpcRequest['params'],
+): asserts params is SignMessageRequestParams {
+  assertIsArray(params);
+
+  params.forEach((param) => {
+    if (
+      !(
+        isRecord(param) &&
+        'derivationPath' in param &&
+        isDerivationPath(param.derivationPath) &&
+        isSupportedDerivationPath(param.derivationPath) &&
+        'messageHex' in param &&
+        typeof param.messageHex === 'string'
+      )
+    ) {
+      throw new Error(
+        `Invalid params for "cardano__signMessage" method. ${JSON.stringify(
           params,
         )} `,
       );

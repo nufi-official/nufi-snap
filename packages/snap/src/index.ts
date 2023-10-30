@@ -1,10 +1,13 @@
 import { OnRpcRequestHandler, JsonRpcRequest } from '@metamask/snaps-types';
-import { assertIsGetExtendedPublicKeyRequestParams } from './utils';
+import {
+  assertIsGetExtendedPublicKeyRequestParams,
+  assertIsSignMessageRequestParams,
+} from './utils';
 import {
   getMetamaskAccountSLIP10Node,
   slip10NodeToBip32PrivateKey,
 } from './key-utils';
-import { GetExtendedPublicKeyResponse } from './types';
+import { GetExtendedPublicKeyResponse, SignMessageResponse } from './types';
 
 const cardanoApi = {
   getExtendedPublicKey: async ({
@@ -36,6 +39,43 @@ const cardanoApi = {
       }),
     );
   },
+  signMessage: async ({
+    params,
+  }: JsonRpcRequest): Promise<SignMessageResponse> => {
+    assertIsSignMessageRequestParams(params);
+    return Promise.all(
+      params.map(async ({ derivationPath, messageHex }) => {
+        const [purpose, coinType, account, ...rest] = derivationPath;
+        const accountSLIP10Node = await getMetamaskAccountSLIP10Node([
+          purpose,
+          coinType,
+          account,
+        ]);
+
+        const accountPrivateKey =
+          slip10NodeToBip32PrivateKey(accountSLIP10Node);
+        const privateKey = await accountPrivateKey.derive(
+          rest.map((pathElement) => Number(pathElement)),
+        );
+
+        const signatureHex = (
+          await privateKey
+            .toRawKey()
+            // casting required for cardano-sdk
+            .sign(messageHex as string & { __opaqueString: 'HexBlob' })
+        ).hex();
+
+        const extendedPublicKeyHex = (await privateKey.toPublic()).hex();
+
+        return {
+          derivationPath,
+          messageHex,
+          extendedPublicKeyHex,
+          signatureHex,
+        };
+      }),
+    );
+  },
 };
 
 /**
@@ -58,6 +98,8 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   switch (request.method) {
     case 'cardano__getExtendedPublicKey':
       return cardanoApi.getExtendedPublicKey(request);
+    case 'cardano__signMessage':
+      return cardanoApi.signMessage(request);
     default:
       throw new Error(`Method not found. ${request.method}`);
   }

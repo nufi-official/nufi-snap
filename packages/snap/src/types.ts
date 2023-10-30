@@ -21,3 +21,14 @@ export type GetExtendedPublicKeyResponse = {
   extendedPublicKeyHex: string;
   derivationPath: SupportedCardanoDerivationPath;
 }[];
+
+export type SignMessageRequestParams = [
+  { messageHex: string; derivationPath: SupportedCardanoDerivationPath },
+];
+
+export type SignMessageResponse = {
+  messageHex: string;
+  derivationPath: SupportedCardanoDerivationPath;
+  signatureHex: string;
+  extendedPublicKeyHex: string;
+}[];

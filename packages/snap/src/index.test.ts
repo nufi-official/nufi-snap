@@ -23,4 +23,22 @@ describe('onRpcRequest', () => {
 
     await close();
   });
+
+  describe('cardano__getExtendedPublicKey', () => {
+    it('should return response containing error for invalid derivation path', async () => {
+      const { request } = await installSnap();
+
+      const origin = 'Jest';
+      const { response: actualResponse } = await request({
+        method: 'cardano__getExtendedPublicKey',
+        origin,
+        params: [{ derivationPath: ["1'"] }],
+      });
+
+      const responseError =
+        'error' in actualResponse ? actualResponse.error : undefined;
+
+      expect(responseError).toBeDefined();
+    });
+  });
 });

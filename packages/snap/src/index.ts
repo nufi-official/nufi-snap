@@ -1,8 +1,13 @@
 import { OnRpcRequestHandler, JsonRpcRequest } from '@metamask/snaps-types';
+import { assertIsGetExtendedPublicKeyRequestParams } from './utils';
+import { GetExtendedPublicKeyResponse } from './types';
+
 const cardanoApi = {
   getExtendedPublicKey: async ({
     params,
-  }: JsonRpcRequest): Promise<unknown> => {
+  }: JsonRpcRequest): Promise<GetExtendedPublicKeyResponse> => {
+    assertIsGetExtendedPublicKeyRequestParams(params);
+
     return params.map(({ derivationPath }) => {
       return {
         derivationPath,

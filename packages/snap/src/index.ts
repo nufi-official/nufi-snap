@@ -28,6 +28,6 @@ export const onRpcRequest: OnRpcRequestHandler = ({ origin, request }) => {
         },
       });
     default:
-      throw new Error('Method not found.');
+      throw new Error(`Method not found. ${request.method}`);
   }
 };

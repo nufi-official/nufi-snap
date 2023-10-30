@@ -5,14 +5,14 @@ import {
   connectSnap,
   getSnap,
   isLocalSnap,
-  sendHello,
+  getCardanoExtendedPublicKey,
   shouldDisplayReconnectButton,
 } from '../utils';
 import {
   ConnectButton,
   InstallFlaskButton,
   ReconnectButton,
-  SendHelloButton,
+  GetCardanoExtendedPublicKeyButton,
   Card,
 } from '../components';
 import { defaultSnapOrigin } from '../config';
@@ -123,9 +123,9 @@ const Index = () => {
     }
   };
 
-  const handleSendHelloClick = async () => {
+  const handleGetCardanoExtendedPublicKeyClick = async () => {
     try {
-      await sendHello();
+      await getCardanoExtendedPublicKey();
     } catch (e) {
       console.error(e);
       dispatch({ type: MetamaskActions.SetError, payload: e });
@@ -191,12 +191,11 @@ const Index = () => {
         )}
         <Card
           content={{
-            title: 'Send Hello message',
-            description:
-              'Display a custom message within a confirmation screen in MetaMask.',
+            title: 'Get cardano extended public key',
+            description: 'The key will be logged into console',
             button: (
-              <SendHelloButton
-                onClick={handleSendHelloClick}
+              <GetCardanoExtendedPublicKeyButton
+                onClick={handleGetCardanoExtendedPublicKeyClick}
                 disabled={!state.installedSnap}
               />
             ),

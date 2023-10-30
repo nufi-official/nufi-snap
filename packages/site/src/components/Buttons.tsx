@@ -94,8 +94,10 @@ export const ReconnectButton = (props: ComponentProps<typeof Button>) => {
   );
 };
 
-export const SendHelloButton = (props: ComponentProps<typeof Button>) => {
-  return <Button {...props}>Send message</Button>;
+export const GetCardanoExtendedPublicKeyButton = (
+  props: ComponentProps<typeof Button>,
+) => {
+  return <Button {...props}>Get Cardano extended public key</Button>;
 };
 
 export const HeaderButtons = ({

@@ -1,5 +1,16 @@
-import { OnRpcRequestHandler } from '@metamask/snaps-types';
-import { panel, text } from '@metamask/snaps-ui';
+import { OnRpcRequestHandler, JsonRpcRequest } from '@metamask/snaps-types';
+const cardanoApi = {
+  getExtendedPublicKey: async ({
+    params,
+  }: JsonRpcRequest): Promise<unknown> => {
+    return params.map(({ derivationPath }) => {
+      return {
+        derivationPath,
+        extendedPublicKeyHex: 'deadbeef',
+      };
+    });
+  },
+};
 
 /**
  * Handle incoming JSON-RPC requests, sent through `wallet_invokeSnap`.
@@ -11,22 +22,16 @@ import { panel, text } from '@metamask/snaps-ui';
  * @returns The result of `snap_dialog`.
  * @throws If the request method is not valid for this snap.
  */
-export const onRpcRequest: OnRpcRequestHandler = ({ origin, request }) => {
+export const onRpcRequest: OnRpcRequestHandler = async ({
+  origin,
+  request,
+}) => {
+  // TODO: white-list origin
+  console.log('Received request from:', origin);
+
   switch (request.method) {
-    case 'hello':
-      return snap.request({
-        method: 'snap_dialog',
-        params: {
-          type: 'confirmation',
-          content: panel([
-            text(`Hello, **${origin}**!`),
-            text('This custom confirmation is just for display purposes.'),
-            text(
-              'But you can edit the snap source code to make it do something, if you want to!',
-            ),
-          ]),
-        },
-      });
+    case 'cardano__getExtendedPublicKey':
+      return cardanoApi.getExtendedPublicKey(request);
     default:
       throw new Error(`Method not found. ${request.method}`);
   }

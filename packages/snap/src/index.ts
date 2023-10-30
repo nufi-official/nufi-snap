@@ -1,5 +1,9 @@
 import { OnRpcRequestHandler, JsonRpcRequest } from '@metamask/snaps-types';
 import { assertIsGetExtendedPublicKeyRequestParams } from './utils';
+import {
+  getMetamaskAccountSLIP10Node,
+  slip10NodeToBip32PrivateKey,
+} from './key-utils';
 import { GetExtendedPublicKeyResponse } from './types';
 
 const cardanoApi = {
@@ -8,12 +12,29 @@ const cardanoApi = {
   }: JsonRpcRequest): Promise<GetExtendedPublicKeyResponse> => {
     assertIsGetExtendedPublicKeyRequestParams(params);
 
-    return params.map(({ derivationPath }) => {
-      return {
-        derivationPath,
-        extendedPublicKeyHex: 'deadbeef',
-      };
-    });
+    return Promise.all(
+      params.map(async ({ derivationPath }) => {
+        const [purpose, coinType, account, ...rest] = derivationPath;
+        const accountSLIP10Node = await getMetamaskAccountSLIP10Node([
+          purpose,
+          coinType,
+          account,
+        ]);
+
+        const accountPrivateKey =
+          slip10NodeToBip32PrivateKey(accountSLIP10Node);
+        const privateKey = await accountPrivateKey.derive(
+          rest.map((pathElement) => Number(pathElement)),
+        );
+
+        const extendedPublicKeyHex = (await privateKey.toPublic()).hex();
+
+        return {
+          derivationPath,
+          extendedPublicKeyHex,
+        };
+      }),
+    );
   },
 };
 

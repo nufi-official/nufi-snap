@@ -10,6 +10,11 @@ const config: SnapConfig = {
   polyfills: {
     buffer: true,
   },
+  stats: {
+    // Used to suppress "fs" warning caused by "@cardano-sdk/crypto"
+    // which is however not needed for the snap functionality
+    builtIns: false,
+  },
 };
 
 export default config;

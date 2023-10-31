@@ -2,6 +2,8 @@ import { installSnap } from '@metamask/snaps-jest';
 import { expect } from '@jest/globals';
 
 describe('onRpcRequest', () => {
+  const origin = 'Jest';
+
   it('throws an error if the requested method does not exist', async () => {
     const { request, close } = await installSnap();
 
@@ -28,7 +30,6 @@ describe('onRpcRequest', () => {
     it('should get extended public key for derivation paths', async () => {
       const { request } = await installSnap();
 
-      const origin = 'Jest';
       const derivationPath0 = ["1852'", "1815'", "0'"];
       const derivationPath1 = ["1694'", "1815'", "1'", '0', '0'];
       const { response: actualResponse } = await request({
@@ -61,8 +62,6 @@ describe('onRpcRequest', () => {
 
     it('should return response containing error for invalid derivation path', async () => {
       const { request } = await installSnap();
-
-      const origin = 'Jest';
       const { response: actualResponse } = await request({
         method: 'cardano__getExtendedPublicKey',
         origin,
@@ -80,7 +79,6 @@ describe('onRpcRequest', () => {
     it('should sign messages', async () => {
       const { request } = await installSnap();
 
-      const origin = 'Jest';
       const derivationPath = ["1852'", "1815'", "0'"];
       const messageHex1 = 'deadbeef';
       const messageHex2 = 'deadbeefdeadbeef';
@@ -128,7 +126,6 @@ describe('onRpcRequest', () => {
     it('should fail for unsupported path', async () => {
       const { request } = await installSnap();
 
-      const origin = 'Jest';
       const derivationPath = ["10'", "1815'", "0'"];
       const { response: actualResponse } = await request({
         method: 'cardano__signMessage',

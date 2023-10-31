@@ -63,12 +63,8 @@ const cardanoApi = {
  * @returns The result of `snap_dialog`.
  * @throws If the request method is not valid for this snap.
  */
-export const onRpcRequest: OnRpcRequestHandler = async ({
-  origin,
-  request,
-}) => {
+export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
   // TODO: white-list origin
-  console.log('Received request from:', origin);
 
   switch (request.method) {
     case 'cardano__getExtendedPublicKey':

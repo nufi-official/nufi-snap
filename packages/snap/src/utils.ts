@@ -1,4 +1,4 @@
-import { JsonRpcRequest } from '@metamask/snaps-types';
+import type { JsonRpcRequest } from '@metamask/snaps-types';
 import type {
   GetExtendedPublicKeyRequestParams,
   SignMessageRequestParams,

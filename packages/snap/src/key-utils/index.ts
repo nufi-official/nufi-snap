@@ -36,7 +36,7 @@ export function slip10NodeToBip32PrivateKey(
  * @param derivationPath.2 - The account index value for the derivation path.
  * @returns Cardano SLIP10Node for path 'm/purpose'/coinType'/accountIndex'.
  */
-export async function getMetamaskAccountSLIP10Node([
+async function getMetamaskAccountSLIP10Node([
   purpose,
   coinType,
   accountIndex,
@@ -49,5 +49,27 @@ export async function getMetamaskAccountSLIP10Node([
         curve: 'ed25519',
       },
     }),
+  );
+}
+
+/**
+ * Retrieves the private key for a given Cardano derivation path.
+ *
+ * @param derivationPath - Supported derivation path in the format [purpose, coinType, accountIndex, ...path].
+ * @returns The private key for the given derivation path.
+ */
+export async function derivePrivateKey(
+  derivationPath: SupportedCardanoDerivationPath,
+): Promise<cardanoCrypto.Bip32PrivateKey> {
+  const [purpose, coinType, account, ...rest] = derivationPath;
+  const accountSLIP10Node = await getMetamaskAccountSLIP10Node([
+    purpose,
+    coinType,
+    account,
+  ]);
+
+  const accountPrivateKey = slip10NodeToBip32PrivateKey(accountSLIP10Node);
+  return await accountPrivateKey.derive(
+    rest.map((pathElement) => Number(pathElement)),
   );
 }

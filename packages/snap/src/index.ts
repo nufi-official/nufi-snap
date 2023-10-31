@@ -3,10 +3,7 @@ import {
   assertIsGetExtendedPublicKeyRequestParams,
   assertIsSignMessageRequestParams,
 } from './utils';
-import {
-  getMetamaskAccountSLIP10Node,
-  slip10NodeToBip32PrivateKey,
-} from './key-utils';
+import { derivePrivateKey } from './key-utils';
 import { GetExtendedPublicKeyResponse, SignMessageResponse } from './types';
 
 const cardanoApi = {
@@ -17,18 +14,7 @@ const cardanoApi = {
 
     return Promise.all(
       params.map(async ({ derivationPath }) => {
-        const [purpose, coinType, account, ...rest] = derivationPath;
-        const accountSLIP10Node = await getMetamaskAccountSLIP10Node([
-          purpose,
-          coinType,
-          account,
-        ]);
-
-        const accountPrivateKey =
-          slip10NodeToBip32PrivateKey(accountSLIP10Node);
-        const privateKey = await accountPrivateKey.derive(
-          rest.map((pathElement) => Number(pathElement)),
-        );
+        const privateKey = await derivePrivateKey(derivationPath);
 
         const extendedPublicKeyHex = (await privateKey.toPublic()).hex();
 
@@ -45,18 +31,7 @@ const cardanoApi = {
     assertIsSignMessageRequestParams(params);
     return Promise.all(
       params.map(async ({ derivationPath, messageHex }) => {
-        const [purpose, coinType, account, ...rest] = derivationPath;
-        const accountSLIP10Node = await getMetamaskAccountSLIP10Node([
-          purpose,
-          coinType,
-          account,
-        ]);
-
-        const accountPrivateKey =
-          slip10NodeToBip32PrivateKey(accountSLIP10Node);
-        const privateKey = await accountPrivateKey.derive(
-          rest.map((pathElement) => Number(pathElement)),
-        );
+        const privateKey = await derivePrivateKey(derivationPath);
 
         const signatureHex = (
           await privateKey

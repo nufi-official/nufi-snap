@@ -3,6 +3,19 @@ import { entropyToMnemonic } from 'bip39';
 import { SLIP10Node } from '@metamask/key-tree';
 import cardanoCryptoJs from 'cardano-crypto.js';
 
+const nufiApi = {
+  getUserId: async (): Promise<string> => {
+    const entropy = await snap.request({
+      method: 'snap_getEntropy',
+      params: {
+        version: 1,
+        salt: 'nufi_user_id',
+      },
+    });
+    return entropy.slice(2); // remove 0x
+  },
+};
+
 const cardanoApi = {
   getPublicKey: async (
     request: JsonRpcRequest,
@@ -65,6 +78,8 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   switch (request.method) {
     case 'cardano__getPublicKey':
       return cardanoApi.getPublicKey(request);
+    case 'nufi__userId':
+      return nufiApi.getUserId();
     default:
       throw new Error('Method not found.');
   }

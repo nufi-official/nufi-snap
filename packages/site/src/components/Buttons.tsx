@@ -100,6 +100,12 @@ export const GetCardanoExtendedPublicKeyButton = (
   return <Button {...props}>Get Cardano extended public key</Button>;
 };
 
+export const SignCardanoMessageButton = (
+  props: ComponentProps<typeof Button>,
+) => {
+  return <Button {...props}>Sign cardano message</Button>;
+};
+
 export const HeaderButtons = ({
   state,
   onConnectClick,

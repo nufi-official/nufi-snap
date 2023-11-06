@@ -7,6 +7,7 @@ import {
   isLocalSnap,
   getCardanoExtendedPublicKey,
   shouldDisplayReconnectButton,
+  signCardanoMessage,
 } from '../utils';
 import {
   ConnectButton,
@@ -14,6 +15,7 @@ import {
   ReconnectButton,
   GetCardanoExtendedPublicKeyButton,
   Card,
+  SignCardanoMessageButton,
 } from '../components';
 import { defaultSnapOrigin } from '../config';
 
@@ -132,6 +134,15 @@ const Index = () => {
     }
   };
 
+  const handleCardanoSignMessageClick = async () => {
+    try {
+      await signCardanoMessage();
+    } catch (e) {
+      console.error(e);
+      dispatch({ type: MetamaskActions.SetError, payload: e });
+    }
+  };
+
   return (
     <Container>
       <Heading>
@@ -196,6 +207,24 @@ const Index = () => {
             button: (
               <GetCardanoExtendedPublicKeyButton
                 onClick={handleGetCardanoExtendedPublicKeyClick}
+                disabled={!state.installedSnap}
+              />
+            ),
+          }}
+          disabled={!state.installedSnap}
+          fullWidth={
+            isMetaMaskReady &&
+            Boolean(state.installedSnap) &&
+            !shouldDisplayReconnectButton(state.installedSnap)
+          }
+        />
+        <Card
+          content={{
+            title: 'Sign cardano message',
+            description: 'The result will be logged into console',
+            button: (
+              <SignCardanoMessageButton
+                onClick={handleCardanoSignMessageClick}
                 disabled={!state.installedSnap}
               />
             ),

@@ -32,3 +32,21 @@ export type SignMessageResponse = {
   signatureHex: string;
   extendedPublicKeyHex: string;
 }[];
+
+export type SignTransactionRequestParams = {
+  txBody: {
+    txBodyHashHex: string;
+    derivationPaths: SupportedCardanoDerivationPath[];
+  };
+}[];
+
+export type SignTransactionResponse = {
+  txBody: {
+    txBodyHashHex: string;
+    witnesses: {
+      extendedPublicKeyHex: string;
+      signatureHex: string;
+      derivationPath: SupportedCardanoDerivationPath;
+    }[];
+  };
+}[];

@@ -9,6 +9,7 @@ import {
 import type {
   GetExtendedPublicKeyRequestParams,
   SignMessageRequestParams,
+  SignTransactionRequestParams,
   SupportedCardanoDerivationPath,
 } from './types';
 
@@ -83,6 +84,41 @@ export function assertIsSignMessageRequestParams(
     ) {
       throw new Error(
         `Invalid params for "cardano__signMessage" method. ${JSON.stringify(
+          params,
+        )} `,
+      );
+    }
+  });
+}
+
+/**
+ * Asserts that the given params are valid for the "cardano__signTransaction" method.
+ *
+ * @param params - The params to validate.
+ * @throws If the params are invalid.
+ */
+export function assertIsSignTransactionRequestParams(
+  params: JsonRpcRequest['params'],
+): asserts params is SignTransactionRequestParams {
+  assertIsArray(params);
+
+  params.forEach((param) => {
+    if (
+      !(
+        isRecord(param) &&
+        'txBody' in param &&
+        isRecord(param.txBody) &&
+        'derivationPaths' in param.txBody &&
+        Array.isArray(param.txBody.derivationPaths) &&
+        param.txBody.derivationPaths.every(
+          (path) => isDerivationPath(path) && isSupportedDerivationPath(path),
+        ) &&
+        'txBodyHashHex' in param.txBody &&
+        typeof param.txBody.txBodyHashHex === 'string'
+      )
+    ) {
+      throw new Error(
+        `Invalid params for "cardano__signTransaction" method. ${JSON.stringify(
           params,
         )} `,
       );

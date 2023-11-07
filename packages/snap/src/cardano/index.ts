@@ -2,10 +2,12 @@ import type { JsonRpcRequest } from '@metamask/snaps-types';
 import {
   assertIsGetExtendedPublicKeyRequestParams,
   assertIsSignMessageRequestParams,
+  assertIsSignTransactionRequestParams,
 } from './utils';
 import type {
   GetExtendedPublicKeyResponse,
   SignMessageResponse,
+  SignTransactionResponse,
 } from './types';
 import { derivePrivateKey } from './key-utils';
 
@@ -50,6 +52,42 @@ export const cardanoApi = {
           messageHex,
           extendedPublicKeyHex,
           signatureHex,
+        };
+      }),
+    );
+  },
+  signTransaction: async ({
+    params,
+  }: JsonRpcRequest): Promise<SignTransactionResponse> => {
+    assertIsSignTransactionRequestParams(params);
+    return Promise.all(
+      params.map(async ({ txBody }) => {
+        const { txBodyHashHex, derivationPaths } = txBody;
+        const witnesses = await Promise.all(
+          derivationPaths.map(async (derivationPath) => {
+            const privateKey = await derivePrivateKey(derivationPath);
+
+            const signatureHex = (
+              await privateKey
+                .toRawKey()
+                // casting required for cardano-sdk
+                .sign(txBodyHashHex as string & { __opaqueString: 'HexBlob' })
+            ).hex();
+
+            const extendedPublicKeyHex = (await privateKey.toPublic()).hex();
+            return {
+              derivationPath,
+              extendedPublicKeyHex,
+              signatureHex,
+            };
+          }),
+        );
+
+        return {
+          txBody: {
+            txBodyHashHex,
+            witnesses,
+          },
         };
       }),
     );

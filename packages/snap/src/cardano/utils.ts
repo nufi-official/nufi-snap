@@ -5,13 +5,13 @@ import {
   CARDANO_DERIVATION_PATH_COINTYPE,
   CARDANO_DERIVATION_PATH_PURPOSE,
   CARDANO_DERIVATION_PATH_VOTING_PURPOSE,
-} from './constants';
+} from './crypto-provider/constants';
 import type {
   GetExtendedPublicKeyRequestParams,
   SignMessageRequestParams,
   SignTransactionRequestParams,
-  SupportedCardanoDerivationPath,
 } from './types';
+import type { SupportedCardanoDerivationPath } from './crypto-provider/types';
 
 /**
  * Checks if the given derivation path is of supported type.

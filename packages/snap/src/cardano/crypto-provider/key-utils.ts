@@ -1,6 +1,6 @@
 import * as cardanoCrypto from '@cardano-sdk/crypto';
 import { SLIP10Node } from '@metamask/key-tree';
-import { SupportedCardanoDerivationPath } from '../types';
+import { SupportedCardanoDerivationPath } from './types';
 
 /**
  * Converts a SLIP10Node to a Bip32PrivateKey.

@@ -4,55 +4,32 @@ import {
   assertIsSignMessageRequestParams,
   assertIsSignTransactionRequestParams,
 } from './utils';
+import type { SignTransactionResponse } from './types';
 import type {
   GetExtendedPublicKeyResponse,
   SignMessageResponse,
-  SignTransactionResponse,
-} from './types';
-import { derivePrivateKey } from './crypto-provider/key-utils';
+} from './crypto-provider/types';
+import { getExtendedPublicKey, signMessage } from './crypto-provider';
 
 export const cardanoApi = {
   getExtendedPublicKey: async ({
     params,
-  }: JsonRpcRequest): Promise<GetExtendedPublicKeyResponse> => {
+  }: JsonRpcRequest): Promise<GetExtendedPublicKeyResponse[]> => {
     assertIsGetExtendedPublicKeyRequestParams(params);
 
     return Promise.all(
       params.map(async ({ derivationPath }) => {
-        const privateKey = await derivePrivateKey(derivationPath);
-
-        const extendedPublicKeyHex = (await privateKey.toPublic()).hex();
-
-        return {
-          derivationPath,
-          extendedPublicKeyHex,
-        };
+        return getExtendedPublicKey(derivationPath);
       }),
     );
   },
   signMessage: async ({
     params,
-  }: JsonRpcRequest): Promise<SignMessageResponse> => {
+  }: JsonRpcRequest): Promise<SignMessageResponse[]> => {
     assertIsSignMessageRequestParams(params);
     return Promise.all(
       params.map(async ({ derivationPath, messageHex }) => {
-        const privateKey = await derivePrivateKey(derivationPath);
-
-        const signatureHex = (
-          await privateKey
-            .toRawKey()
-            // casting required for cardano-sdk
-            .sign(messageHex as string & { __opaqueString: 'HexBlob' })
-        ).hex();
-
-        const extendedPublicKeyHex = (await privateKey.toPublic()).hex();
-
-        return {
-          derivationPath,
-          messageHex,
-          extendedPublicKeyHex,
-          signatureHex,
-        };
+        return signMessage(derivationPath, messageHex);
       }),
     );
   },
@@ -63,23 +40,14 @@ export const cardanoApi = {
     return Promise.all(
       params.map(async ({ txBody }) => {
         const { txBodyHashHex, derivationPaths } = txBody;
+
         const witnesses = await Promise.all(
           derivationPaths.map(async (derivationPath) => {
-            const privateKey = await derivePrivateKey(derivationPath);
-
-            const signatureHex = (
-              await privateKey
-                .toRawKey()
-                // casting required for cardano-sdk
-                .sign(txBodyHashHex as string & { __opaqueString: 'HexBlob' })
-            ).hex();
-
-            const extendedPublicKeyHex = (await privateKey.toPublic()).hex();
-            return {
+            const { extendedPublicKeyHex, signatureHex } = await signMessage(
               derivationPath,
-              extendedPublicKeyHex,
-              signatureHex,
-            };
+              txBodyHashHex,
+            );
+            return { derivationPath, extendedPublicKeyHex, signatureHex };
           }),
         );
 

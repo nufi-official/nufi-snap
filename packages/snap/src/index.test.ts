@@ -82,7 +82,7 @@ describe('onRpcRequest', () => {
       const derivationPath = ["1852'", "1815'", "0'"];
       const messageHex1 = 'deadbeef';
       const messageHex2 = 'deadbeefdeadbeef';
-      const { response: actualResponse } = await request({
+      const pendingResponse = request({
         method: 'cardano__signMessage',
         origin,
         params: [
@@ -96,6 +96,10 @@ describe('onRpcRequest', () => {
           },
         ],
       });
+
+      (await pendingResponse.getInterface()).ok();
+
+      const { response: actualResponse } = await pendingResponse;
 
       const expectedResponse = {
         result: [
@@ -152,7 +156,7 @@ describe('onRpcRequest', () => {
       const derivationPath1 = ["1852'", "1815'", "0'"];
       const derivationPath2 = ["1852'", "1815'", "1'"];
       const txBodyHashHex = 'deadbeef';
-      const { response: actualResponse } = await request({
+      const pendingResponse = request({
         method: 'cardano__signTransaction',
         origin,
         params: [
@@ -164,6 +168,10 @@ describe('onRpcRequest', () => {
           },
         ],
       });
+
+      (await pendingResponse.getInterface()).ok();
+
+      const { response: actualResponse } = await pendingResponse;
 
       const expectedResponse = {
         result: [

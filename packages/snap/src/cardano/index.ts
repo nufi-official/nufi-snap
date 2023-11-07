@@ -1,4 +1,6 @@
 import type { JsonRpcRequest } from '@metamask/snaps-types';
+import { renderSignMessages, renderSignTransactions } from '../ui';
+import { assertUserHasConfirmed } from '../utils';
 import {
   assertIsGetExtendedPublicKeyRequestParams,
   assertIsSignMessageRequestParams,
@@ -23,20 +25,38 @@ export const cardanoApi = {
       }),
     );
   },
-  signMessage: async ({
-    params,
-  }: JsonRpcRequest): Promise<SignMessageResponse[]> => {
+  signMessage: async (
+    { params }: JsonRpcRequest,
+    origin: string,
+  ): Promise<SignMessageResponse[]> => {
     assertIsSignMessageRequestParams(params);
+
+    await assertUserHasConfirmed(() =>
+      renderSignMessages(
+        origin,
+        params.map(({ messageHex }) => messageHex),
+      ),
+    );
+
     return Promise.all(
       params.map(async ({ derivationPath, messageHex }) => {
         return signMessage(derivationPath, messageHex);
       }),
     );
   },
-  signTransaction: async ({
-    params,
-  }: JsonRpcRequest): Promise<SignTransactionResponse> => {
+  signTransaction: async (
+    { params }: JsonRpcRequest,
+    origin: string,
+  ): Promise<SignTransactionResponse> => {
     assertIsSignTransactionRequestParams(params);
+
+    await assertUserHasConfirmed(() =>
+      renderSignTransactions(
+        origin,
+        params.map(({ txBody }) => txBody.txBodyHashHex),
+      ),
+    );
+
     return Promise.all(
       params.map(async ({ txBody }) => {
         const { txBodyHashHex, derivationPaths } = txBody;

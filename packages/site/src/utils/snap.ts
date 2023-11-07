@@ -87,3 +87,27 @@ export const signCardanoMessage = async () => {
   });
   console.log('cardano sign message result', result);
 };
+
+export const signCardanoTransaction = async () => {
+  const result = await window.ethereum.request({
+    method: 'wallet_invokeSnap',
+    params: {
+      snapId: defaultSnapOrigin,
+      request: {
+        method: 'cardano__signTransaction',
+        params: [
+          {
+            txBody: {
+              txBodyHashHex: 'deadbeef',
+              derivationPaths: [
+                ["1852'", "1815'", "0'"],
+                ["1852'", "1815'", "1'"],
+              ],
+            },
+          },
+        ],
+      },
+    },
+  });
+  console.log('cardano sign transaction result', result);
+};

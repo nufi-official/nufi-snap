@@ -106,6 +106,12 @@ export const SignCardanoMessageButton = (
   return <Button {...props}>Sign cardano message</Button>;
 };
 
+export const SignCardanoTransactionButton = (
+  props: ComponentProps<typeof Button>,
+) => {
+  return <Button {...props}>Sign cardano transaction</Button>;
+};
+
 export const HeaderButtons = ({
   state,
   onConnectClick,

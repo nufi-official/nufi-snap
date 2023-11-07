@@ -1,6 +1,6 @@
 import { expect } from '@jest/globals';
 import { SLIP10Node } from '@metamask/key-tree';
-import { slip10NodeToBip32PrivateKey } from '.';
+import { slip10NodeToBip32PrivateKey } from './key-utils';
 
 const slip10Node = {
   privateKeyBytes: new Uint8Array(Array(32).keys()),

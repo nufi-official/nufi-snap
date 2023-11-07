@@ -9,7 +9,7 @@ import type {
   SignMessageResponse,
   SignTransactionResponse,
 } from './types';
-import { derivePrivateKey } from './crypto-provider';
+import { derivePrivateKey } from './crypto-provider/key-utils';
 
 export const cardanoApi = {
   getExtendedPublicKey: async ({

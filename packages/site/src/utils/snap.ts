@@ -97,13 +97,11 @@ export const signCardanoTransaction = async () => {
         method: 'cardano__signTransaction',
         params: [
           {
-            txBody: {
-              txBodyHashHex: 'deadbeef',
-              derivationPaths: [
-                ["1852'", "1815'", "0'"],
-                ["1852'", "1815'", "1'"],
-              ],
-            },
+            txBodyHashHex: 'deadbeef',
+            derivationPaths: [
+              ["1852'", "1815'", "0'"],
+              ["1852'", "1815'", "1'"],
+            ],
           },
         ],
       },

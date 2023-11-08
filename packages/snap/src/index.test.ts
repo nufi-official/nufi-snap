@@ -178,23 +178,23 @@ describe('onRpcRequest', () => {
           {
             txBody: {
               txBodyHashHex,
-              witnesses: [
-                {
-                  derivationPath: derivationPath1,
-                  extendedPublicKeyHex:
-                    'c76dceba676cb7276300eb17c35097c26687fac2b2e6b22f78b626367733a569140d8aeb3f0aaedfeeace3ad25743c9c39b29fced34d325dd03686b7d6027c5c',
-                  signatureHex:
-                    '093550dd44a6506471b6e34bc7dc6e912a8512dc792d0c7bcbfb947dcf98b6223a44901922fa1b2096505c199194f679bd528983c6a5612bfca645eb451d3206',
-                },
-                {
-                  derivationPath: derivationPath2,
-                  extendedPublicKeyHex:
-                    'c9c08d13aaf0fd013948721275a35aae908394a0e959935cbb866602fc2109756b55c47a80231d32e221bcef2cb1bed5953ab51b4e25d86821f2087e289397cf',
-                  signatureHex:
-                    '9ca1484b464fa63215141e18503310153225961fdf97867961378c2bced4c5f7d431e034e0a8ef43eba741ee7e6654e9c1ce881762b1aa9a3d22df1501b5760d',
-                },
-              ],
             },
+            witnesses: [
+              {
+                derivationPath: derivationPath1,
+                extendedPublicKeyHex:
+                  'c76dceba676cb7276300eb17c35097c26687fac2b2e6b22f78b626367733a569140d8aeb3f0aaedfeeace3ad25743c9c39b29fced34d325dd03686b7d6027c5c',
+                signatureHex:
+                  '093550dd44a6506471b6e34bc7dc6e912a8512dc792d0c7bcbfb947dcf98b6223a44901922fa1b2096505c199194f679bd528983c6a5612bfca645eb451d3206',
+              },
+              {
+                derivationPath: derivationPath2,
+                extendedPublicKeyHex:
+                  'c9c08d13aaf0fd013948721275a35aae908394a0e959935cbb866602fc2109756b55c47a80231d32e221bcef2cb1bed5953ab51b4e25d86821f2087e289397cf',
+                signatureHex:
+                  '9ca1484b464fa63215141e18503310153225961fdf97867961378c2bced4c5f7d431e034e0a8ef43eba741ee7e6654e9c1ce881762b1aa9a3d22df1501b5760d',
+              },
+            ],
           },
         ],
       };

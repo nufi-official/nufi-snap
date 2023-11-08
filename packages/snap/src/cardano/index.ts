@@ -74,8 +74,8 @@ export const cardanoApi = {
         return {
           txBody: {
             txBodyHashHex,
-            witnesses,
           },
+          witnesses,
         };
       }),
     );

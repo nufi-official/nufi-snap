@@ -18,10 +18,10 @@ export type SignTransactionRequestParams = {
 export type SignTransactionResponse = {
   txBody: {
     txBodyHashHex: string;
-    witnesses: {
-      extendedPublicKeyHex: string;
-      signatureHex: string;
-      derivationPath: SupportedCardanoDerivationPath;
-    }[];
   };
+  witnesses: {
+    extendedPublicKeyHex: string;
+    signatureHex: string;
+    derivationPath: SupportedCardanoDerivationPath;
+  }[];
 }[];

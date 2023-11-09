@@ -161,10 +161,8 @@ describe('onRpcRequest', () => {
         origin,
         params: [
           {
-            txBody: {
-              txBodyHashHex,
-              derivationPaths: [derivationPath1, derivationPath2],
-            },
+            txBodyHashHex,
+            derivationPaths: [derivationPath1, derivationPath2],
           },
         ],
       });
@@ -176,9 +174,7 @@ describe('onRpcRequest', () => {
       const expectedResponse = {
         result: [
           {
-            txBody: {
-              txBodyHashHex,
-            },
+            txBodyHashHex,
             witnesses: [
               {
                 derivationPath: derivationPath1,
@@ -213,10 +209,8 @@ describe('onRpcRequest', () => {
         origin,
         params: [
           {
-            txBody: {
-              txBodyHashHex: 'deadbeef',
-              derivationPaths: [derivationPath],
-            },
+            txBodyHashHex: 'deadbeef',
+            derivationPaths: [derivationPath],
           },
         ],
       });

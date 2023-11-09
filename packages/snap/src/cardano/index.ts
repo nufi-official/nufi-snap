@@ -53,14 +53,12 @@ export const cardanoApi = {
     await assertUserHasConfirmed(() =>
       renderSignTransactions(
         origin,
-        params.map(({ txBody }) => txBody.txBodyHashHex),
+        params.map(({ txBodyHashHex }) => txBodyHashHex),
       ),
     );
 
     return Promise.all(
-      params.map(async ({ txBody }) => {
-        const { txBodyHashHex, derivationPaths } = txBody;
-
+      params.map(async ({ txBodyHashHex, derivationPaths }) => {
         const witnesses = await Promise.all(
           derivationPaths.map(async (derivationPath) => {
             const { extendedPublicKeyHex, signatureHex } = await signMessage(
@@ -72,9 +70,7 @@ export const cardanoApi = {
         );
 
         return {
-          txBody: {
-            txBodyHashHex,
-          },
+          txBodyHashHex,
           witnesses,
         };
       }),

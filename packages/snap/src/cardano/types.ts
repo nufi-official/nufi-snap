@@ -9,16 +9,12 @@ export type SignMessageRequestParams = [
 ];
 
 export type SignTransactionRequestParams = {
-  txBody: {
-    txBodyHashHex: string;
-    derivationPaths: SupportedCardanoDerivationPath[];
-  };
+  txBodyHashHex: string;
+  derivationPaths: SupportedCardanoDerivationPath[];
 }[];
 
 export type SignTransactionResponse = {
-  txBody: {
-    txBodyHashHex: string;
-  };
+  txBodyHashHex: string;
   witnesses: {
     extendedPublicKeyHex: string;
     signatureHex: string;

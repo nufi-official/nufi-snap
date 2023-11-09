@@ -106,15 +106,13 @@ export function assertIsSignTransactionRequestParams(
     if (
       !(
         isRecord(param) &&
-        'txBody' in param &&
-        isRecord(param.txBody) &&
-        'derivationPaths' in param.txBody &&
-        Array.isArray(param.txBody.derivationPaths) &&
-        param.txBody.derivationPaths.every(
+        'derivationPaths' in param &&
+        Array.isArray(param.derivationPaths) &&
+        param.derivationPaths.every(
           (path) => isDerivationPath(path) && isSupportedDerivationPath(path),
         ) &&
-        'txBodyHashHex' in param.txBody &&
-        typeof param.txBody.txBodyHashHex === 'string'
+        'txBodyHashHex' in param &&
+        typeof param.txBodyHashHex === 'string'
       )
     ) {
       throw new Error(

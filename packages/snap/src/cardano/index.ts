@@ -5,7 +5,7 @@ import {
   assertIsGetExtendedPublicKeyRequestParams,
   assertIsSignMessageRequestParams,
   assertIsSignTransactionRequestParams,
-} from './utils';
+} from './requestValidation';
 import type { SignTransactionResponse } from './types';
 import type {
   GetExtendedPublicKeyResponse,

@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MetamaskActions, MetaMaskContext } from '../hooks';
 import {
@@ -107,10 +107,30 @@ const ErrorMessage = styled.div`
 
 const Index = () => {
   const [state, dispatch] = useContext(MetaMaskContext);
+  const [cardanoAddress, setCardanoAddress] = useState(null);
 
   const isMetaMaskReady = isLocalSnap(defaultSnapOrigin)
     ? state.isFlask
     : state.snapsDetected;
+
+  useEffect(() => {
+    const fn = async () => {
+      if (isMetaMaskReady) {
+        setTimeout(async () => {
+          const _window = window as any;
+          const cardano = await _window.cardano.nufi.enable();
+          try {
+            const result = await cardano.getChangeAddress();
+            console.log('result', result);
+            setCardanoAddress(result);
+          } catch (e) {
+            console.error('Could not get cardano address');
+          }
+        }, 8000);
+      }
+    };
+    fn();
+  }, [isMetaMaskReady]);
 
   const handleConnectClick = async () => {
     try {
@@ -162,6 +182,8 @@ const Index = () => {
       <Subtitle>
         Get started by editing <code>src/index.ts</code>
       </Subtitle>
+      <div style={{ marginTop: 16 }} />
+      <Subtitle>Cardano change address: {cardanoAddress}</Subtitle>
       <CardContainer>
         {state.error && (
           <ErrorMessage>

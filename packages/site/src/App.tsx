@@ -1,5 +1,12 @@
-import { FunctionComponent, ReactNode, useContext } from 'react';
+import {
+  FunctionComponent,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import styled from 'styled-components';
+import { nufiToMetamaskSnapCardanoAdapter } from '@nufi/dapp-client-cardano';
 import { Footer, Header } from './components';
 
 import { GlobalStyle } from './config/theme';
@@ -13,6 +20,21 @@ const Wrapper = styled.div`
   max-width: 100vw;
 `;
 
+const InitNuFiMetamaskAdapter = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const [didInit, setDidInit] = useState(false);
+
+  useEffect(() => {
+    nufiToMetamaskSnapCardanoAdapter();
+    setDidInit(true);
+  }, []);
+
+  return didInit ? children : null;
+};
+
 export type AppProps = {
   children: ReactNode;
 };
@@ -25,7 +47,7 @@ export const App: FunctionComponent<AppProps> = ({ children }) => {
       <GlobalStyle />
       <Wrapper>
         <Header handleToggleClick={toggleTheme} />
-        {children}
+        <InitNuFiMetamaskAdapter>{children}</InitNuFiMetamaskAdapter>
         <Footer />
       </Wrapper>
     </>

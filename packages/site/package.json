@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@metamask/providers": "^9.0.0",
+    "@nufi/dapp-client-cardano": "link:../../../nufi/packages/dapp-client/cardano",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",

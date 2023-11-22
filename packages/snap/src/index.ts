@@ -1,4 +1,4 @@
-import type { OnRpcRequestHandler } from '@metamask/snaps-types';
+import { OnRpcRequestHandler } from '@metamask/snaps-sdk';
 import { cardanoApi } from './cardano';
 
 /**

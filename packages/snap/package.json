@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@cardano-sdk/crypto": "^0.1.15",
+    "@metamask/snaps-sdk": "/home/peter/vl/nufi-official/metamask-snaps/packages/snaps-sdk/snap-sdk-0.tgz",
     "@metamask/snaps-types": "^2.0.0",
     "@metamask/snaps-ui": "^2.0.0"
   },
@@ -38,9 +39,11 @@
     "@metamask/eslint-config-jest": "^10.0.0",
     "@metamask/eslint-config-nodejs": "^10.0.0",
     "@metamask/eslint-config-typescript": "^10.0.0",
-    "@metamask/key-tree": "^9.0.0",
-    "@metamask/snaps-cli": "^2.0.1",
+    "@metamask/key-tree": "/home/peter/vl/nufi-official/metamask-key-tree/snap-key-tree-0.tgz",
+    "@metamask/snaps-cli": "/home/peter/vl/nufi-official/metamask-snaps/packages/snaps-cli/cli-0.tgz",
     "@metamask/snaps-jest": "^1.0.0",
+    "@metamask/snaps-rpc-methods": "/home/peter/vl/nufi-official/metamask-snaps/packages/snaps-rpc-methods/rpc-methods-0.tgz",
+    "@metamask/snaps-utils": "/home/peter/vl/nufi-official/metamask-snaps/packages/snaps-utils/snap-utils-0.tgz",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.0",
     "eslint": "^8.21.0",

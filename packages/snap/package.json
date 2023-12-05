@@ -41,7 +41,7 @@
     "@metamask/eslint-config-typescript": "^10.0.0",
     "@metamask/key-tree": "/home/peter/vl/nufi-official/metamask-key-tree/snap-key-tree-0.tgz",
     "@metamask/snaps-cli": "/home/peter/vl/nufi-official/metamask-snaps/packages/snaps-cli/cli-0.tgz",
-    "@metamask/snaps-jest": "^1.0.0",
+    "@metamask/snaps-jest": "/home/peter/vl/nufi-official/metamask-snaps/packages/snaps-jest/jest-0.tgz",
     "@metamask/snaps-rpc-methods": "/home/peter/vl/nufi-official/metamask-snaps/packages/snaps-rpc-methods/rpc-methods-0.tgz",
     "@metamask/snaps-utils": "/home/peter/vl/nufi-official/metamask-snaps/packages/snaps-utils/snap-utils-0.tgz",
     "@typescript-eslint/eslint-plugin": "^5.33.0",

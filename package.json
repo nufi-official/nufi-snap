@@ -15,7 +15,7 @@
   "author": "",
   "scripts": {
     "build": "yarn",
-    "start": "mm-snap serve"
+    "start": "mm-snap serve --port process.env.PORT"
   },
   "packageManager": "yarn@3.2.1",
   "engines": {

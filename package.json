@@ -14,7 +14,7 @@
   "license": "(MIT-0 OR Apache-2.0)",
   "author": "",
   "scripts": {
-    "start": "npx mm-snap serve"
+    "start": "mm-snap serve"
   },
   "packageManager": "yarn@3.2.1",
   "engines": {

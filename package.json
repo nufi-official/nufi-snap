@@ -13,48 +13,16 @@
   },
   "license": "(MIT-0 OR Apache-2.0)",
   "author": "",
-  "workspaces": [
-    "packages/*"
-  ],
   "scripts": {
-    "build": "yarn workspaces foreach --parallel --topological --verbose run build",
-    "install-chrome": "./scripts/install-chrome.sh",
-    "lint": "yarn lint:eslint && yarn lint:misc --check",
-    "lint:eslint": "eslint . --cache --ext js,ts",
-    "lint:fix": "yarn lint:eslint --fix && yarn lint:misc --write",
-    "lint:misc": "prettier '**/*.md' '!**/CHANGELOG.md' '**/*.yml' --ignore-path .gitignore",
-    "start": "yarn workspaces foreach --parallel --interlaced --verbose run start",
-    "test": "echo \"TODO\""
-  },
-  "resolutions": {
-    "@metamask/key-tree": "/home/peter/vl/nufi-official/metamask-key-tree/snap-key-tree-0.tgz",
-    "@metamask/snaps-cli": "/home/peter/vl/nufi-official/metamask-snaps/packages/snaps-cli/cli-0.tgz",
-    "@metamask/snaps-rpc-methods": "/home/peter/vl/nufi-official/metamask-snaps/packages/snaps-rpc-methods/rpc-methods-0.tgz",
-    "@metamask/snaps-sdk": "/home/peter/vl/nufi-official/metamask-snaps/packages/snaps-sdk/snap-sdk-0.tgz",
-    "@metamask/snaps-utils": "/home/peter/vl/nufi-official/metamask-snaps/packages/snaps-utils/snap-utils-0.tgz"
-  },
-  "devDependencies": {
-    "@metamask/eslint-config": "^10.0.0",
-    "@metamask/eslint-config-jest": "^10.0.0",
-    "@metamask/eslint-config-nodejs": "^10.0.0",
-    "@metamask/eslint-config-typescript": "^10.0.0",
-    "@typescript-eslint/eslint-plugin": "^5.33.0",
-    "@typescript-eslint/parser": "^5.33.0",
-    "eslint": "^8.21.0",
-    "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jest": "^26.8.2",
-    "eslint-plugin-jsdoc": "^39.2.9",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "prettier": "^2.2.1",
-    "prettier-plugin-packagejson": "^2.2.18",
-    "typescript": "^4.7.4"
+    "start": "npx mm-snap serve"
   },
   "packageManager": "yarn@3.2.1",
   "engines": {
     "node": "18.15.0",
     "npm": "9.5.0",
     "yarn": "3.2.1"
+  },
+  "devDependencies": {
+    "@metamask/snaps-cli": "^3.0.5"
   }
 }

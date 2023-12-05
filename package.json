@@ -23,7 +23,7 @@
     "npm": "9.5.0",
     "yarn": "3.2.1"
   },
-  "devDependencies": {
+  "dependencies": {
     "@metamask/snaps-cli": "^3.0.5"
   }
 }

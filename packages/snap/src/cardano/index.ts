@@ -1,17 +1,18 @@
-import type { JsonRpcRequest } from '@metamask/snaps-types';
+import type { JsonRpcRequest } from '@metamask/snaps-sdk';
+
 import { renderSignMessages, renderSignTransactions } from '../ui';
 import { assertUserHasConfirmed } from '../utils';
+import { getExtendedPublicKey, signMessage } from './crypto-provider';
+import type {
+  GetExtendedPublicKeyResponse,
+  SignMessageResponse,
+} from './crypto-provider/types';
 import {
   assertIsGetExtendedPublicKeyRequestParams,
   assertIsSignMessageRequestParams,
   assertIsSignTransactionRequestParams,
 } from './requestValidation';
 import type { SignTransactionResponse } from './types';
-import type {
-  GetExtendedPublicKeyResponse,
-  SignMessageResponse,
-} from './crypto-provider/types';
-import { getExtendedPublicKey, signMessage } from './crypto-provider';
 
 export const cardanoApi = {
   getExtendedPublicKey: async ({
@@ -31,7 +32,7 @@ export const cardanoApi = {
   ): Promise<SignMessageResponse[]> => {
     assertIsSignMessageRequestParams(params);
 
-    await assertUserHasConfirmed(() =>
+    await assertUserHasConfirmed(async () =>
       renderSignMessages(
         origin,
         params.map(({ messageHex }) => messageHex),
@@ -50,7 +51,7 @@ export const cardanoApi = {
   ): Promise<SignTransactionResponse> => {
     assertIsSignTransactionRequestParams(params);
 
-    await assertUserHasConfirmed(() =>
+    await assertUserHasConfirmed(async () =>
       renderSignTransactions(
         origin,
         params.map(({ txBodyHashHex }) => txBodyHashHex),

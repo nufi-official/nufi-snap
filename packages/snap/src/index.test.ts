@@ -1,11 +1,11 @@
-import { installSnap } from '@metamask/snaps-jest';
 import { expect } from '@jest/globals';
+import { installSnap } from '@metamask/snaps-jest';
 
 describe('onRpcRequest', () => {
   const origin = 'Jest';
 
   it('throws an error if the requested method does not exist', async () => {
-    const { request, close } = await installSnap();
+    const { request } = await installSnap();
 
     const method = 'foo';
     const response = await request({
@@ -14,16 +14,9 @@ describe('onRpcRequest', () => {
 
     expect(response).toRespondWithError({
       code: -32603,
-      message: 'Internal JSON-RPC error.',
-      data: {
-        cause: {
-          message: `Method not found. ${method}`,
-          stack: expect.any(String),
-        },
-      },
+      message: `Method not found. ${method}`,
+      stack: expect.any(String),
     });
-
-    await close();
   });
 
   describe('cardano__getExtendedPublicKey', () => {
@@ -97,7 +90,8 @@ describe('onRpcRequest', () => {
         ],
       });
 
-      (await pendingResponse.getInterface()).ok();
+      const ui = await pendingResponse.getInterface();
+      await ui.ok();
 
       const { response: actualResponse } = await pendingResponse;
 
@@ -167,7 +161,8 @@ describe('onRpcRequest', () => {
         ],
       });
 
-      (await pendingResponse.getInterface()).ok();
+      const ui = await pendingResponse.getInterface();
+      await ui.ok();
 
       const { response: actualResponse } = await pendingResponse;
 

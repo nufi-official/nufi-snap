@@ -1,6 +1,6 @@
-import { panel, heading, text, copyable, divider } from '@metamask/snaps-ui';
+import { copyable, divider, heading, text, panel } from '@metamask/snaps-sdk';
 
-export const renderSignTransactions = (
+export const renderSignTransactions = async (
   origin: string,
   txBodyHashHexBundle: string[],
 ) => {
@@ -27,7 +27,10 @@ export const renderSignTransactions = (
   });
 };
 
-export const renderSignMessages = (origin: string, messages: string[]) => {
+export const renderSignMessages = async (
+  origin: string,
+  messages: string[],
+) => {
   const headingText = messages.length === 1 ? 'Sign message' : 'Sign messages';
 
   const messageUiElements =

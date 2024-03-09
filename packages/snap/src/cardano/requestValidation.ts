@@ -1,4 +1,4 @@
-import type { JsonRpcRequest } from '@metamask/snaps-types';
+import type { JsonRpcRequest } from '@metamask/snaps-sdk';
 
 import { isDerivationPath, isRecord, assertIsArray } from '../utils';
 import {
@@ -6,12 +6,12 @@ import {
   CARDANO_DERIVATION_PATH_PURPOSE,
   CARDANO_DERIVATION_PATH_VOTING_PURPOSE,
 } from './crypto-provider/constants';
+import type { SupportedCardanoDerivationPath } from './crypto-provider/types';
 import type {
   GetExtendedPublicKeyRequestParams,
   SignMessageRequestParams,
   SignTransactionRequestParams,
 } from './types';
-import type { SupportedCardanoDerivationPath } from './crypto-provider/types';
 
 /**
  * Checks if the given derivation path is of supported type.
@@ -22,12 +22,12 @@ import type { SupportedCardanoDerivationPath } from './crypto-provider/types';
 function isSupportedDerivationPath(
   path: string[],
 ): path is SupportedCardanoDerivationPath {
-  return (
+  return Boolean(
     path.length >= 3 &&
-    (path[0] === CARDANO_DERIVATION_PATH_PURPOSE ||
-      path[0] === CARDANO_DERIVATION_PATH_VOTING_PURPOSE) &&
-    path[1] === CARDANO_DERIVATION_PATH_COINTYPE &&
-    path[2].endsWith("'") // account index must be hardened
+      (path[0] === CARDANO_DERIVATION_PATH_PURPOSE ||
+        path[0] === CARDANO_DERIVATION_PATH_VOTING_PURPOSE) &&
+      path[1] === CARDANO_DERIVATION_PATH_COINTYPE &&
+      path[2]?.endsWith("'"), // account index must be hardened
   );
 }
 

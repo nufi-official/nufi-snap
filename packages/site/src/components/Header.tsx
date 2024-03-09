@@ -1,7 +1,6 @@
-import { useContext } from 'react';
 import styled, { useTheme } from 'styled-components';
-import { MetamaskActions, MetaMaskContext } from '../hooks';
-import { connectSnap, getThemePreference, getSnap } from '../utils';
+
+import { getThemePreference } from '../utils';
 import { HeaderButtons } from './Buttons';
 import { SnapLogo } from './SnapLogo';
 import { Toggle } from './Toggle';
@@ -12,7 +11,7 @@ const HeaderWrapper = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 2.4rem;
-  border-bottom: 1px solid ${(props) => props.theme.colors.border.default};
+  border-bottom: 1px solid ${(props) => props.theme.colors.border?.default};
 `;
 
 const Title = styled.p`
@@ -43,26 +42,11 @@ export const Header = ({
   handleToggleClick(): void;
 }) => {
   const theme = useTheme();
-  const [state, dispatch] = useContext(MetaMaskContext);
 
-  const handleConnectClick = async () => {
-    try {
-      await connectSnap();
-      const installedSnap = await getSnap();
-
-      dispatch({
-        type: MetamaskActions.SetInstalled,
-        payload: installedSnap,
-      });
-    } catch (e) {
-      console.error(e);
-      dispatch({ type: MetamaskActions.SetError, payload: e });
-    }
-  };
   return (
     <HeaderWrapper>
       <LogoWrapper>
-        <SnapLogo color={theme.colors.icon.default} size={36} />
+        <SnapLogo color={theme.colors.icon?.default} size={36} />
         <Title>template-snap</Title>
       </LogoWrapper>
       <RightContainer>
@@ -70,7 +54,7 @@ export const Header = ({
           onToggle={handleToggleClick}
           defaultChecked={getThemePreference()}
         />
-        <HeaderButtons state={state} onConnectClick={handleConnectClick} />
+        <HeaderButtons />
       </RightContainer>
     </HeaderWrapper>
   );

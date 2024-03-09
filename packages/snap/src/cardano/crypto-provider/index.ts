@@ -1,9 +1,9 @@
-import {
+import { derivePrivateKey } from './key-utils';
+import type {
   GetExtendedPublicKeyResponse,
   SignMessageResponse,
   SupportedCardanoDerivationPath,
 } from './types';
-import { derivePrivateKey } from './key-utils';
 
 export const getExtendedPublicKey = async (
   derivationPath: SupportedCardanoDerivationPath,
@@ -27,7 +27,8 @@ export const signMessage = async (
   const signatureHex = (
     await privateKey
       .toRawKey()
-      // casting required for cardano-sdk
+      // casting and lint ignore required for cardano-sdk
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       .sign(messageHex as string & { __opaqueString: 'HexBlob' })
   ).hex();
 

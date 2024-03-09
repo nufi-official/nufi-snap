@@ -1,25 +1,23 @@
-import { useContext } from 'react';
 import styled from 'styled-components';
-import { MetamaskActions, MetaMaskContext } from '../hooks';
-import {
-  connectSnap,
-  getSnap,
-  isLocalSnap,
-  getCardanoExtendedPublicKey,
-  shouldDisplayReconnectButton,
-  signCardanoMessage,
-  signCardanoTransaction,
-} from '../utils';
+
 import {
   ConnectButton,
   InstallFlaskButton,
   ReconnectButton,
-  GetCardanoExtendedPublicKeyButton,
   Card,
+  GetCardanoExtendedPublicKeyButton,
   SignCardanoMessageButton,
   SignCardanoTransactionButton,
 } from '../components';
 import { defaultSnapOrigin } from '../config';
+import { useMetaMask, useMetaMaskContext, useRequestSnap } from '../hooks';
+import {
+  getCardanoExtendedPublicKey,
+  isLocalSnap,
+  shouldDisplayReconnectButton,
+  signCardanoMessage,
+  signCardanoTransaction,
+} from '../utils';
 
 const Container = styled.div`
   display: flex;
@@ -44,7 +42,7 @@ const Heading = styled.h1`
 `;
 
 const Span = styled.span`
-  color: ${(props) => props.theme.colors.primary.default};
+  color: ${(props) => props.theme.colors.primary?.default};
 `;
 
 const Subtitle = styled.p`
@@ -69,9 +67,9 @@ const CardContainer = styled.div`
 `;
 
 const Notice = styled.div`
-  background-color: ${({ theme }) => theme.colors.background.alternative};
-  border: 1px solid ${({ theme }) => theme.colors.border.default};
-  color: ${({ theme }) => theme.colors.text.alternative};
+  background-color: ${({ theme }) => theme.colors.background?.alternative};
+  border: 1px solid ${({ theme }) => theme.colors.border?.default};
+  color: ${({ theme }) => theme.colors.text?.alternative};
   border-radius: ${({ theme }) => theme.radii.default};
   padding: 2.4rem;
   margin-top: 2.4rem;
@@ -88,9 +86,9 @@ const Notice = styled.div`
 `;
 
 const ErrorMessage = styled.div`
-  background-color: ${({ theme }) => theme.colors.error.muted};
-  border: 1px solid ${({ theme }) => theme.colors.error.default};
-  color: ${({ theme }) => theme.colors.error.alternative};
+  background-color: ${({ theme }) => theme.colors.error?.muted};
+  border: 1px solid ${({ theme }) => theme.colors.error?.default};
+  color: ${({ theme }) => theme.colors.error?.alternative};
   border-radius: ${({ theme }) => theme.radii.default};
   padding: 2.4rem;
   margin-bottom: 2.4rem;
@@ -106,52 +104,24 @@ const ErrorMessage = styled.div`
 `;
 
 const Index = () => {
-  const [state, dispatch] = useContext(MetaMaskContext);
+  const { error } = useMetaMaskContext();
+  const { isFlask, snapsDetected, installedSnap } = useMetaMask();
+  const requestSnap = useRequestSnap();
 
   const isMetaMaskReady = isLocalSnap(defaultSnapOrigin)
-    ? state.isFlask
-    : state.snapsDetected;
-
-  const handleConnectClick = async () => {
-    try {
-      await connectSnap();
-      const installedSnap = await getSnap();
-
-      dispatch({
-        type: MetamaskActions.SetInstalled,
-        payload: installedSnap,
-      });
-    } catch (e) {
-      console.error(e);
-      dispatch({ type: MetamaskActions.SetError, payload: e });
-    }
-  };
+    ? isFlask
+    : snapsDetected;
 
   const handleGetCardanoExtendedPublicKeyClick = async () => {
-    try {
-      await getCardanoExtendedPublicKey();
-    } catch (e) {
-      console.error(e);
-      dispatch({ type: MetamaskActions.SetError, payload: e });
-    }
+    await getCardanoExtendedPublicKey();
   };
 
   const handleCardanoSignMessageClick = async () => {
-    try {
-      await signCardanoMessage();
-    } catch (e) {
-      console.error(e);
-      dispatch({ type: MetamaskActions.SetError, payload: e });
-    }
+    await signCardanoMessage();
   };
 
   const handleCardanoSignTransactionClick = async () => {
-    try {
-      await signCardanoTransaction();
-    } catch (e) {
-      console.error(e);
-      dispatch({ type: MetamaskActions.SetError, payload: e });
-    }
+    await signCardanoTransaction();
   };
 
   return (
@@ -163,9 +133,9 @@ const Index = () => {
         Get started by editing <code>src/index.ts</code>
       </Subtitle>
       <CardContainer>
-        {state.error && (
+        {error && (
           <ErrorMessage>
-            <b>An error happened:</b> {state.error.message}
+            <b>An error happened:</b> {error.message}
           </ErrorMessage>
         )}
         {!isMetaMaskReady && (
@@ -179,7 +149,7 @@ const Index = () => {
             fullWidth
           />
         )}
-        {!state.installedSnap && (
+        {!installedSnap && (
           <Card
             content={{
               title: 'Connect',
@@ -187,7 +157,7 @@ const Index = () => {
                 'Get started by connecting to and installing the example snap.',
               button: (
                 <ConnectButton
-                  onClick={handleConnectClick}
+                  onClick={requestSnap}
                   disabled={!isMetaMaskReady}
                 />
               ),
@@ -195,7 +165,7 @@ const Index = () => {
             disabled={!isMetaMaskReady}
           />
         )}
-        {shouldDisplayReconnectButton(state.installedSnap) && (
+        {shouldDisplayReconnectButton(installedSnap) && (
           <Card
             content={{
               title: 'Reconnect',
@@ -203,12 +173,12 @@ const Index = () => {
                 'While connected to a local running snap this button will always be displayed in order to update the snap if a change is made.',
               button: (
                 <ReconnectButton
-                  onClick={handleConnectClick}
-                  disabled={!state.installedSnap}
+                  onClick={requestSnap}
+                  disabled={!installedSnap}
                 />
               ),
             }}
-            disabled={!state.installedSnap}
+            disabled={!installedSnap}
           />
         )}
         <Card
@@ -218,15 +188,15 @@ const Index = () => {
             button: (
               <GetCardanoExtendedPublicKeyButton
                 onClick={handleGetCardanoExtendedPublicKeyClick}
-                disabled={!state.installedSnap}
+                disabled={!installedSnap}
               />
             ),
           }}
-          disabled={!state.installedSnap}
+          disabled={!installedSnap}
           fullWidth={
             isMetaMaskReady &&
-            Boolean(state.installedSnap) &&
-            !shouldDisplayReconnectButton(state.installedSnap)
+            Boolean(installedSnap) &&
+            !shouldDisplayReconnectButton(installedSnap)
           }
         />
         <Card
@@ -236,15 +206,15 @@ const Index = () => {
             button: (
               <SignCardanoMessageButton
                 onClick={handleCardanoSignMessageClick}
-                disabled={!state.installedSnap}
+                disabled={!installedSnap}
               />
             ),
           }}
-          disabled={!state.installedSnap}
+          disabled={!installedSnap}
           fullWidth={
             isMetaMaskReady &&
-            Boolean(state.installedSnap) &&
-            !shouldDisplayReconnectButton(state.installedSnap)
+            Boolean(installedSnap) &&
+            !shouldDisplayReconnectButton(installedSnap)
           }
         />
         <Card
@@ -254,15 +224,15 @@ const Index = () => {
             button: (
               <SignCardanoTransactionButton
                 onClick={handleCardanoSignTransactionClick}
-                disabled={!state.installedSnap}
+                disabled={!installedSnap}
               />
             ),
           }}
-          disabled={!state.installedSnap}
+          disabled={!installedSnap}
           fullWidth={
             isMetaMaskReady &&
-            Boolean(state.installedSnap) &&
-            !shouldDisplayReconnectButton(state.installedSnap)
+            Boolean(installedSnap) &&
+            !shouldDisplayReconnectButton(installedSnap)
           }
         />
         <Notice>

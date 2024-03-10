@@ -1810,7 +1810,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethereumjs/tx@npm:^4.1.2, @ethereumjs/tx@npm:^4.2.0":
+"@ethereumjs/tx@npm:^4.2.0":
   version: 4.2.0
   resolution: "@ethereumjs/tx@npm:4.2.0"
   dependencies:
@@ -2658,7 +2658,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@metamask/approval-controller@npm:^5.1.2":
+"@metamask/approval-controller@npm:^5.1.3":
   version: 5.1.3
   resolution: "@metamask/approval-controller@npm:5.1.3"
   dependencies:
@@ -2857,17 +2857,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@metamask/key-tree@npm:^9.0.0":
-  version: 9.0.0
-  resolution: "@metamask/key-tree@npm:9.0.0"
+"@metamask/key-tree@https://github.com/nufi-official/metamask-key-tree/releases/download/v10.0.0-cip3/metamask-key-tree-10.0.0-cip3.tgz":
+  version: 10.0.0-cip3
+  resolution: "@metamask/key-tree@https://github.com/nufi-official/metamask-key-tree/releases/download/v10.0.0-cip3/metamask-key-tree-10.0.0-cip3.tgz"
   dependencies:
-    "@metamask/scure-bip39": ^2.1.0
-    "@metamask/utils": ^6.0.1
-    "@noble/ed25519": ^1.6.0
-    "@noble/hashes": ^1.0.0
-    "@noble/secp256k1": ^1.5.5
+    "@metamask/scure-bip39": ^2.1.1
+    "@metamask/utils": ^8.3.0
+    "@noble/curves": ^1.2.0
+    "@noble/hashes": ^1.3.2
     "@scure/base": ^1.0.0
-  checksum: 5c81f07351ca59b37570d52edcc80d60424630b2a8403ed7149c3343c264878ac5d3fc0584a61635ea7ddda4a789295ded1247846606dc529d8e2fd42f6fc61a
+  checksum: 58947686f0668614502c1e57454aecbbed13141ca8a0143824fcbfff62bdeaac301154203b2b3c32c2d7a2d7daf1dabda614d4b54cec77907a024daaa805da78
   languageName: node
   linkType: hard
 
@@ -2990,7 +2989,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@metamask/scure-bip39@npm:^2.1.0":
+"@metamask/scure-bip39@npm:^2.1.1":
   version: 2.1.1
   resolution: "@metamask/scure-bip39@npm:2.1.1"
   dependencies:
@@ -3066,11 +3065,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@metamask/snaps-controllers@npm:^6.0.1":
-  version: 6.0.1
-  resolution: "@metamask/snaps-controllers@npm:6.0.1"
+"@metamask/snaps-controllers@https://github.com/nufi-official/metamask-snaps/releases/download/v37.0.0-cip3/metamask-snaps-controllers-6.0.2-cip3.tgz":
+  version: 6.0.2-cip3
+  resolution: "@metamask/snaps-controllers@https://github.com/nufi-official/metamask-snaps/releases/download/v37.0.0-cip3/metamask-snaps-controllers-6.0.2-cip3.tgz"
   dependencies:
-    "@metamask/approval-controller": ^5.1.2
+    "@metamask/approval-controller": ^5.1.3
     "@metamask/base-controller": ^4.1.0
     "@metamask/json-rpc-engine": ^7.3.2
     "@metamask/object-multiplex": ^2.0.0
@@ -3079,9 +3078,9 @@ __metadata:
     "@metamask/post-message-stream": ^8.0.0
     "@metamask/rpc-errors": ^6.2.1
     "@metamask/snaps-registry": ^3.0.0
-    "@metamask/snaps-rpc-methods": ^7.0.1
-    "@metamask/snaps-sdk": ^3.0.1
-    "@metamask/snaps-utils": ^7.0.1
+    "@metamask/snaps-rpc-methods": "workspace:^"
+    "@metamask/snaps-sdk": "workspace:^"
+    "@metamask/snaps-utils": "workspace:^"
     "@metamask/utils": ^8.3.0
     "@xstate/fsm": ^2.0.0
     browserify-zlib: ^0.2.0
@@ -3094,36 +3093,36 @@ __metadata:
     readable-web-to-node-stream: ^3.0.2
     tar-stream: ^3.1.7
   peerDependencies:
-    "@metamask/snaps-execution-environments": ^5.0.1
+    "@metamask/snaps-execution-environments": "workspace:^"
   peerDependenciesMeta:
     "@metamask/snaps-execution-environments":
       optional: true
-  checksum: 93ceaa31fbae6aeb43276e8e41b9aaf528e0d188984de408e00d410c6e2e5db5cd80576a245731d2d5592d3f9e7bd93b29068dc952f49691960f8d1d60082afc
+  checksum: 0bc8c26c4f8d4ffd334da93f96fbb9208256205e4c9ec9e787db69c2048e6e716fb6542c97c145654c1687dc301f15388bf631042078595180e9140924745885
   languageName: node
   linkType: hard
 
-"@metamask/snaps-execution-environments@npm:^5.0.1":
-  version: 5.0.1
-  resolution: "@metamask/snaps-execution-environments@npm:5.0.1"
+"@metamask/snaps-execution-environments@https://github.com/nufi-official/metamask-snaps/releases/download/v37.0.0-cip3/metamask-snaps-execution-environments-5.0.2-cip3.tgz":
+  version: 5.0.2-cip3
+  resolution: "@metamask/snaps-execution-environments@https://github.com/nufi-official/metamask-snaps/releases/download/v37.0.0-cip3/metamask-snaps-execution-environments-5.0.2-cip3.tgz"
   dependencies:
     "@metamask/json-rpc-engine": ^7.3.2
     "@metamask/object-multiplex": ^2.0.0
     "@metamask/post-message-stream": ^8.0.0
     "@metamask/providers": ^14.0.2
     "@metamask/rpc-errors": ^6.2.1
-    "@metamask/snaps-sdk": ^3.0.1
-    "@metamask/snaps-utils": ^7.0.1
+    "@metamask/snaps-sdk": "workspace:^"
+    "@metamask/snaps-utils": "workspace:^"
     "@metamask/utils": ^8.3.0
     nanoid: ^3.1.31
     readable-stream: ^3.6.2
     superstruct: ^1.0.3
-  checksum: d8968458bb6d53007828a98874b4f2546885d868088ec72b1477dc225f9d5fc5a2d14101bf7f13dfc0ebab9c4481ee89e29e0018c83c2230dda68938f2b89165
+  checksum: 2421ccfb42922792b8eb467bab4b126120baf928517953a52af54cfa86be7f808e9ca98811ef2e8b402c59e0586e4e8b4dc3ce1eeb4bd8852dfa0233d89f40e6
   languageName: node
   linkType: hard
 
-"@metamask/snaps-jest@npm:^6.0.1":
-  version: 6.0.1
-  resolution: "@metamask/snaps-jest@npm:6.0.1"
+"@metamask/snaps-jest@https://github.com/nufi-official/metamask-snaps/releases/download/v37.0.0-cip3/metamask-snaps-jest-6.0.1-cip3.tgz":
+  version: 6.0.1-cip3
+  resolution: "@metamask/snaps-jest@https://github.com/nufi-official/metamask-snaps/releases/download/v37.0.0-cip3/metamask-snaps-jest-6.0.1-cip3.tgz"
   dependencies:
     "@jest/environment": ^29.5.0
     "@jest/expect": ^29.5.0
@@ -3134,11 +3133,11 @@ __metadata:
     "@metamask/json-rpc-middleware-stream": ^6.0.2
     "@metamask/key-tree": ^9.0.0
     "@metamask/permission-controller": ^8.0.1
-    "@metamask/snaps-controllers": ^6.0.1
-    "@metamask/snaps-execution-environments": ^5.0.1
-    "@metamask/snaps-rpc-methods": ^7.0.1
-    "@metamask/snaps-sdk": ^3.0.1
-    "@metamask/snaps-utils": ^7.0.1
+    "@metamask/snaps-controllers": "workspace:^"
+    "@metamask/snaps-execution-environments": "workspace:^"
+    "@metamask/snaps-rpc-methods": "workspace:^"
+    "@metamask/snaps-sdk": "workspace:^"
+    "@metamask/snaps-utils": "workspace:^"
     "@metamask/utils": ^8.3.0
     "@reduxjs/toolkit": ^1.9.5
     express: ^4.18.2
@@ -3148,7 +3147,7 @@ __metadata:
     redux: ^4.2.1
     redux-saga: ^1.2.3
     superstruct: ^1.0.3
-  checksum: 8fb53fb5f8d916b5496a254d35a6e26856b06fbce782d58f2af97241c011577d9b75a362daee347c404d4b98d04b7d40efc0f84f8745d63cca9dfa049b73e044
+  checksum: 25cfb674493e9cb6d614cadd3bfa862c7c6366a6f21308b6b2925a9a38313081cd9e15eed109865f27f79c36a710aac0d506564127a5287ed761015b3c9f0cf9
   languageName: node
   linkType: hard
 
@@ -3164,25 +3163,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@metamask/snaps-rpc-methods@npm:^7.0.1":
-  version: 7.0.1
-  resolution: "@metamask/snaps-rpc-methods@npm:7.0.1"
+"@metamask/snaps-rpc-methods@https://github.com/nufi-official/metamask-snaps/releases/download/v37.0.0-cip3/metamask-snaps-rpc-methods-7.0.1-cip3.tgz":
+  version: 7.0.1-cip3
+  resolution: "@metamask/snaps-rpc-methods@https://github.com/nufi-official/metamask-snaps/releases/download/v37.0.0-cip3/metamask-snaps-rpc-methods-7.0.1-cip3.tgz"
   dependencies:
     "@metamask/key-tree": ^9.0.0
     "@metamask/permission-controller": ^8.0.1
     "@metamask/rpc-errors": ^6.2.1
-    "@metamask/snaps-sdk": ^3.0.1
-    "@metamask/snaps-utils": ^7.0.1
+    "@metamask/snaps-sdk": "workspace:^"
+    "@metamask/snaps-utils": "workspace:^"
     "@metamask/utils": ^8.3.0
     "@noble/hashes": ^1.3.1
     superstruct: ^1.0.3
-  checksum: 19309ef234cc5cb47c941b4e3bf03df9fc6335ea9aad0b9931bcd63480f63b6d12a10d8d438df3660fe9c6f9b153b9d109a5dabd4576dc68019640b6336f7357
+  checksum: dbc556a91eb93bd43cf6b5ac7caa8908bdc0d54ad0f3376ebbbc3ad08194f9e5f32b5a7b51f407c751814f421c659e0cea562a3144b3c86f4add19ecdf82d92d
   languageName: node
   linkType: hard
 
-"@metamask/snaps-sdk@npm:^3.0.1, @metamask/snaps-sdk@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "@metamask/snaps-sdk@npm:3.1.0"
+"@metamask/snaps-sdk@https://github.com/nufi-official/metamask-snaps/releases/download/v37.0.0-cip3/metamask-snaps-sdk-3.1.0-cip3.tgz":
+  version: 3.1.0-cip3
+  resolution: "@metamask/snaps-sdk@https://github.com/nufi-official/metamask-snaps/releases/download/v37.0.0-cip3/metamask-snaps-sdk-3.1.0-cip3.tgz"
   dependencies:
     "@metamask/key-tree": ^9.0.0
     "@metamask/providers": ^14.0.2
@@ -3190,13 +3189,13 @@ __metadata:
     "@metamask/utils": ^8.3.0
     fast-xml-parser: ^4.3.4
     superstruct: ^1.0.3
-  checksum: 292c97eb4f98530fcb0dc207643686ad927ec4d86ac43c296ecc3b5500aef160556ae19eb3f8e15dbb5ffcf7763b51da90ff327a1f1a10ab2409afd3d9b8caed
+  checksum: 762aa5f4049ecf661bb3f1f8529965bc46dce231b18d18f81ebe907a79515a255aae600fcf4d2616a2f52cb27c340b9553daf19b919aa8efc7ce7058c8bb95f3
   languageName: node
   linkType: hard
 
-"@metamask/snaps-utils@npm:^7.0.1":
-  version: 7.0.2
-  resolution: "@metamask/snaps-utils@npm:7.0.2"
+"@metamask/snaps-utils@https://github.com/nufi-official/metamask-snaps/releases/download/v37.0.0-cip3/metamask-snaps-utils-7.0.2-cip3.tgz":
+  version: 7.0.2-cip3
+  resolution: "@metamask/snaps-utils@https://github.com/nufi-official/metamask-snaps/releases/download/v37.0.0-cip3/metamask-snaps-utils-7.0.2-cip3.tgz"
   dependencies:
     "@babel/core": ^7.23.2
     "@babel/types": ^7.23.0
@@ -3206,7 +3205,7 @@ __metadata:
     "@metamask/rpc-errors": ^6.2.1
     "@metamask/slip44": ^3.1.0
     "@metamask/snaps-registry": ^3.0.0
-    "@metamask/snaps-sdk": ^3.1.0
+    "@metamask/snaps-sdk": "workspace:^"
     "@metamask/utils": ^8.3.0
     "@noble/hashes": ^1.3.1
     "@scure/base": ^1.1.1
@@ -3219,7 +3218,7 @@ __metadata:
     ses: ^1.1.0
     superstruct: ^1.0.3
     validate-npm-package-name: ^5.0.0
-  checksum: 2a9ce9fa2ba8551b1fb97df57d8352f4c98a8267c7cb8970bcfb2ff508de0a6798c2184767c0c7a5d454c712be0fdc5a5a7b90f96ae7cdbb5cb9a1d1c8b14f03
+  checksum: 5f9c88034c983fc45a8728320dbe63f7c497511fb46788cfbcd71d75f068abfc6d10409d83be99b84ad859df1410a0e813ec1fc89d9529399deb2a4825e1d28d
   languageName: node
   linkType: hard
 
@@ -3232,20 +3231,6 @@ __metadata:
     "@metamask/utils": ^8.3.0
     webpack-sources: ^3.2.3
   checksum: b22a6b03db2b285942a05995f5077ab954ba2b5737f500af653b09a27ed2c35fcc7b8f5c933f558f343f191199437d380d3ebfa9d179ee67a9b395a8fc0634c6
-  languageName: node
-  linkType: hard
-
-"@metamask/utils@npm:^6.0.1":
-  version: 6.2.0
-  resolution: "@metamask/utils@npm:6.2.0"
-  dependencies:
-    "@ethereumjs/tx": ^4.1.2
-    "@noble/hashes": ^1.3.1
-    "@types/debug": ^4.1.7
-    debug: ^4.3.4
-    semver: ^7.3.8
-    superstruct: ^1.0.3
-  checksum: 0bc675358ecc09b3bc04da613d73666295d7afa51ff6b8554801585966900b24b8545bd93b8b2e9a17db867ebe421fe884baf3558ec4ca3199fa65504f677c1b
   languageName: node
   linkType: hard
 
@@ -3345,13 +3330,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@noble/ed25519@npm:^1.6.0":
-  version: 1.7.3
-  resolution: "@noble/ed25519@npm:1.7.3"
-  checksum: 45169927d51de513e47bbeebff3a603433c4ac7579e1b8c5034c380a0afedbe85e6959be3d69584a7a5ed6828d638f8f28879003b9bb2fb5f22d8aa2d88fd5fe
-  languageName: node
-  linkType: hard
-
 "@noble/hashes@npm:1.3.1":
   version: 1.3.1
   resolution: "@noble/hashes@npm:1.3.1"
@@ -3359,17 +3337,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@noble/hashes@npm:1.3.3, @noble/hashes@npm:^1.0.0, @noble/hashes@npm:^1.3.1, @noble/hashes@npm:^1.3.2, @noble/hashes@npm:~1.3.0, @noble/hashes@npm:~1.3.1, @noble/hashes@npm:~1.3.2":
+"@noble/hashes@npm:1.3.3, @noble/hashes@npm:^1.3.1, @noble/hashes@npm:^1.3.2, @noble/hashes@npm:~1.3.0, @noble/hashes@npm:~1.3.1, @noble/hashes@npm:~1.3.2":
   version: 1.3.3
   resolution: "@noble/hashes@npm:1.3.3"
   checksum: 8a6496d1c0c64797339bc694ad06cdfaa0f9e56cd0c3f68ae3666cfb153a791a55deb0af9c653c7ed2db64d537aa3e3054629740d2f2338bb1dcb7ab60cd205b
-  languageName: node
-  linkType: hard
-
-"@noble/secp256k1@npm:^1.5.5":
-  version: 1.7.1
-  resolution: "@noble/secp256k1@npm:1.7.1"
-  checksum: d2301f1f7690368d8409a3152450458f27e54df47e3f917292de3de82c298770890c2de7c967d237eff9c95b70af485389a9695f73eb05a43e2bd562d18b18cb
   languageName: node
   linkType: hard
 
@@ -18061,7 +18032,7 @@ __metadata:
     "@metamask/key-tree": ^9.0.0
     "@metamask/snaps-cli": ^6.0.2
     "@metamask/snaps-jest": ^6.0.1
-    "@metamask/snaps-sdk": ^3.0.1
+    "@metamask/snaps-sdk": ^3.1.0
     "@typescript-eslint/eslint-plugin": ^5.42.1
     "@typescript-eslint/parser": ^5.42.1
     buffer: ^6.0.3

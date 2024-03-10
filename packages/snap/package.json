@@ -29,7 +29,7 @@
   "dependencies": {
     "@cardano-sdk/crypto": "^0.1.21",
     "@metamask/key-tree": "^9.0.0",
-    "@metamask/snaps-sdk": "^3.0.1",
+    "@metamask/snaps-sdk": "^3.1.0",
     "buffer": "^6.0.3"
   },
   "devDependencies": {

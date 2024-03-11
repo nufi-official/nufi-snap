@@ -3,7 +3,8 @@ import { useRequest } from './useRequest';
 
 export type InvokeSnapParams = {
   method: string;
-  params?: Record<string, unknown>;
+  // in the snap template, params were incorrectly types as object, even though they need be an array
+  params?: Record<string, unknown>[];
 };
 
 /**

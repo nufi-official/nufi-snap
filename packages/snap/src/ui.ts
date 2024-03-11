@@ -47,7 +47,6 @@ export const renderSignMessages = async (
       content: panel([
         heading(headingText),
         text(origin),
-        divider(),
         ...messageUiElements,
       ]),
     },

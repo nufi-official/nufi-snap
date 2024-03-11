@@ -18,17 +18,12 @@ import type { SupportedCardanoDerivationPath } from './types';
 export function slip10NodeToBip32PrivateKey(
   slip10Node: SLIP10Node,
 ): cardanoCrypto.Bip32PrivateKey {
-  const { privateKeyBytes, publicKeyBytes, chainCodeBytes } = slip10Node;
+  const { privateKeyBytes, chainCodeBytes } = slip10Node;
   if (!privateKeyBytes) {
     throw new Error('Missing private key bytes');
   }
 
-  const bytes = Uint8Array.from([
-    ...privateKeyBytes,
-    // public key is prefixed with one zero byte, we remove it to have 32 byte public key
-    ...publicKeyBytes.subarray(1),
-    ...chainCodeBytes,
-  ]);
+  const bytes = Uint8Array.from([...privateKeyBytes, ...chainCodeBytes]);
 
   return cardanoCrypto.Bip32PrivateKey.fromBytes(bytes);
 }
@@ -56,7 +51,7 @@ async function getMetamaskAccountSLIP10Node([
         method: 'snap_getBip32Entropy',
         params: {
           path: ['m', "1694'", "1815'", accountIndex],
-          curve: 'ed25519',
+          curve: 'ed25519Bip32',
         },
       }),
     );
@@ -71,7 +66,7 @@ async function getMetamaskAccountSLIP10Node([
         method: 'snap_getBip32Entropy',
         params: {
           path: ['m', "1852'", "1815'", accountIndex],
-          curve: 'ed25519',
+          curve: 'ed25519Bip32',
         },
       }),
     );

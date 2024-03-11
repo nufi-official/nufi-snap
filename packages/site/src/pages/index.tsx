@@ -10,14 +10,13 @@ import {
   SignCardanoTransactionButton,
 } from '../components';
 import { defaultSnapOrigin } from '../config';
-import { useMetaMask, useMetaMaskContext, useRequestSnap } from '../hooks';
 import {
-  getCardanoExtendedPublicKey,
-  isLocalSnap,
-  shouldDisplayReconnectButton,
-  signCardanoMessage,
-  signCardanoTransaction,
-} from '../utils';
+  useInvokeSnap,
+  useMetaMask,
+  useMetaMaskContext,
+  useRequestSnap,
+} from '../hooks';
+import { isLocalSnap, shouldDisplayReconnectButton } from '../utils';
 
 const Container = styled.div`
   display: flex;
@@ -107,21 +106,44 @@ const Index = () => {
   const { error } = useMetaMaskContext();
   const { isFlask, snapsDetected, installedSnap } = useMetaMask();
   const requestSnap = useRequestSnap();
+  const invokeSnap = useInvokeSnap();
 
   const isMetaMaskReady = isLocalSnap(defaultSnapOrigin)
     ? isFlask
     : snapsDetected;
 
   const handleGetCardanoExtendedPublicKeyClick = async () => {
-    await getCardanoExtendedPublicKey();
+    const res = await invokeSnap({
+      method: 'cardano__getExtendedPublicKey',
+      params: [{ derivationPath: ["1852'", "1815'", "0'"] }],
+    });
+    console.log('cardano extended public key result', res);
   };
 
   const handleCardanoSignMessageClick = async () => {
-    await signCardanoMessage();
+    const res = await invokeSnap({
+      method: 'cardano__signMessage',
+      params: [
+        { derivationPath: ["1852'", "1815'", "0'"], messageHex: 'deadbeef' },
+      ],
+    });
+    console.log('cardano sign message key result', res);
   };
 
   const handleCardanoSignTransactionClick = async () => {
-    await signCardanoTransaction();
+    const res = await invokeSnap({
+      method: 'cardano__signTransaction',
+      params: [
+        {
+          txBodyHashHex: 'deadbeef',
+          derivationPaths: [
+            ["1852'", "1815'", "0'"],
+            ["1852'", "1815'", "1'"],
+          ],
+        },
+      ],
+    });
+    console.log('cardano sign message key result', res);
   };
 
   return (

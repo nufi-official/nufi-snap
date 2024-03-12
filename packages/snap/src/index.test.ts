@@ -39,12 +39,12 @@ describe('onRpcRequest', () => {
           {
             derivationPath: derivationPath0,
             extendedPublicKeyHex:
-              'c76dceba676cb7276300eb17c35097c26687fac2b2e6b22f78b626367733a569140d8aeb3f0aaedfeeace3ad25743c9c39b29fced34d325dd03686b7d6027c5c',
+              '50bc18a1a034ce905811acd88ad64f9affc69001571bf5870c3a87e174bef50a6d0672b5d805f0ac0134e7cd093d5cd401de8df11603a79d82ad834c0fa8a98e',
           },
           {
             derivationPath: derivationPath1,
             extendedPublicKeyHex:
-              '89c966ce091a9a95b8f2d6608e0915379e14f462cf831088a3b63a9f09385ba56d658597a18f2c6190859d5e05e541f279c0ce5c0d9250a33075a3c9faade0e8',
+              '834245796c5b8768630803837f2e5d744bb3bda20eb36c8f8e1d20bb9540535f6c31486f3487e4f76d6fe49d89dfa7dc6994f311c8d2844b0b9d647454846fd6',
           },
         ],
       };
@@ -101,17 +101,17 @@ describe('onRpcRequest', () => {
             derivationPath: ["1852'", "1815'", "0'"],
             messageHex: 'deadbeef',
             extendedPublicKeyHex:
-              'c76dceba676cb7276300eb17c35097c26687fac2b2e6b22f78b626367733a569140d8aeb3f0aaedfeeace3ad25743c9c39b29fced34d325dd03686b7d6027c5c',
+              '50bc18a1a034ce905811acd88ad64f9affc69001571bf5870c3a87e174bef50a6d0672b5d805f0ac0134e7cd093d5cd401de8df11603a79d82ad834c0fa8a98e',
             signatureHex:
-              '093550dd44a6506471b6e34bc7dc6e912a8512dc792d0c7bcbfb947dcf98b6223a44901922fa1b2096505c199194f679bd528983c6a5612bfca645eb451d3206',
+              'c219381242e980ded9e0103e150386dfb0b56931da1f553d36b949bba12805f4b91bb177a41d3280aa3082163637163cb0037f7b86661a451ec1f3ac9381720b',
           },
           {
             derivationPath: ["1852'", "1815'", "0'"],
             messageHex: 'deadbeefdeadbeef',
             extendedPublicKeyHex:
-              'c76dceba676cb7276300eb17c35097c26687fac2b2e6b22f78b626367733a569140d8aeb3f0aaedfeeace3ad25743c9c39b29fced34d325dd03686b7d6027c5c',
+              '50bc18a1a034ce905811acd88ad64f9affc69001571bf5870c3a87e174bef50a6d0672b5d805f0ac0134e7cd093d5cd401de8df11603a79d82ad834c0fa8a98e',
             signatureHex:
-              'bef0eee4a020b0fa833a6eca10654fc2a538298dfb5cd515f054b0f6afa86a18060c72d879a9f33937eb53a4563947a61281397eff130b4ff1fb112d160a9e0a',
+              '2bc38f21d507870c34b0aef6a9a8507207b13985f45b04714271c1107d6b66e3c0d8f35b9f73a85bb0bf9c0431de8d4e547d111167825f51845570b74c12e008',
           },
         ],
       };
@@ -174,16 +174,16 @@ describe('onRpcRequest', () => {
               {
                 derivationPath: derivationPath1,
                 extendedPublicKeyHex:
-                  'c76dceba676cb7276300eb17c35097c26687fac2b2e6b22f78b626367733a569140d8aeb3f0aaedfeeace3ad25743c9c39b29fced34d325dd03686b7d6027c5c',
+                  '50bc18a1a034ce905811acd88ad64f9affc69001571bf5870c3a87e174bef50a6d0672b5d805f0ac0134e7cd093d5cd401de8df11603a79d82ad834c0fa8a98e',
                 signatureHex:
-                  '093550dd44a6506471b6e34bc7dc6e912a8512dc792d0c7bcbfb947dcf98b6223a44901922fa1b2096505c199194f679bd528983c6a5612bfca645eb451d3206',
+                  'c219381242e980ded9e0103e150386dfb0b56931da1f553d36b949bba12805f4b91bb177a41d3280aa3082163637163cb0037f7b86661a451ec1f3ac9381720b',
               },
               {
                 derivationPath: derivationPath2,
                 extendedPublicKeyHex:
-                  'c9c08d13aaf0fd013948721275a35aae908394a0e959935cbb866602fc2109756b55c47a80231d32e221bcef2cb1bed5953ab51b4e25d86821f2087e289397cf',
+                  '49e6da6f02a6951b638707d42019fa36d0289ab5f13d663a01a79ad4c291248a7cb652286ec50053f106ab8d8bb9938f545610a3b6e746ed85bd1270ba08efc9',
                 signatureHex:
-                  '9ca1484b464fa63215141e18503310153225961fdf97867961378c2bced4c5f7d431e034e0a8ef43eba741ee7e6654e9c1ce881762b1aa9a3d22df1501b5760d',
+                  '02ac7e7fdb7ee589043ea509323a204f97ac00f70360c23a1b2c9bcbe697d794357453b6649ac064d68fdf978117cd33c68ea02dfa5ec92f8c6513bd78adf000',
               },
             ],
           },

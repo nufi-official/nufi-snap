@@ -1,4 +1,4 @@
-# TypeScript Example Snap
+# Cardano Wallet Snap
 
 This snap demonstrates how to develop a snap with TypeScript. It is a simple
 snap that displays a confirmation dialog when the `hello` JSON-RPC method is

@@ -104,13 +104,13 @@ export const GetCardanoExtendedPublicKeyButton = (
 export const SignCardanoMessageButton = (
   props: ComponentProps<typeof Button>,
 ) => {
-  return <Button {...props}>Sign cardano message</Button>;
+  return <Button {...props}>Sign Cardano message</Button>;
 };
 
 export const SignCardanoTransactionButton = (
   props: ComponentProps<typeof Button>,
 ) => {
-  return <Button {...props}>Sign cardano transaction</Button>;
+  return <Button {...props}>Sign Cardano transaction</Button>;
 };
 
 export const HeaderButtons = () => {

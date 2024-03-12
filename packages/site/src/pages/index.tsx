@@ -143,7 +143,7 @@ const Index = () => {
         },
       ],
     });
-    console.log('cardano sign message key result', res);
+    console.log('cardano sign transaction key result', res);
   };
 
   return (

@@ -1,21 +1,15 @@
-# @metamask/template-snap-monorepo
+# NuFi Metamask snap
 
-This repository demonstrates how to develop a snap with TypeScript. For detailed
-instructions, see [the MetaMask documentation](https://docs.metamask.io/guide/snaps.html#serving-a-snap-to-your-local-environment).
+Based on @metamask/template-snap-monorepo, supporting Cardano.
+
+## Metamask snaps
 
 MetaMask Snaps is a system that allows anyone to safely expand the capabilities
-of MetaMask. A _snap_ is a program that we run in an isolated environment that
-can customize the wallet experience.
-
-## Snaps is pre-release software
-
-To interact with (your) Snaps, you will need to install [MetaMask Flask](https://metamask.io/flask/),
-a canary distribution for developers that provides access to upcoming features.
+of MetaMask. A _snap_ is a program that is run in an isolated environment that
+can customize the wallet experience. For detailed
+instructions, see [the MetaMask documentation](https://docs.metamask.io/guide/snaps.html#serving-a-snap-to-your-local-environment).
 
 ## Getting Started
-
-Clone the template-snap repository [using this template](https://github.com/MetaMask/template-snap-monorepo/generate)
-and set up the development environment:
 
 ```shell
 yarn install && yarn start

@@ -1,12 +1,13 @@
-# Cardano Wallet Snap
+# @nufi/cardano-metamask-snap
 
-This snap demonstrates how to develop a snap with TypeScript. It is a simple
-snap that displays a confirmation dialog when the `hello` JSON-RPC method is
-called.
+This snap implements necessary methods for Cardano dapps to interact with Metamask
+
+## Key derivation
+
+Master key generation consistent with [CIP3-Icarus](https://github.com/cardano-foundation/CIPs/blob/09d7d8ee1bd64f7e6b20b5a6cae088039dce00cb/CIP-0003/Icarus.md)
+
+Child key generation consistent with [BIP32-Ed25519](https://input-output-hk.github.io/adrestia/static/Ed25519_BIP.pdf)
 
 ## Testing
 
-The snap comes with some basic tests, to demonstrate how to write tests for
-snaps. To test the snap, run `yarn test` in this directory. This will use
-[`@metamask/snaps-jest`](https://github.com/MetaMask/snaps/tree/main/packages/snaps-jest)
-to run the tests in `src/index.test.ts`.
+run `yarn test`

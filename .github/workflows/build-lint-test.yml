@@ -34,7 +34,7 @@ jobs:
       - name: Cache snap build
         uses: actions/cache@v3
         with:
-          path: ./packages/snap/dist
+          path: ./packages/cardano-metamask-snap/dist
           key: snap-${{ runner.os }}-${{ github.sha }}
       - name: Require clean working directory
         shell: bash
@@ -82,7 +82,7 @@ jobs:
       - name: Restore snap build cache
         uses: actions/cache@v3
         with:
-          path: ./packages/snap/dist
+          path: ./packages/cardano-metamask-snap/dist
           key: snap-${{ runner.os }}-${{ github.sha }}
       - run: yarn install --immutable
       - name: Run e2e tests

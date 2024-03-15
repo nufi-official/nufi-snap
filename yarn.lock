@@ -3580,9 +3580,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nufi/cardano-metamask-snap@workspace:packages/snap":
+"@nufi/cardano-metamask-snap@workspace:packages/cardano-metamask-snap":
   version: 0.0.0-use.local
-  resolution: "@nufi/cardano-metamask-snap@workspace:packages/snap"
+  resolution: "@nufi/cardano-metamask-snap@workspace:packages/cardano-metamask-snap"
   dependencies:
     "@cardano-sdk/crypto": ^0.1.21
     "@jest/globals": ^29.5.0

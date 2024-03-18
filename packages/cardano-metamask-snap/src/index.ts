@@ -33,6 +33,16 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   request,
   origin,
 }) => {
+  const urlObject = new URL(origin);
+  if (
+    !(
+      urlObject.hostname === 'localhost' ||
+      urlObject.hostname.endsWith('.nu.fi')
+    )
+  ) {
+    throw new Error('Invalid URL');
+  }
+
   switch (request.method) {
     case 'nufi__getUserId':
       return getNufiUserId();

@@ -2,7 +2,8 @@ import { expect } from '@jest/globals';
 import { installSnap } from '@metamask/snaps-jest';
 
 describe('onRpcRequest', () => {
-  const origin = 'Jest';
+  // we allow only localhost and nu.fi origins, so we use localhost for testing
+  const origin = 'http://localhost:8000';
 
   it('throws an error if the requested method does not exist', async () => {
     const { request } = await installSnap();
@@ -10,6 +11,7 @@ describe('onRpcRequest', () => {
     const method = 'foo';
     const response = await request({
       method,
+      origin,
     });
 
     expect(response).toRespondWithError({

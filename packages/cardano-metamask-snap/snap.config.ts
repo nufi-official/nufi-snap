@@ -9,11 +9,30 @@ const config: SnapConfig = {
   },
   polyfills: {
     buffer: true,
+    util: true,
+    crypto: true,
+    path: true,
+    events: true,
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    string_decoder: true,
+    stream: true,
   },
   stats: {
-    // Used to suppress "fs" warning caused by "@cardano-sdk/crypto"
-    // which is however not needed for the snap functionality
-    builtIns: false,
+    builtIns: {
+      ignore: ['fs'],
+    },
+  },
+  customizeWebpackConfig: (wpConfig) => {
+    return {
+      ...wpConfig,
+      resolve: {
+        ...wpConfig.resolve,
+        alias: {
+          ...wpConfig.resolve?.alias,
+          'isomorphic-ws': resolve(__dirname, 'isomorphic-ws-mock.ts'),
+        },
+      },
+    };
   },
 };
 

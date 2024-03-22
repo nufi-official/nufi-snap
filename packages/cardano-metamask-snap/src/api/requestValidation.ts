@@ -5,8 +5,8 @@ import {
   CARDANO_DERIVATION_PATH_COINTYPE,
   CARDANO_DERIVATION_PATH_PURPOSE,
   CARDANO_DERIVATION_PATH_VOTING_PURPOSE,
-} from './crypto-provider/constants';
-import type { SupportedCardanoDerivationPath } from './crypto-provider/types';
+} from './cryptoProvider/constants';
+import type { SupportedCardanoDerivationPath } from './cryptoProvider/types';
 import type {
   GetExtendedPublicKeyRequestParams,
   SignMessageRequestParams,

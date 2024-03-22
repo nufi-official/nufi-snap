@@ -1,4 +1,4 @@
-import type { SupportedCardanoDerivationPath } from './crypto-provider/types';
+import type { SupportedCardanoDerivationPath } from './cryptoProvider/types';
 
 export type GetExtendedPublicKeyRequestParams = {
   derivationPath: SupportedCardanoDerivationPath;

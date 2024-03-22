@@ -2,11 +2,11 @@ import type { JsonRpcRequest } from '@metamask/snaps-sdk';
 
 import { renderSignMessages, renderSignTransactions } from '../ui';
 import { assertUserHasConfirmed } from '../utils';
-import { getExtendedPublicKey, signMessage } from './crypto-provider';
+import { getExtendedPublicKey, signMessage } from './cryptoProvider';
 import type {
   GetExtendedPublicKeyResponse,
   SignMessageResponse,
-} from './crypto-provider/types';
+} from './cryptoProvider/types';
 import {
   assertIsGetExtendedPublicKeyRequestParams,
   assertIsSignMessageRequestParams,

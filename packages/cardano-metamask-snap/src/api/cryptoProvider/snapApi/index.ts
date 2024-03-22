@@ -1,10 +1,12 @@
 import { SLIP10Node, type SLIP10PathNode } from '@metamask/key-tree';
+
 import {
   CARDANO_DERIVATION_PATH_COINTYPE,
   CARDANO_DERIVATION_PATH_PURPOSE,
   CARDANO_DERIVATION_PATH_VOTING_PURPOSE,
-} from 'src/api/constants';
-import type { SupportedCardanoDerivationPath } from 'src/api/types';
+} from '../../constants';
+import type { SupportedCardanoDerivationPath } from '../../types';
+import type { Bip32Node } from '../types';
 
 /**
  * Retrieves Cardano account SLIP10Node from Metamask.
@@ -63,7 +65,7 @@ async function getMetamaskAccountSLIP10Node([
  */
 export async function deriveNode(
   derivationPath: SupportedCardanoDerivationPath,
-): Promise<SLIP10Node> {
+): Promise<Bip32Node> {
   const [purpose, coinType, account, ...rest] = derivationPath;
   const accountSLIP10Node = await getMetamaskAccountSLIP10Node([
     purpose,
@@ -71,11 +73,16 @@ export async function deriveNode(
     account,
   ]);
 
-  if (rest.length === 0) {
-    return accountSLIP10Node;
+  const { privateKeyBytes, chainCodeBytes } =
+    rest.length === 0
+      ? accountSLIP10Node
+      : await accountSLIP10Node.derive(
+          rest.map((pathElement) => `cip3:${pathElement}` as SLIP10PathNode),
+        );
+
+  if (!privateKeyBytes) {
+    throw new Error('Missing private key bytes');
   }
 
-  return accountSLIP10Node.derive(
-    rest.map((pathElement) => `cip3:${pathElement}` as SLIP10PathNode),
-  );
+  return { privateKeyBytes, chainCodeBytes };
 }

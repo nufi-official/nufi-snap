@@ -1,7 +1,5 @@
 import type { JsonRpcRequest } from '@metamask/snaps-sdk';
 
-import { renderSignMessages, renderSignTransactions } from '../ui';
-import { assertUserHasConfirmed } from '../utils';
 import { getExtendedPublicKey, signMessage } from './cryptoProvider';
 import {
   assertIsGetExtendedPublicKeyRequestParams,
@@ -13,6 +11,11 @@ import type {
   SignMessageResponse,
   SignTransactionResponse,
 } from './types';
+import {
+  renderSignMessages,
+  renderSignTransactions,
+  assertUserHasConfirmed,
+} from './ui';
 
 export const cardanoApi = {
   getExtendedPublicKey: async ({

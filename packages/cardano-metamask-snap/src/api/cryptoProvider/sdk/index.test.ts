@@ -1,7 +1,7 @@
 import { expect } from '@jest/globals';
 import type { SLIP10Node } from '@metamask/key-tree';
 
-import { slip10NodeToBip32PrivateKey } from './key-utils';
+import { slip10NodeToBip32PrivateKey } from '.';
 
 const slip10Node = {
   privateKeyBytes: new Uint8Array([
@@ -20,7 +20,7 @@ const slip10Node = {
   ]),
 } as SLIP10Node;
 
-describe('key-utils', () => {
+describe('sdk', () => {
   describe('slip10NodeToBip32PrivateKey', () => {
     it('should convert a SLIP10Node to a Bip32PrivateKey', () => {
       const expectedPrivateKey =

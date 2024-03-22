@@ -1,4 +1,4 @@
-import { slip10NodeToBip32PrivateKey } from './key-utils';
+import { slip10NodeToBip32PrivateKey } from './sdk';
 import { deriveNode } from './snapApi';
 import type {
   GetExtendedPublicKeyResponse,

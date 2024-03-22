@@ -21,3 +21,38 @@ export function bip32NodeToBip32PrivateKey(
 
   return cardanoCrypto.Bip32PrivateKey.fromBytes(bytes);
 }
+
+/**
+ * Converts a Bip32Node to an extended public key in hexadecimal format.
+ *
+ * @param bip32Node - The Bip32Node to convert.
+ * @returns The extended public key in hexadecimal format.
+ */
+export async function bip32NodeToExtendedPublicKeyHex(
+  bip32Node: Bip32Node,
+): Promise<string> {
+  const privateKey = bip32NodeToBip32PrivateKey(bip32Node);
+  return (await privateKey.toPublic()).hex();
+}
+
+/**
+ * Signs a message with a Bip32Node.
+ *
+ * @param bip32Node - The Bip32Node to sign with.
+ * @param messageHex - The message to sign in hexadecimal format.
+ * @returns The signed message in hexadecimal format.
+ */
+export async function signWithBip32Node(
+  bip32Node: Bip32Node,
+  messageHex: string,
+): Promise<string> {
+  return (
+    (
+      await bip32NodeToBip32PrivateKey(bip32Node)
+        .toRawKey()
+        // casting and lint ignore required for cardano-sdk
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        .sign(messageHex as string & { __opaqueString: 'HexBlob' })
+    ).hex()
+  );
+}

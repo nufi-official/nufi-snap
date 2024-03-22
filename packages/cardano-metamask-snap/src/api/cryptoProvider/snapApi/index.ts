@@ -57,12 +57,12 @@ async function getMetamaskAccountSLIP10Node([
 }
 
 /**
- * Retrieves the private key for a given Cardano derivation path.
+ * Derives SLIP10Node for a given Cardano derivation path.
  *
  * @param derivationPath - Supported derivation path in the format [purpose, coinType, accountIndex, ...path].
- * @returns The private key for the given derivation path.
+ * @returns The SLIP10Node for the given derivation path.
  */
-export async function derivePrivateKey(
+export async function deriveNode(
   derivationPath: SupportedCardanoDerivationPath,
 ): Promise<SLIP10Node> {
   const [purpose, coinType, account, ...rest] = derivationPath;

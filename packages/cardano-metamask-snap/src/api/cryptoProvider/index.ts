@@ -1,10 +1,10 @@
-import { slip10NodeToBip32PrivateKey } from './sdk';
-import { deriveNode } from './snapApi';
 import type {
   GetExtendedPublicKeyResponse,
   SignMessageResponse,
   SupportedCardanoDerivationPath,
-} from './types';
+} from '../types';
+import { slip10NodeToBip32PrivateKey } from './sdk';
+import { deriveNode } from './snapApi';
 
 export const getExtendedPublicKey = async (
   derivationPath: SupportedCardanoDerivationPath,

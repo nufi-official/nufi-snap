@@ -1,11 +1,10 @@
 import { SLIP10Node, type SLIP10PathNode } from '@metamask/key-tree';
-
 import {
   CARDANO_DERIVATION_PATH_COINTYPE,
   CARDANO_DERIVATION_PATH_PURPOSE,
   CARDANO_DERIVATION_PATH_VOTING_PURPOSE,
-} from '../constants';
-import type { SupportedCardanoDerivationPath } from '../types';
+} from 'src/api/constants';
+import type { SupportedCardanoDerivationPath } from 'src/api/types';
 
 /**
  * Retrieves Cardano account SLIP10Node from Metamask.

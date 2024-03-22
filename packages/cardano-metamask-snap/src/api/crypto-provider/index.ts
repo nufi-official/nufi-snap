@@ -1,4 +1,4 @@
-import { derivePrivateKey } from './key-utils';
+import { derivePrivateKey, slip10NodeToBip32PrivateKey } from './key-utils';
 import type {
   GetExtendedPublicKeyResponse,
   SignMessageResponse,
@@ -8,7 +8,9 @@ import type {
 export const getExtendedPublicKey = async (
   derivationPath: SupportedCardanoDerivationPath,
 ): Promise<GetExtendedPublicKeyResponse> => {
-  const privateKey = await derivePrivateKey(derivationPath);
+  const privateKey = slip10NodeToBip32PrivateKey(
+    await derivePrivateKey(derivationPath),
+  );
 
   const extendedPublicKeyHex = (await privateKey.toPublic()).hex();
 
@@ -22,7 +24,9 @@ export const signMessage = async (
   derivationPath: SupportedCardanoDerivationPath,
   messageHex: string,
 ): Promise<SignMessageResponse> => {
-  const privateKey = await derivePrivateKey(derivationPath);
+  const privateKey = slip10NodeToBip32PrivateKey(
+    await derivePrivateKey(derivationPath),
+  );
 
   const signatureHex = (
     await privateKey

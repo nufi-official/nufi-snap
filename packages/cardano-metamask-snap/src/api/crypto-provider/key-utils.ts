@@ -1,5 +1,5 @@
 import * as cardanoCrypto from '@cardano-sdk/crypto';
-import { SLIP10Node } from '@metamask/key-tree';
+import { SLIP10Node, type SLIP10PathNode } from '@metamask/key-tree';
 
 import {
   CARDANO_DERIVATION_PATH_COINTYPE,
@@ -85,7 +85,7 @@ async function getMetamaskAccountSLIP10Node([
  */
 export async function derivePrivateKey(
   derivationPath: SupportedCardanoDerivationPath,
-): Promise<cardanoCrypto.Bip32PrivateKey> {
+): Promise<SLIP10Node> {
   const [purpose, coinType, account, ...rest] = derivationPath;
   const accountSLIP10Node = await getMetamaskAccountSLIP10Node([
     purpose,
@@ -93,8 +93,11 @@ export async function derivePrivateKey(
     account,
   ]);
 
-  const accountPrivateKey = slip10NodeToBip32PrivateKey(accountSLIP10Node);
-  return await accountPrivateKey.derive(
-    rest.map((pathElement) => Number(pathElement)),
+  if (rest.length === 0) {
+    return accountSLIP10Node;
+  }
+
+  return accountSLIP10Node.derive(
+    rest.map((pathElement) => `cip3:${pathElement}` as SLIP10PathNode),
   );
 }

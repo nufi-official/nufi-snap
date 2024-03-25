@@ -4,8 +4,8 @@ import {
   CARDANO_DERIVATION_PATH_COINTYPE,
   CARDANO_DERIVATION_PATH_PURPOSE,
   CARDANO_DERIVATION_PATH_VOTING_PURPOSE,
-} from '../../constants';
-import type { SupportedCardanoDerivationPath } from '../../types';
+  type SupportedCardanoDerivationPath,
+} from '../../derivationPath';
 import type { Bip32Node } from '../types';
 
 /**

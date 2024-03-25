@@ -1,12 +1,10 @@
-import type {
-  GetExtendedPublicKeyResponse,
-  SignMessageResponse,
-  SupportedCardanoDerivationPath,
-} from '../types';
+import type { SupportedCardanoDerivationPath } from '../derivationPath';
+import type { GetExtendedPublicKeyResponse } from '../getExtendedPublicKey';
+import type { SignMessageResponse } from '../signMessage';
 import { bip32NodeToExtendedPublicKeyHex, signWithBip32Node } from './sdk';
 import { deriveNode } from './snapApi';
 
-export const getExtendedPublicKey = async (
+const getExtendedPublicKey = async (
   derivationPath: SupportedCardanoDerivationPath,
 ): Promise<GetExtendedPublicKeyResponse> => {
   const bip32Node = await deriveNode(derivationPath);
@@ -18,7 +16,7 @@ export const getExtendedPublicKey = async (
   };
 };
 
-export const signMessage = async (
+const signMessage = async (
   derivationPath: SupportedCardanoDerivationPath,
   messageHex: string,
 ): Promise<SignMessageResponse> => {
@@ -32,4 +30,9 @@ export const signMessage = async (
     extendedPublicKeyHex,
     signatureHex,
   };
+};
+
+export const cryptoProvider = {
+  getExtendedPublicKey,
+  signMessage,
 };

@@ -1,6 +1,6 @@
 import { expect } from '@jest/globals';
 
-import { bip32NodeToBip32PrivateKey } from '.';
+import { bip32NodeToBip32PrivateKey } from './keys';
 
 const bip32Node = {
   privateKeyBytes: new Uint8Array([

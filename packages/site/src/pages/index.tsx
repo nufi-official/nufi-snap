@@ -8,6 +8,7 @@ import {
   GetCardanoExtendedPublicKeyButton,
   SignCardanoMessageButton,
   SignCardanoTransactionButton,
+  VerifyCardanoAddressButton,
 } from '../components';
 import { defaultSnapOrigin } from '../config';
 import {
@@ -146,6 +147,41 @@ const Index = () => {
     console.log('cardano sign transaction key result', res);
   };
 
+  const handleCardanoVerifyAddressClick = async () => {
+    const res = await invokeSnap({
+      method: 'cardano__verifyAddress',
+      params: [
+        {
+          addressType: 0,
+          networkId: 1,
+          paymentDerivationPath: ["1852'", "1815'", "0'", '0', '0'],
+          stakeDerivationPath: ["1852'", "1815'", "0'", '2', '0'],
+        },
+        {
+          addressType: 1,
+          networkId: 1,
+          paymentDerivationPath: null,
+          paymentScriptHashHex:
+            'c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f',
+          stakeDerivationPath: ["1852'", "1815'", "0'", '2', '0'],
+        },
+        {
+          addressType: 4,
+          networkId: 1,
+          paymentDerivationPath: ["1852'", "1815'", "0'", '0', '0'],
+          stakeDerivationPath: null,
+          pointer: {
+            slot: 2498243,
+            txIndex: 27,
+            certIndex: 22,
+          },
+        },
+      ],
+    });
+
+    console.log('cardano verify address result', res);
+  };
+
   return (
     <Container>
       <Heading>
@@ -257,6 +293,25 @@ const Index = () => {
             !shouldDisplayReconnectButton(installedSnap)
           }
         />
+        <Card
+          content={{
+            title: 'Verify cardano address',
+            description: 'The result will be logged into console',
+            button: (
+              <VerifyCardanoAddressButton
+                onClick={handleCardanoVerifyAddressClick}
+                disabled={!installedSnap}
+              />
+            ),
+          }}
+          disabled={!installedSnap}
+          fullWidth={
+            isMetaMaskReady &&
+            Boolean(installedSnap) &&
+            !shouldDisplayReconnectButton(installedSnap)
+          }
+        />
+
         <Notice>
           <p>
             Please note that the <b>snap.manifest.json</b> and{' '}

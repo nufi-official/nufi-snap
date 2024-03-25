@@ -1,6 +1,12 @@
 import { expect } from '@jest/globals';
 import { installSnap } from '@metamask/snaps-jest';
+import type { Copyable } from '@metamask/snaps-sdk';
 
+import type {
+  CardanoPaymentDerivationPath,
+  CardanoStakeDerivationPath,
+} from './api/derivationPath';
+import { type VerifyAddressRequestParams } from './api/verifyAddress';
 import { accountsFixture } from './fixtures';
 
 describe('onRpcRequest', () => {
@@ -196,5 +202,113 @@ describe('onRpcRequest', () => {
 
       expect(responseError).toBeDefined();
     });
+  });
+  describe('cardano__verifyAddress', () => {
+    const { addresses } = accountsFixture.account0;
+    const {
+      paymentPart,
+      stakePart,
+      pointer,
+      networkId,
+      basePaymentKeyStakeKeyAddress,
+      basePaymentKeyStakeScriptAddress,
+      basePaymentScriptStakeKeyAddress,
+      pointerAddress,
+      enterpriseAddress,
+      rewardAddress,
+      scriptHashHex,
+    } = addresses;
+
+    const paymentDerivationPath =
+      paymentPart.derivationPath as CardanoPaymentDerivationPath;
+    const stakeDerivationPath =
+      stakePart.derivationPath as CardanoStakeDerivationPath;
+
+    const fixtures: {
+      addressParams: VerifyAddressRequestParams[number];
+      expectedResult: string;
+    }[] = [
+      {
+        addressParams: {
+          addressType: basePaymentKeyStakeKeyAddress.addressType,
+          networkId,
+          paymentDerivationPath,
+          stakeDerivationPath,
+        },
+        expectedResult: basePaymentKeyStakeKeyAddress.bech32Address,
+      },
+      {
+        addressParams: {
+          addressType: basePaymentScriptStakeKeyAddress.addressType,
+          networkId,
+          paymentDerivationPath: null,
+          paymentScriptHashHex: scriptHashHex,
+          stakeDerivationPath,
+        },
+        expectedResult: basePaymentScriptStakeKeyAddress.bech32Address,
+      },
+      {
+        addressParams: {
+          addressType: basePaymentKeyStakeScriptAddress.addressType,
+          networkId,
+          paymentDerivationPath,
+          stakeDerivationPath: null,
+          stakeScriptHashHex: scriptHashHex,
+        },
+        expectedResult: basePaymentKeyStakeScriptAddress.bech32Address,
+      },
+      {
+        addressParams: {
+          addressType: pointerAddress.addressType,
+          networkId,
+          paymentDerivationPath,
+          stakeDerivationPath: null,
+          pointer,
+        },
+        expectedResult: pointerAddress.bech32Address,
+      },
+      {
+        addressParams: {
+          addressType: enterpriseAddress.addressType,
+          networkId,
+          paymentDerivationPath,
+          stakeDerivationPath: null,
+        },
+        expectedResult: enterpriseAddress.bech32Address,
+      },
+      {
+        addressParams: {
+          addressType: rewardAddress.addressType,
+          networkId,
+          stakeDerivationPath,
+          paymentDerivationPath: null,
+        },
+        expectedResult: rewardAddress.bech32Address,
+      },
+    ];
+
+    fixtures.forEach(({ addressParams, expectedResult }) =>
+      it(`should display copyable address for address type ${addressParams.addressType}`, async () => {
+        const { request } = await installSnap();
+
+        const pendingResponse = request({
+          method: 'cardano__verifyAddress',
+          origin,
+          params: [addressParams],
+        });
+
+        const ui = await pendingResponse.getInterface();
+        const copyableValue = (
+          ui.content.type === 'panel'
+            ? ui.content.children.find(
+                (element): element is Copyable => element.type === 'copyable',
+              )
+            : undefined
+        )?.value;
+        await ui.ok();
+
+        expect(copyableValue).toBe(expectedResult);
+      }),
+    );
   });
 });

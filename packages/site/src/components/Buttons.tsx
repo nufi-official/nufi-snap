@@ -113,6 +113,12 @@ export const SignCardanoTransactionButton = (
   return <Button {...props}>Sign Cardano transaction</Button>;
 };
 
+export const VerifyCardanoAddressButton = (
+  props: ComponentProps<typeof Button>,
+) => {
+  return <Button {...props}>Verify Cardano address</Button>;
+};
+
 export const HeaderButtons = () => {
   const requestSnap = useRequestSnap();
   const { isFlask, installedSnap } = useMetaMask();

@@ -51,6 +51,8 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
       return getNufiUserId();
     case 'cardano__getExtendedPublicKey':
       return cardanoApi.getExtendedPublicKey(request);
+    case 'cardano__verifyAddress':
+      return cardanoApi.verifyAddress(request);
     case 'cardano__signMessage':
       return cardanoApi.signMessage(request, origin);
     case 'cardano__signTransaction':

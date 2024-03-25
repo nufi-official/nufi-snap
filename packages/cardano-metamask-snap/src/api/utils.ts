@@ -1,4 +1,19 @@
 /**
+ * Asserts that the user has confirmed an action.
+ *
+ * @param onConfirm - The function to execute to confirm the action.
+ * @throws If the user rejects the action.
+ */
+export async function assertUserHasConfirmed(
+  onConfirm: () => Promise<unknown>,
+) {
+  const confirmed = await onConfirm();
+  if (!confirmed) {
+    throw new Error('User rejected');
+  }
+}
+
+/**
  * Asserts that the given params is an array.
  *
  * @param params - The params to check.

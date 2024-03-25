@@ -6,7 +6,7 @@ import {
   isDerivationPath,
   isSupportedDerivationPath,
 } from './derivationPath';
-import { assertIsArray, isRecord } from './requestValidation';
+import { assertIsArray, isRecord } from './utils';
 
 export type GetExtendedPublicKeyRequestParams = {
   derivationPath: SupportedCardanoDerivationPath;

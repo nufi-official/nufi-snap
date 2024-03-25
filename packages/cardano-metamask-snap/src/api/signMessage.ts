@@ -1,4 +1,11 @@
-import type { JsonRpcRequest } from '@metamask/snaps-sdk';
+import {
+  divider,
+  text,
+  type JsonRpcRequest,
+  copyable,
+  heading,
+  panel,
+} from '@metamask/snaps-sdk';
 
 import { cryptoProvider } from './cryptoProvider';
 import {
@@ -6,8 +13,7 @@ import {
   isDerivationPath,
   isSupportedDerivationPath,
 } from './derivationPath';
-import { assertIsArray, isRecord } from './requestValidation';
-import { assertUserHasConfirmed, renderSignMessages } from './ui';
+import { assertIsArray, assertUserHasConfirmed, isRecord } from './utils';
 
 export type SignMessageRequestParams = [
   { messageHex: string; derivationPath: SupportedCardanoDerivationPath },
@@ -50,6 +56,29 @@ function assertIsSignMessageRequestParams(
     }
   });
 }
+
+const renderSignMessages = async (origin: string, messages: string[]) => {
+  const headingText = messages.length === 1 ? 'Sign message' : 'Sign messages';
+
+  const messageUiElements =
+    messages.length === 1
+      ? [divider(), text('Message:'), copyable(messages[0])]
+      : messages.flatMap((message, i) => {
+          return [divider(), text(`Message ${i + 1}:`), copyable(message)];
+        });
+
+  return snap.request({
+    method: 'snap_dialog',
+    params: {
+      type: 'confirmation',
+      content: panel([
+        heading(headingText),
+        text(origin),
+        ...messageUiElements,
+      ]),
+    },
+  });
+};
 
 export const signMessage = async (
   { params }: JsonRpcRequest,

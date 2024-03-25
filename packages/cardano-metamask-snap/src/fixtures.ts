@@ -1,4 +1,4 @@
-export const fixtures = {
+export const accountsFixture = {
   account0: {
     derivationPath: ["1852'", "1815'", "0'"],
     extendedPublicKeyHex:
@@ -8,6 +8,57 @@ export const fixtures = {
         'c219381242e980ded9e0103e150386dfb0b56931da1f553d36b949bba12805f4b91bb177a41d3280aa3082163637163cb0037f7b86661a451ec1f3ac9381720b',
       deadbeefdeadbeef:
         '2bc38f21d507870c34b0aef6a9a8507207b13985f45b04714271c1107d6b66e3c0d8f35b9f73a85bb0bf9c0431de8d4e547d111167825f51845570b74c12e008',
+    },
+    addresses: {
+      // address test vectors created using cardano-serialization-lib
+      // https://gist.github.com/PeterBenc/2fce3310c32f220371b7fdf7436c77be
+      networkId: 1,
+      scriptHashHex: 'c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f',
+      paymentPart: {
+        derivationPath: ["1852'", "1815'", "0'", '0', '0'],
+        extendedPublicKeyHex:
+          '15382abbf262f01aba1deaf31d0bc442305c976a415bc612a1c9dc60930efba0fa7746b8c07f71d63d7f0b0b213eab08465d2772ece3dad88927d38f6bdd4160',
+      },
+      stakePart: {
+        derivationPath: ["1852'", "1815'", "0'", '2', '0'],
+        extendedPublicKeyHex:
+          '24f959cebe939e3486fcaa4ddcac2d0a24967c34525cedfcc53c7c90670940a640a0d13fbe69bbe36c4d8068b7ed1b5dd0ee2facc2f8758fb78e0f2026d3cac6',
+      },
+      pointer: {
+        slot: 2498243,
+        txIndex: 27,
+        certIndex: 22,
+      },
+      basePaymentKeyStakeKeyAddress: {
+        addressType: 0,
+        bech32Address:
+          'addr1qxgcuk5j0q0k2d0s9axvah49aut4ct5a5ertwp67psz3uuejm6ernk539y4mwwzrmny7ducc4d50mf6jfqvu79ghryss0cc0r2',
+      },
+      basePaymentKeyStakeScriptAddress: {
+        addressType: 2,
+        bech32Address:
+          'addr1yxgcuk5j0q0k2d0s9axvah49aut4ct5a5ertwp67psz3uu7r0vd4msrxnuwnccdxlhdjar77j6lg0wypcc9uar5d2shsx3aqeg',
+      },
+      basePaymentScriptStakeKeyAddress: {
+        addressType: 1,
+        bech32Address:
+          'addr1z8phkx6acpnf78fuvxn0mkew3l0fd058hzquvz7w36x4gtejm6ernk539y4mwwzrmny7ducc4d50mf6jfqvu79ghryssl7h6s2',
+      },
+      enterpriseAddress: {
+        addressType: 6,
+        bech32Address:
+          'addr1vxgcuk5j0q0k2d0s9axvah49aut4ct5a5ertwp67psz3uucl8y23r',
+      },
+      pointerAddress: {
+        addressType: 4,
+        bech32Address:
+          'addr1gxgcuk5j0q0k2d0s9axvah49aut4ct5a5ertwp67psz3uuupnz75xxcky8dm8z',
+      },
+      rewardAddress: {
+        addressType: 14,
+        bech32Address:
+          'stake1uyedav3em2gjj2ah8ppaej0x7vv2k68a5afysxw0z5t3jgg59p6yp',
+      },
     },
   },
   account1: {

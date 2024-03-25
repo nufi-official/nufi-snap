@@ -1,7 +1,12 @@
 import type { SupportedCardanoDerivationPath } from '../derivationPath';
 import type { GetExtendedPublicKeyResponse } from '../getExtendedPublicKey';
 import type { SignMessageResponse } from '../signMessage';
-import { bip32NodeToExtendedPublicKeyHex, signWithBip32Node } from './sdk';
+import type { VerifyAddressRequestParams } from '../verifyAddress';
+import {
+  bip32NodeToExtendedPublicKeyHex,
+  signWithBip32Node,
+  packAddress,
+} from './sdk';
 import { deriveNode } from './snapApi';
 
 const getExtendedPublicKey = async (
@@ -32,7 +37,28 @@ const signMessage = async (
   };
 };
 
+const getAddress = async (
+  params: VerifyAddressRequestParams[number],
+): Promise<string> => {
+  const { paymentDerivationPath, stakeDerivationPath, ...rest } = params;
+
+  const paymentKeyHex = paymentDerivationPath
+    ? await bip32NodeToExtendedPublicKeyHex(
+        await deriveNode(paymentDerivationPath),
+      )
+    : null;
+
+  const stakeKeyHex = stakeDerivationPath
+    ? await bip32NodeToExtendedPublicKeyHex(
+        await deriveNode(stakeDerivationPath),
+      )
+    : null;
+
+  return packAddress({ paymentKeyHex, stakeKeyHex, ...rest });
+};
+
 export const cryptoProvider = {
   getExtendedPublicKey,
   signMessage,
+  getAddress,
 };

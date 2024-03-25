@@ -1,7 +1,7 @@
 import { expect } from '@jest/globals';
 import { installSnap } from '@metamask/snaps-jest';
 
-import { fixtures } from './fixtures';
+import { accountsFixture } from './fixtures';
 
 describe('onRpcRequest', () => {
   // we allow only localhost and nu.fi origins, so we use localhost for testing
@@ -27,7 +27,7 @@ describe('onRpcRequest', () => {
     it('should get extended public key for derivation paths', async () => {
       const { request } = await installSnap();
 
-      const accounts = [fixtures.account0, fixtures.voting];
+      const accounts = [accountsFixture.account0, accountsFixture.voting];
 
       const { response: actualResponse } = await request({
         method: 'cardano__getExtendedPublicKey',
@@ -71,7 +71,7 @@ describe('onRpcRequest', () => {
     it('should sign messages', async () => {
       const { request } = await installSnap();
 
-      const account = fixtures.account0;
+      const account = accountsFixture.account0;
 
       const pendingResponse = request({
         method: 'cardano__signMessage',
@@ -133,7 +133,7 @@ describe('onRpcRequest', () => {
     it('should sign transactions', async () => {
       const { request } = await installSnap();
 
-      const accounts = [fixtures.account0, fixtures.account1];
+      const accounts = [accountsFixture.account0, accountsFixture.account1];
       const txBodyHashHex = 'deadbeef';
 
       const pendingResponse = request({

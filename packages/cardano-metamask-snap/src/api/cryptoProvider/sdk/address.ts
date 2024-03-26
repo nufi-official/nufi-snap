@@ -5,7 +5,7 @@ import {
   Hash28ByteBase16,
 } from '@cardano-sdk/crypto';
 
-import type { VerifyAddressRequestParams } from '../../verifyAddress';
+import { type VerifyAddressRequestParams } from '../../verifyAddress';
 
 export type PackAddressParams = Omit<
   VerifyAddressRequestParams[number],
@@ -82,7 +82,7 @@ async function getPaymentPart({
  * @param addressParams.stakeScriptHashHex - Hash of stake script in hex.
  * @returns The delegation part of the address.
  */
-async function getDelegationPartPart({
+async function getDelegationPart({
   addressType,
   stakeKeyHex,
   stakeScriptHashHex,
@@ -119,7 +119,7 @@ export async function packAddress(
   addressParams: PackAddressParams,
 ): Promise<string> {
   const paymentPart = await getPaymentPart(addressParams);
-  const delegationPart = await getDelegationPartPart(addressParams);
+  const delegationPart = await getDelegationPart(addressParams);
   return new Cardano.Address({
     type: addressParams.addressType,
     ...(paymentPart ? { paymentPart } : {}),

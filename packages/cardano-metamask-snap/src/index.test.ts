@@ -310,5 +310,26 @@ describe('onRpcRequest', () => {
         expect(copyableValue).toBe(expectedResult);
       }),
     );
+
+    it('should fail for unsupported address type', async () => {
+      const { request } = await installSnap();
+
+      const addressParams = {
+        addressType: 8,
+        networkId,
+        paymentDerivationPath,
+        stakeDerivationPath: null,
+      };
+      const { response: actualResponse } = await request({
+        method: 'cardano__verifyAddress',
+        origin,
+        params: [addressParams],
+      });
+
+      const responseError =
+        'error' in actualResponse ? actualResponse.error : undefined;
+
+      expect(responseError).toBeDefined();
+    });
   });
 });

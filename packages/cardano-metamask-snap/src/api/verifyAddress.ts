@@ -18,16 +18,28 @@ import {
 } from './derivationPath';
 import { assertIsArray, assertUserHasConfirmed, isRecord } from './utils';
 
+const networkIds = {
+  Mainnet: Cardano.NetworkId.Mainnet,
+  Testnet: Cardano.NetworkId.Testnet,
+} as const;
+
+// we do not support ByronAddresses, and address types which
+// contain only script hashes, as these cannot be verified against a wallet
+const addressTypes = {
+  BasePaymentKeyStakeKey: Cardano.AddressType.BasePaymentKeyStakeKey,
+  BasePaymentKeyStakeScript: Cardano.AddressType.BasePaymentKeyStakeScript,
+  BasePaymentScriptStakeKey: Cardano.AddressType.BasePaymentScriptStakeKey,
+  EnterpriseKey: Cardano.AddressType.EnterpriseKey,
+  PointerKey: Cardano.AddressType.PointerKey,
+  RewardKey: Cardano.AddressType.RewardKey,
+} as const;
+
+export type NetworkId = (typeof networkIds)[keyof typeof networkIds];
+export type AddressType = (typeof addressTypes)[keyof typeof addressTypes];
+
 export type VerifyAddressRequestParams = {
-  networkId: Cardano.NetworkId;
-  addressType: // we do not support ByronAddresses, and address types which
-  // contain only script hashes, as these cannot be verified against a wallet
-  | Cardano.AddressType.BasePaymentKeyStakeKey
-    | Cardano.AddressType.BasePaymentKeyStakeScript
-    | Cardano.AddressType.BasePaymentScriptStakeKey
-    | Cardano.AddressType.EnterpriseKey
-    | Cardano.AddressType.PointerKey
-    | Cardano.AddressType.RewardKey;
+  networkId: NetworkId;
+  addressType: AddressType;
   paymentDerivationPath: CardanoPaymentDerivationPath | null;
   stakeDerivationPath: CardanoStakeDerivationPath | null;
   stakeScriptHashHex?: string;
@@ -55,6 +67,12 @@ export function assertIsVerifyAddressRequestParams(
       !(
         (
           isRecord(param) &&
+          'networkId' in param &&
+          'addressType' in param &&
+          typeof param.addressType === 'number' &&
+          (Object.values(addressTypes) as number[]).includes(
+            param.addressType,
+          ) &&
           'paymentDerivationPath' in param &&
           (param.paymentDerivationPath === null ||
             (isDerivationPath(param.paymentDerivationPath) &&
@@ -62,9 +80,7 @@ export function assertIsVerifyAddressRequestParams(
           'stakeDerivationPath' in param &&
           (param.stakeDerivationPath === null ||
             (isDerivationPath(param.stakeDerivationPath) &&
-              isStakeDerivationPath(param.stakeDerivationPath))) &&
-          'networkId' in param &&
-          'addressType' in param
+              isStakeDerivationPath(param.stakeDerivationPath)))
         )
         // not checking for other optional fields because we do not transform them in any way
         // so we can rely on the sdk to throw/fail if anything is invalid
@@ -89,8 +105,8 @@ const renderVerifyAddress = async (
     VerifyAddressRequestParams[number]['networkId'],
     string
   > = {
-    [Cardano.NetworkId.Testnet]: 'Testnet',
-    [Cardano.NetworkId.Mainnet]: 'Mainnet',
+    [networkIds.Testnet]: 'Testnet',
+    [networkIds.Mainnet]: 'Mainnet',
   };
 
   const addressUiElements = [

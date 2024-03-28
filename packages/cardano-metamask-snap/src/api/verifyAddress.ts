@@ -127,7 +127,7 @@ const renderVerifyAddress = async (
     ...(param.pointer
       ? [
           text(
-            `Pointer: ${param.pointer.slot}/${param.pointer.txIndex}/${param.pointer.certIndex}`,
+            `Pointer: (Slot: ${param.pointer.slot}, Transaction index: ${param.pointer.txIndex}, Certificate index: ${param.pointer.certIndex})`,
           ),
         ]
       : []),

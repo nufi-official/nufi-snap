@@ -37,19 +37,21 @@ const addressTypes = {
 export type NetworkId = (typeof networkIds)[keyof typeof networkIds];
 export type AddressType = (typeof addressTypes)[keyof typeof addressTypes];
 
-export type VerifyAddressRequestParams = {
-  networkId: NetworkId;
-  addressType: AddressType;
-  paymentDerivationPath: CardanoPaymentDerivationPath | null;
-  stakeDerivationPath: CardanoStakeDerivationPath | null;
-  stakeScriptHashHex?: string;
-  paymentScriptHashHex?: string;
-  pointer?: {
-    slot: number;
-    txIndex: number;
-    certIndex: number;
-  };
-}[];
+export type VerifyAddressRequestParams = [
+  {
+    networkId: NetworkId;
+    addressType: AddressType;
+    paymentDerivationPath: CardanoPaymentDerivationPath | null;
+    stakeDerivationPath: CardanoStakeDerivationPath | null;
+    stakeScriptHashHex?: string;
+    paymentScriptHashHex?: string;
+    pointer?: {
+      slot: number;
+      txIndex: number;
+      certIndex: number;
+    };
+  },
+];
 
 /**
  * Asserts that the given params are valid for the "cardano__verifyAddress" method.
@@ -61,38 +63,41 @@ export function assertIsVerifyAddressRequestParams(
   params: unknown,
 ): asserts params is VerifyAddressRequestParams {
   assertIsArray(params);
-
-  params.forEach((param) => {
-    if (
-      !(
-        (
-          isRecord(param) &&
-          'networkId' in param &&
-          'addressType' in param &&
-          typeof param.addressType === 'number' &&
-          (Object.values(addressTypes) as number[]).includes(
-            param.addressType,
-          ) &&
-          'paymentDerivationPath' in param &&
-          (param.paymentDerivationPath === null ||
-            (isDerivationPath(param.paymentDerivationPath) &&
-              isPaymentDerivationPath(param.paymentDerivationPath))) &&
-          'stakeDerivationPath' in param &&
-          (param.stakeDerivationPath === null ||
-            (isDerivationPath(param.stakeDerivationPath) &&
-              isStakeDerivationPath(param.stakeDerivationPath)))
-        )
-        // not checking for other optional fields because we do not transform them in any way
-        // so we can rely on the sdk to throw/fail if anything is invalid
+  if (params.length !== 1) {
+    throw new Error(
+      `Invalid params for "cardano__verifyAddress" method. Only one address can be verified at a time. ${JSON.stringify(
+        params,
+      )}, `,
+    );
+  }
+  const [param] = params;
+  if (
+    !(
+      (
+        isRecord(param) &&
+        'networkId' in param &&
+        'addressType' in param &&
+        typeof param.addressType === 'number' &&
+        (Object.values(addressTypes) as number[]).includes(param.addressType) &&
+        'paymentDerivationPath' in param &&
+        (param.paymentDerivationPath === null ||
+          (isDerivationPath(param.paymentDerivationPath) &&
+            isPaymentDerivationPath(param.paymentDerivationPath))) &&
+        'stakeDerivationPath' in param &&
+        (param.stakeDerivationPath === null ||
+          (isDerivationPath(param.stakeDerivationPath) &&
+            isStakeDerivationPath(param.stakeDerivationPath)))
       )
-    ) {
-      throw new Error(
-        `Invalid params for "cardano__verifyAddress" method. ${JSON.stringify(
-          params,
-        )} `,
-      );
-    }
-  });
+      // not checking for other optional fields because we do not transform them in any way
+      // so we can rely on the sdk to throw/fail if anything is invalid
+    )
+  ) {
+    throw new Error(
+      `Invalid params for "cardano__verifyAddress" method. ${JSON.stringify(
+        params,
+      )} `,
+    );
+  }
 }
 
 const renderVerifyAddress = async (
@@ -147,17 +152,15 @@ export const verifyAddress = async ({
   params,
 }: JsonRpcRequest): Promise<boolean> => {
   assertIsVerifyAddressRequestParams(params);
+  const [param] = params;
 
+  const address = await cryptoProvider.getAddress(param);
   try {
-    for (const param of params) {
-      const address = await cryptoProvider.getAddress(param);
-      await assertUserHasConfirmed(async () =>
-        renderVerifyAddress(param, address),
-      );
-    }
+    await assertUserHasConfirmed(async () =>
+      renderVerifyAddress(param, address),
+    );
   } catch (error) {
     return false;
   }
-
   return true;
 };

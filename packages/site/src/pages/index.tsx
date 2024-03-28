@@ -148,15 +148,16 @@ const Index = () => {
   };
 
   const handleCardanoVerifyAddressClick = async () => {
-    const res = await invokeSnap({
-      method: 'cardano__verifyAddress',
-      params: [
+    const params = [
+      [
         {
           addressType: 0,
           networkId: 1,
           paymentDerivationPath: ["1852'", "1815'", "0'", '0', '0'],
           stakeDerivationPath: ["1852'", "1815'", "0'", '2', '0'],
         },
+      ],
+      [
         {
           addressType: 1,
           networkId: 1,
@@ -165,6 +166,8 @@ const Index = () => {
             'c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f',
           stakeDerivationPath: ["1852'", "1815'", "0'", '2', '0'],
         },
+      ],
+      [
         {
           addressType: 4,
           networkId: 1,
@@ -177,9 +180,14 @@ const Index = () => {
           },
         },
       ],
-    });
-
-    console.log('cardano verify address result', res);
+    ];
+    for (const param of params) {
+      const res = await invokeSnap({
+        method: 'cardano__verifyAddress',
+        params: param,
+      });
+      console.log('cardano verify address result', res);
+    }
   };
 
   return (

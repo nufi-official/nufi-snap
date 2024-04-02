@@ -1,6 +1,6 @@
 import { divider, text, copyable, heading, panel } from '@metamask/snaps-sdk';
 
-export const renderSignMessages = async (origin: string, message: string) => {
+export const renderSignMessages = async (message: string) => {
   const headingText = 'Sign message';
 
   const messageUiElements = [divider(), text('Message:'), copyable(message)];
@@ -9,11 +9,7 @@ export const renderSignMessages = async (origin: string, message: string) => {
     method: 'snap_dialog',
     params: {
       type: 'confirmation',
-      content: panel([
-        heading(headingText),
-        text(origin),
-        ...messageUiElements,
-      ]),
+      content: panel([heading(headingText), ...messageUiElements]),
     },
   });
 };

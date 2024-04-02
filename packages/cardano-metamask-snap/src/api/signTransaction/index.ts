@@ -1,11 +1,4 @@
-import {
-  panel,
-  divider,
-  text,
-  type JsonRpcRequest,
-  copyable,
-  heading,
-} from '@metamask/snaps-sdk';
+import { type JsonRpcRequest } from '@metamask/snaps-sdk';
 
 import { cryptoProvider } from '../cryptoProvider';
 import {
@@ -14,6 +7,7 @@ import {
   isSupportedDerivationPath,
 } from '../derivationPath';
 import { assertIsArray, assertUserHasConfirmed, isRecord } from '../utils';
+import { renderSignTransactions } from './ui';
 
 export type SignTransactionRequestParams = {
   txBodyHashHex: string;
@@ -61,33 +55,6 @@ export function assertIsSignTransactionRequestParams(
     }
   });
 }
-
-const renderSignTransactions = async (
-  origin: string,
-  txBodyHashHexBundle: string[],
-) => {
-  const headingText =
-    txBodyHashHexBundle.length === 1 ? 'Sign transaction' : 'Sign transactions';
-
-  const txUiElements =
-    txBodyHashHexBundle.length === 1
-      ? [divider(), text('Transaction hash:'), copyable(txBodyHashHexBundle[0])]
-      : txBodyHashHexBundle.flatMap((txBodyHashHex, i) => {
-          return [
-            divider(),
-            text(`Transaction hash ${i + 1}:`),
-            copyable(txBodyHashHex),
-          ];
-        });
-
-  return snap.request({
-    method: 'snap_dialog',
-    params: {
-      type: 'confirmation',
-      content: panel([heading(headingText), text(origin), ...txUiElements]),
-    },
-  });
-};
 
 export const signTransaction = async (
   { params }: JsonRpcRequest,

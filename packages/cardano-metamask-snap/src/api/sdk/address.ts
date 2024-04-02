@@ -5,7 +5,7 @@ import {
   Hash28ByteBase16,
 } from '@cardano-sdk/crypto';
 
-import { type VerifyAddressRequestParams } from '../verifyAddress';
+import type { VerifyAddressRequestParams } from '../verifyAddress';
 
 export type PackAddressParams = Omit<
   VerifyAddressRequestParams[number],

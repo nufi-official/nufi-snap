@@ -1,24 +1,18 @@
 import { Cardano } from '@cardano-sdk/core';
-import {
-  panel,
-  divider,
-  text,
-  type JsonRpcRequest,
-  copyable,
-  heading,
-} from '@metamask/snaps-sdk';
+import { type JsonRpcRequest } from '@metamask/snaps-sdk';
 
-import { cryptoProvider } from './cryptoProvider';
+import { cryptoProvider } from '../cryptoProvider';
 import {
   type CardanoPaymentDerivationPath,
   type CardanoStakeDerivationPath,
   isDerivationPath,
   isPaymentDerivationPath,
   isStakeDerivationPath,
-} from './derivationPath';
-import { assertIsArray, assertUserHasConfirmed, isRecord } from './utils';
+} from '../derivationPath';
+import { assertIsArray, assertUserHasConfirmed, isRecord } from '../utils';
+import { renderVerifyAddress } from './ui';
 
-const networkIds = {
+export const networkIds = {
   Mainnet: Cardano.NetworkId.Mainnet,
   Testnet: Cardano.NetworkId.Testnet,
 } as const;
@@ -100,54 +94,6 @@ export function assertIsVerifyAddressRequestParams(
   }
 }
 
-const renderVerifyAddress = async (
-  param: VerifyAddressRequestParams[number],
-  address: string,
-) => {
-  const headingText = 'Verify address';
-
-  const networkNameForId: Record<
-    VerifyAddressRequestParams[number]['networkId'],
-    string
-  > = {
-    [networkIds.Testnet]: 'Testnet',
-    [networkIds.Mainnet]: 'Mainnet',
-  };
-
-  const addressUiElements = [
-    divider(),
-    text(`Network: ${networkNameForId[param.networkId]}`),
-    ...(param.paymentDerivationPath
-      ? [text(`Spending path: ${param.paymentDerivationPath.join('/')}`)]
-      : []),
-    ...(param.paymentScriptHashHex
-      ? [text(`Spending script hex: ${param.paymentScriptHashHex}`)]
-      : []),
-    ...(param.stakeDerivationPath
-      ? [text(`Staking path: ${param.stakeDerivationPath.join('/')}`)]
-      : []),
-    ...(param.stakeScriptHashHex
-      ? [text(`Staking script hex: ${param.stakeScriptHashHex}`)]
-      : []),
-    ...(param.pointer
-      ? [
-          text(
-            `Pointer: (Slot: ${param.pointer.slot}, Transaction index: ${param.pointer.txIndex}, Certificate index: ${param.pointer.certIndex})`,
-          ),
-        ]
-      : []),
-    copyable(address),
-  ];
-
-  return snap.request({
-    method: 'snap_dialog',
-    params: {
-      type: 'confirmation',
-      content: panel([heading(headingText), ...addressUiElements]),
-    },
-  });
-};
-
 export const verifyAddress = async ({
   params,
 }: JsonRpcRequest): Promise<boolean> => {
@@ -157,7 +103,14 @@ export const verifyAddress = async ({
   const address = await cryptoProvider.getAddress(param);
   try {
     await assertUserHasConfirmed(async () =>
-      renderVerifyAddress(param, address),
+      renderVerifyAddress(
+        param,
+        {
+          [networkIds.Testnet]: 'Testnet',
+          [networkIds.Mainnet]: 'Mainnet',
+        },
+        address,
+      ),
     );
   } catch (error) {
     return false;

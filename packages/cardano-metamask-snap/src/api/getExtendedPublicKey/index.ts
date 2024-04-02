@@ -1,12 +1,12 @@
 import type { JsonRpcRequest } from '@metamask/snaps-sdk';
 
-import { cryptoProvider } from './cryptoProvider';
+import { cryptoProvider } from '../cryptoProvider';
 import {
   type SupportedCardanoDerivationPath,
   isDerivationPath,
   isSupportedDerivationPath,
-} from './derivationPath';
-import { assertIsArray, isRecord } from './utils';
+} from '../derivationPath';
+import { assertIsArray, isRecord } from '../utils';
 
 export type GetExtendedPublicKeyRequestParams = {
   derivationPath: SupportedCardanoDerivationPath;

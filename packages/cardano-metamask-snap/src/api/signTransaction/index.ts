@@ -7,13 +7,13 @@ import {
   heading,
 } from '@metamask/snaps-sdk';
 
-import { cryptoProvider } from './cryptoProvider';
+import { cryptoProvider } from '../cryptoProvider';
 import {
   type SupportedCardanoDerivationPath,
   isDerivationPath,
   isSupportedDerivationPath,
-} from './derivationPath';
-import { assertIsArray, assertUserHasConfirmed, isRecord } from './utils';
+} from '../derivationPath';
+import { assertIsArray, assertUserHasConfirmed, isRecord } from '../utils';
 
 export type SignTransactionRequestParams = {
   txBodyHashHex: string;

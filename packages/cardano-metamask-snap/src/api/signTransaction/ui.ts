@@ -1,9 +1,6 @@
 import { panel, divider, text, copyable, heading } from '@metamask/snaps-sdk';
 
-export const renderSignTransactions = async (
-  origin: string,
-  txBodyHashHex: string,
-) => {
+export const renderSignTransactions = async (txBodyHashHex: string) => {
   const headingText = 'Sign transaction';
 
   const txUiElements = [
@@ -16,7 +13,7 @@ export const renderSignTransactions = async (
     method: 'snap_dialog',
     params: {
       type: 'confirmation',
-      content: panel([heading(headingText), text(origin), ...txUiElements]),
+      content: panel([heading(headingText), ...txUiElements]),
     },
   });
 };

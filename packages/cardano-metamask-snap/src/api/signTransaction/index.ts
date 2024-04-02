@@ -65,16 +65,15 @@ export function assertIsSignTransactionRequestParams(
   }
 }
 
-export const signTransaction = async (
-  { params }: JsonRpcRequest,
-  origin: string,
-): Promise<SignTransactionResponse> => {
+export const signTransaction = async ({
+  params,
+}: JsonRpcRequest): Promise<SignTransactionResponse> => {
   assertIsSignTransactionRequestParams(params);
 
   const [{ txBodyHashHex, derivationPaths }] = params;
 
   await assertUserHasConfirmed(async () =>
-    renderSignTransactions(origin, txBodyHashHex),
+    renderSignTransactions(txBodyHashHex),
   );
 
   const witnesses = await Promise.all(

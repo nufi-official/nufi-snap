@@ -54,9 +54,9 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
     case 'cardano__verifyAddress':
       return cardanoApi.verifyAddress(request);
     case 'cardano__signMessage':
-      return cardanoApi.signMessage(request, origin);
+      return cardanoApi.signMessage(request);
     case 'cardano__signTransaction':
-      return cardanoApi.signTransaction(request, origin);
+      return cardanoApi.signTransaction(request);
     default:
       throw new Error(`Method not found. ${request.method}`);
   }

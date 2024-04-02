@@ -59,17 +59,14 @@ function assertIsSignMessageRequestParams(
   }
 }
 
-export const signMessage = async (
-  { params }: JsonRpcRequest,
-  origin: string,
-): Promise<SignMessageResponse> => {
+export const signMessage = async ({
+  params,
+}: JsonRpcRequest): Promise<SignMessageResponse> => {
   assertIsSignMessageRequestParams(params);
 
   const [{ derivationPath, messageHex }] = params;
 
-  await assertUserHasConfirmed(async () =>
-    renderSignMessages(origin, messageHex),
-  );
+  await assertUserHasConfirmed(async () => renderSignMessages(messageHex));
 
   return cryptoProvider.signMessage(derivationPath, messageHex);
 };

@@ -74,44 +74,41 @@ describe('onRpcRequest', () => {
   });
 
   describe('cardano__signMessage', () => {
-    it('should sign messages', async () => {
-      const { request } = await installSnap();
+    const account = accountsFixture.account0;
+    Object.entries(account.signing).forEach(([messageHex, signatureHex]) =>
+      it('should sign messages', async () => {
+        const { request } = await installSnap();
 
-      const account = accountsFixture.account0;
-
-      const pendingResponse = request({
-        method: 'cardano__signMessage',
-        origin,
-        params: Object.keys(account.signing).map((messageHex) => {
-          return {
-            messageHex,
-            derivationPath: account.derivationPath,
-          };
-        }),
-      });
-
-      const ui = await pendingResponse.getInterface();
-      await ui.ok();
-
-      const { response: actualResponse } = await pendingResponse;
-
-      const expectedResponse = {
-        result: Object.entries(account.signing).map(
-          ([messageHex, signatureHex]) => {
-            return {
-              derivationPath: account.derivationPath,
+        const pendingResponse = request({
+          method: 'cardano__signMessage',
+          origin,
+          params: [
+            {
               messageHex,
-              extendedPublicKeyHex: account.extendedPublicKeyHex,
-              signatureHex,
-            };
-          },
-        ),
-      };
+              derivationPath: account.derivationPath,
+            },
+          ],
+        });
 
-      expect(JSON.stringify(actualResponse)).toStrictEqual(
-        JSON.stringify(expectedResponse),
-      );
-    });
+        const ui = await pendingResponse.getInterface();
+        await ui.ok();
+
+        const { response: actualResponse } = await pendingResponse;
+
+        const expectedResponse = {
+          result: {
+            derivationPath: account.derivationPath,
+            messageHex,
+            extendedPublicKeyHex: account.extendedPublicKeyHex,
+            signatureHex,
+          },
+        };
+
+        expect(JSON.stringify(actualResponse)).toStrictEqual(
+          JSON.stringify(expectedResponse),
+        );
+      }),
+    );
 
     it('should fail for unsupported path', async () => {
       const { request } = await installSnap();
@@ -161,20 +158,18 @@ describe('onRpcRequest', () => {
       const { response: actualResponse } = await pendingResponse;
 
       const expectedResponse = {
-        result: [
-          {
-            txBodyHashHex,
-            witnesses: accounts.map(
-              ({ derivationPath, extendedPublicKeyHex, signing }) => {
-                return {
-                  derivationPath,
-                  extendedPublicKeyHex,
-                  signatureHex: signing[txBodyHashHex],
-                };
-              },
-            ),
-          },
-        ],
+        result: {
+          txBodyHashHex,
+          witnesses: accounts.map(
+            ({ derivationPath, extendedPublicKeyHex, signing }) => {
+              return {
+                derivationPath,
+                extendedPublicKeyHex,
+                signatureHex: signing[txBodyHashHex],
+              };
+            },
+          ),
+        },
       };
 
       expect(JSON.stringify(actualResponse)).toStrictEqual(

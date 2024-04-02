@@ -2,21 +2,15 @@ import { panel, divider, text, copyable, heading } from '@metamask/snaps-sdk';
 
 export const renderSignTransactions = async (
   origin: string,
-  txBodyHashHexBundle: string[],
+  txBodyHashHex: string,
 ) => {
-  const headingText =
-    txBodyHashHexBundle.length === 1 ? 'Sign transaction' : 'Sign transactions';
+  const headingText = 'Sign transaction';
 
-  const txUiElements =
-    txBodyHashHexBundle.length === 1
-      ? [divider(), text('Transaction hash:'), copyable(txBodyHashHexBundle[0])]
-      : txBodyHashHexBundle.flatMap((txBodyHashHex, i) => {
-          return [
-            divider(),
-            text(`Transaction hash ${i + 1}:`),
-            copyable(txBodyHashHex),
-          ];
-        });
+  const txUiElements = [
+    divider(),
+    text('Transaction hash:'),
+    copyable(txBodyHashHex),
+  ];
 
   return snap.request({
     method: 'snap_dialog',

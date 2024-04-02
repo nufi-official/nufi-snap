@@ -31,42 +31,45 @@ function assertIsSignMessageRequestParams(
 ): asserts params is SignMessageRequestParams {
   assertIsArray(params);
 
-  params.forEach((param) => {
-    if (
-      !(
-        isRecord(param) &&
-        'derivationPath' in param &&
-        isDerivationPath(param.derivationPath) &&
-        isSupportedDerivationPath(param.derivationPath) &&
-        'messageHex' in param &&
-        typeof param.messageHex === 'string'
-      )
-    ) {
-      throw new Error(
-        `Invalid params for "cardano__signMessage" method. ${JSON.stringify(
-          params,
-        )} `,
-      );
-    }
-  });
+  if (params.length !== 1) {
+    throw new Error(
+      `Invalid params for "cardano__signMessage" method. Only one message can be signed at a time. ${JSON.stringify(
+        params,
+      )}, `,
+    );
+  }
+
+  const [param] = params;
+
+  if (
+    !(
+      isRecord(param) &&
+      'derivationPath' in param &&
+      isDerivationPath(param.derivationPath) &&
+      isSupportedDerivationPath(param.derivationPath) &&
+      'messageHex' in param &&
+      typeof param.messageHex === 'string'
+    )
+  ) {
+    throw new Error(
+      `Invalid params for "cardano__signMessage" method. ${JSON.stringify(
+        params,
+      )} `,
+    );
+  }
 }
 
 export const signMessage = async (
   { params }: JsonRpcRequest,
   origin: string,
-): Promise<SignMessageResponse[]> => {
+): Promise<SignMessageResponse> => {
   assertIsSignMessageRequestParams(params);
 
+  const [{ derivationPath, messageHex }] = params;
+
   await assertUserHasConfirmed(async () =>
-    renderSignMessages(
-      origin,
-      params.map(({ messageHex }) => messageHex),
-    ),
+    renderSignMessages(origin, messageHex),
   );
 
-  return Promise.all(
-    params.map(async ({ derivationPath, messageHex }) => {
-      return cryptoProvider.signMessage(derivationPath, messageHex);
-    }),
-  );
+  return cryptoProvider.signMessage(derivationPath, messageHex);
 };

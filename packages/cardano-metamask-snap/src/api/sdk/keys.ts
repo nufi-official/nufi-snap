@@ -1,6 +1,6 @@
 import * as cardanoCrypto from '@cardano-sdk/crypto';
 
-import type { Bip32Node } from '../types';
+import type { Bip32Node } from '../cryptoProvider/types';
 
 /**
  * Converts a Bip32Node to a Bip32PrivateKey.

@@ -4170,8 +4170,8 @@ __metadata:
   linkType: hard
 
 "@metamask/eth-sig-util@npm:^6.0.0":
-  version: 6.0.1
-  resolution: "@metamask/eth-sig-util@npm:6.0.1"
+  version: 6.0.2
+  resolution: "@metamask/eth-sig-util@npm:6.0.2"
   dependencies:
     "@ethereumjs/util": ^8.1.0
     "@metamask/abi-utils": ^1.2.0
@@ -4180,7 +4180,7 @@ __metadata:
     ethjs-util: ^0.1.6
     tweetnacl: ^1.0.3
     tweetnacl-util: ^0.15.1
-  checksum: 6a9e64991bf826b882c0e42499052c5b51f7a2d5db77ac65ac64be1d14dd498569a4cade3cbad6213b6a9f7e508eaff619eda9c9ea448377e94e16773b755a5c
+  checksum: 1d8e504bfa2b0e5a68516ade35b9890c166f7e1d1b8f8471ef677f0fe63b701ff8346fae3061d699ddc9b35a9a7fa198e6eebf1605eb3848401e6318f09319bc
   languageName: node
   linkType: hard
 

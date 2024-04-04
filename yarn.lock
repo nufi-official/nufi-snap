@@ -4583,13 +4583,13 @@ __metadata:
   linkType: hard
 
 "@metamask/snaps-webpack-plugin@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "@metamask/snaps-webpack-plugin@npm:2.0.0"
+  version: 2.0.1
+  resolution: "@metamask/snaps-webpack-plugin@npm:2.0.1"
   dependencies:
-    "@metamask/snaps-utils": ^2.0.0
+    "@metamask/snaps-utils": ^2.0.1
     "@metamask/utils": ^8.1.0
     webpack-sources: ^3.2.3
-  checksum: 5f0cac038abb12e8d02e6712ed5172a46bc0e31c16ea3f784dbc1b3f50ee6dab8e63386aae8eb4e2e9c224b94913fa7ceab0cbf05554c4a5e34df308b5d60453
+  checksum: 8748f15c60ee0d964b395e20dc47c09572f412ba30c3fbf9e19b162771b43415e658a1f5796ba2da35cbb569610b57163b78778286639123049a42f06321a0b1
   languageName: node
   linkType: hard
 

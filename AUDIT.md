@@ -69,8 +69,8 @@ and get valid Cardano keys consistent with other Cardano wallets.
 
 - install metamask flask
 - download Metamask Flask extension from [here](https://github.com/nufi-official/metamask-extension/releases/tag/v11.10.0-flask-cip3) or click [here](https://github.com/nufi-official/metamask-extension/releases/download/v11.10.0-flask-cip3/v11.10.0-flask-cip3.zip) to download it directly
-- unpack the zip, choose either Chrome or Firefox build, follow instructions to install,
+- extract the zip, choose either Chrome or Firefox build, follow instructions to install
 - run `git clone git@github.com:nufi-official/nufi-snap.git`
 - run `yarn` to install dependencies
-- run `yarn start` to start the snap, the accompanied UI will allow you to test all capabilities of the snap manually
+- run `yarn start` to start the snap, the accompanied UI will allow you to test all capabilities of the snap manually, test app runs at `http://localhost:8000`
 - run `yarn test` to run tests

@@ -5,9 +5,9 @@ import {
   signWithBip32Node,
   packAddress,
 } from '../sdk';
-import type { SignMessageResponse } from '../signMessage';
 import type { VerifyAddressRequestParams } from '../verifyAddress';
 import { deriveNode } from './snapApi';
+import type { SignMessageResponse } from './types';
 
 const getExtendedPublicKey = async (
   derivationPath: SupportedCardanoDerivationPath,

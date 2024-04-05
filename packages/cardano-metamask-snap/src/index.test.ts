@@ -73,65 +73,6 @@ describe('onRpcRequest', () => {
     });
   });
 
-  describe('cardano__signMessage', () => {
-    const account = accountsFixture.account0;
-    Object.entries(account.signing).forEach(([messageHex, signatureHex]) =>
-      it('should sign messages', async () => {
-        const { request } = await installSnap();
-
-        const pendingResponse = request({
-          method: 'cardano__signMessage',
-          origin,
-          params: [
-            {
-              messageHex,
-              derivationPath: account.derivationPath,
-            },
-          ],
-        });
-
-        const ui = await pendingResponse.getInterface();
-        await ui.ok();
-
-        const { response: actualResponse } = await pendingResponse;
-
-        const expectedResponse = {
-          result: {
-            derivationPath: account.derivationPath,
-            messageHex,
-            extendedPublicKeyHex: account.extendedPublicKeyHex,
-            signatureHex,
-          },
-        };
-
-        expect(JSON.stringify(actualResponse)).toStrictEqual(
-          JSON.stringify(expectedResponse),
-        );
-      }),
-    );
-
-    it('should fail for unsupported path', async () => {
-      const { request } = await installSnap();
-
-      const derivationPath = ["10'", "1815'", "0'"];
-      const { response: actualResponse } = await request({
-        method: 'cardano__signMessage',
-        origin,
-        params: [
-          {
-            messageHex: 'deadbeef',
-            derivationPath,
-          },
-        ],
-      });
-
-      const responseError =
-        'error' in actualResponse ? actualResponse.error : undefined;
-
-      expect(responseError).toBeDefined();
-    });
-  });
-
   describe('cardano__signTransaction', () => {
     it('should sign transactions', async () => {
       const { request } = await installSnap();

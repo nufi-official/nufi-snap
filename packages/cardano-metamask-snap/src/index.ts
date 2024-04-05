@@ -39,8 +39,6 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
       return cardanoApi.getExtendedPublicKey(request);
     case 'cardano__verifyAddress':
       return cardanoApi.verifyAddress(request);
-    case 'cardano__signMessage':
-      return cardanoApi.signMessage(request);
     case 'cardano__signTransaction':
       return cardanoApi.signTransaction(request);
     default:

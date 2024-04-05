@@ -4,10 +4,10 @@
   "proposedName": "Cardano Wallet",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MetaMask/template-snap-monorepo.git"
+    "url": "https://github.com/nufi-official/nufi-snap"
   },
   "source": {
-    "shasum": "touPJyHhoceEy9W8CidImvvf1KU8hBkquZLjnmQOEwI=",
+    "shasum": "wZW8Pb4hvQ43AcDa7lsgkFK74v319p9A743Nd2UAKQA=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",

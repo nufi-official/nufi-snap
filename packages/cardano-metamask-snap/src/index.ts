@@ -28,10 +28,24 @@ async function getNufiUserId(): Promise<string> {
  * @param args - The request handler args as object.
  * invoked the snap.
  * @param args.request - A validated JSON-RPC request object.
+ * @param args.origin - Origin of the caller.
  * @returns The result of `snap_dialog`.
  * @throws If the request method is not valid for this snap.
  */
-export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
+export const onRpcRequest: OnRpcRequestHandler = async ({
+  request,
+  origin,
+}) => {
+  const urlObject = new URL(origin);
+  if (
+    !(
+      urlObject.hostname === 'localhost' ||
+      urlObject.hostname.endsWith('.nu.fi')
+    )
+  ) {
+    throw new Error('Invalid URL');
+  }
+
   switch (request.method) {
     case 'nufi__getUserId':
       return getNufiUserId();

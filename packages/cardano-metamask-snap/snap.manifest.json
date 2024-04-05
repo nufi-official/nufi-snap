@@ -20,26 +20,17 @@
   "initialPermissions": {
     "snap_dialog": {},
     "endowment:rpc": {
-      "allowedOrigins": [
-        "nu.fi"
-      ]
+      "dapps": true,
+      "snaps": false
     },
     "snap_getEntropy": {},
     "snap_getBip32Entropy": [
       {
-        "path": [
-          "m",
-          "1852'",
-          "1815'"
-        ],
+        "path": ["m", "1852'", "1815'"],
         "curve": "ed25519Bip32"
       },
       {
-        "path": [
-          "m",
-          "1694'",
-          "1815'"
-        ],
+        "path": ["m", "1694'", "1815'"],
         "curve": "ed25519Bip32"
       }
     ]

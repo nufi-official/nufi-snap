@@ -17,14 +17,11 @@ export const networkIds = {
   Testnet: Cardano.NetworkId.Testnet,
 } as const;
 
-// we do not support ByronAddresses, and address types which
-// contain only script hashes, as these cannot be verified against a wallet
+// we support only a subset of addresses, rest of them are not used in dapp/wallet interactions
+// so we leave them out for now
 const addressTypes = {
   BasePaymentKeyStakeKey: Cardano.AddressType.BasePaymentKeyStakeKey,
-  BasePaymentKeyStakeScript: Cardano.AddressType.BasePaymentKeyStakeScript,
-  BasePaymentScriptStakeKey: Cardano.AddressType.BasePaymentScriptStakeKey,
   EnterpriseKey: Cardano.AddressType.EnterpriseKey,
-  PointerKey: Cardano.AddressType.PointerKey,
   RewardKey: Cardano.AddressType.RewardKey,
 } as const;
 
@@ -37,13 +34,6 @@ export type VerifyAddressRequestParams = [
     addressType: AddressType;
     paymentDerivationPath: CardanoPaymentDerivationPath | null;
     stakeDerivationPath: CardanoStakeDerivationPath | null;
-    stakeScriptHashHex?: string;
-    paymentScriptHashHex?: string;
-    pointer?: {
-      slot: number;
-      txIndex: number;
-      certIndex: number;
-    };
   },
 ];
 

@@ -18,21 +18,8 @@ export const renderVerifyAddress = async (
     ...(param.paymentDerivationPath
       ? [text(`Spending path: ${param.paymentDerivationPath.join('/')}`)]
       : []),
-    ...(param.paymentScriptHashHex
-      ? [text(`Spending script hex: ${param.paymentScriptHashHex}`)]
-      : []),
     ...(param.stakeDerivationPath
       ? [text(`Staking path: ${param.stakeDerivationPath.join('/')}`)]
-      : []),
-    ...(param.stakeScriptHashHex
-      ? [text(`Staking script hex: ${param.stakeScriptHashHex}`)]
-      : []),
-    ...(param.pointer
-      ? [
-          text(
-            `Pointer: (Slot: ${param.pointer.slot}, Transaction index: ${param.pointer.txIndex}, Certificate index: ${param.pointer.certIndex})`,
-          ),
-        ]
       : []),
     copyable(address),
   ];

@@ -148,25 +148,10 @@ const Index = () => {
       ],
       [
         {
-          addressType: 1,
+          addressType: 14,
           networkId: 1,
-          paymentDerivationPath: null,
-          paymentScriptHashHex:
-            'c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f',
           stakeDerivationPath: ["1852'", "1815'", "0'", '2', '0'],
-        },
-      ],
-      [
-        {
-          addressType: 4,
-          networkId: 1,
-          paymentDerivationPath: ["1852'", "1815'", "0'", '0', '0'],
-          stakeDerivationPath: null,
-          pointer: {
-            slot: 2498243,
-            txIndex: 27,
-            certIndex: 22,
-          },
+          paymentDerivationPath: null,
         },
       ],
     ];

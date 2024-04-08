@@ -144,15 +144,10 @@ describe('onRpcRequest', () => {
     const {
       paymentPart,
       stakePart,
-      pointer,
       networkId,
       basePaymentKeyStakeKeyAddress,
-      basePaymentKeyStakeScriptAddress,
-      basePaymentScriptStakeKeyAddress,
-      pointerAddress,
       enterpriseAddress,
       rewardAddress,
-      scriptHashHex,
     } = addresses;
 
     const paymentDerivationPath =
@@ -174,42 +169,6 @@ describe('onRpcRequest', () => {
           },
         ],
         expectedResult: basePaymentKeyStakeKeyAddress.bech32Address,
-      },
-      {
-        addressParams: [
-          {
-            addressType: basePaymentScriptStakeKeyAddress.addressType,
-            networkId,
-            paymentDerivationPath: null,
-            paymentScriptHashHex: scriptHashHex,
-            stakeDerivationPath,
-          },
-        ],
-        expectedResult: basePaymentScriptStakeKeyAddress.bech32Address,
-      },
-      {
-        addressParams: [
-          {
-            addressType: basePaymentKeyStakeScriptAddress.addressType,
-            networkId,
-            paymentDerivationPath,
-            stakeDerivationPath: null,
-            stakeScriptHashHex: scriptHashHex,
-          },
-        ],
-        expectedResult: basePaymentKeyStakeScriptAddress.bech32Address,
-      },
-      {
-        addressParams: [
-          {
-            addressType: pointerAddress.addressType,
-            networkId,
-            paymentDerivationPath,
-            stakeDerivationPath: null,
-            pointer,
-          },
-        ],
-        expectedResult: pointerAddress.bech32Address,
       },
       {
         addressParams: [

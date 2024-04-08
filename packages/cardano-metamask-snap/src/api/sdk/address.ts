@@ -13,6 +13,13 @@ export type PackAddressParams = Omit<
 > & {
   paymentKeyHex: string | null;
   stakeKeyHex: string | null;
+  stakeScriptHashHex?: string;
+  paymentScriptHashHex?: string;
+  pointer?: {
+    slot: number;
+    txIndex: number;
+    certIndex: number;
+  };
 };
 
 /**

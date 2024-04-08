@@ -1,6 +1,7 @@
-import { panel, divider, text, copyable, heading } from '@metamask/snaps-sdk';
+import { panel, text, copyable, heading } from '@metamask/snaps-sdk';
 
 import type { VerifyAddressRequestParams } from '.';
+import { section } from '../ui';
 
 export const renderVerifyAddress = async (
   param: VerifyAddressRequestParams[number],
@@ -12,8 +13,7 @@ export const renderVerifyAddress = async (
 ) => {
   const headingText = 'Verify address';
 
-  const addressUiElements = [
-    divider(),
+  const addressUiElements = section([
     text(`Network: ${networkNameForId[param.networkId]}`),
     ...(param.paymentDerivationPath
       ? [text(`Spending path: ${param.paymentDerivationPath.join('/')}`)]
@@ -22,13 +22,13 @@ export const renderVerifyAddress = async (
       ? [text(`Staking path: ${param.stakeDerivationPath.join('/')}`)]
       : []),
     copyable(address),
-  ];
+  ]);
 
   return snap.request({
     method: 'snap_dialog',
     params: {
       type: 'confirmation',
-      content: panel([heading(headingText), ...addressUiElements]),
+      content: panel([heading(headingText), addressUiElements]),
     },
   });
 };

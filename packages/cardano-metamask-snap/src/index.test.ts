@@ -7,7 +7,7 @@ import type {
   CardanoStakeDerivationPath,
 } from './api/derivationPath';
 import { type VerifyAddressRequestParams } from './api/verifyAddress';
-import { accountsFixture } from './fixtures';
+import { accountsFixture, transactionsFixture } from './fixtures';
 
 describe('onRpcRequest', () => {
   // we allow only localhost and nu.fi origins, so we use localhost for testing
@@ -78,14 +78,17 @@ describe('onRpcRequest', () => {
       const { request } = await installSnap();
 
       const accounts = [accountsFixture.account0, accountsFixture.account1];
-      const txBodyHashHex = 'deadbeef';
+
+      const txType = 'simple';
+
+      const { txBodyCborHex, txBodyHashHex } = transactionsFixture[txType];
 
       const pendingResponse = request({
         method: 'cardano__signTransaction',
         origin,
         params: [
           {
-            txBodyHashHex,
+            txBodyCborHex,
             derivationPaths: accounts.map(
               ({ derivationPath }) => derivationPath,
             ),
@@ -101,12 +104,17 @@ describe('onRpcRequest', () => {
       const expectedResponse = {
         result: {
           txBodyHashHex,
+          txBodyCborHex,
           witnesses: accounts.map(
-            ({ derivationPath, extendedPublicKeyHex, signing }) => {
+            ({
+              derivationPath,
+              extendedPublicKeyHex,
+              transactionSignatures,
+            }) => {
               return {
                 derivationPath,
                 extendedPublicKeyHex,
-                signatureHex: signing[txBodyHashHex],
+                signatureHex: transactionSignatures[txType],
               };
             },
           ),

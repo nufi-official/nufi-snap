@@ -6,18 +6,20 @@ import {
   isDerivationPath,
   isSupportedDerivationPath,
 } from '../derivationPath';
+import { getTxBodyHash, isValidTxBodyCborHex } from '../sdk';
 import { assertIsArray, assertUserHasConfirmed, isRecord } from '../utils';
-import { renderSignTransactions } from './ui';
+import { renderSignTransaction } from './ui';
 
 export type SignTransactionRequestParams = [
   {
-    txBodyHashHex: string;
+    txBodyCborHex: string;
     derivationPaths: SupportedCardanoDerivationPath[];
   },
 ];
 
 export type SignTransactionResponse = {
   txBodyHashHex: string;
+  txBodyCborHex: string;
   witnesses: {
     extendedPublicKeyHex: string;
     signatureHex: string;
@@ -53,8 +55,9 @@ export function assertIsSignTransactionRequestParams(
       param.derivationPaths.every(
         (path) => isDerivationPath(path) && isSupportedDerivationPath(path),
       ) &&
-      'txBodyHashHex' in param &&
-      typeof param.txBodyHashHex === 'string'
+      'txBodyCborHex' in param &&
+      typeof param.txBodyCborHex === 'string' &&
+      isValidTxBodyCborHex(param.txBodyCborHex)
     )
   ) {
     throw new Error(
@@ -70,11 +73,13 @@ export const signTransaction = async ({
 }: JsonRpcRequest): Promise<SignTransactionResponse> => {
   assertIsSignTransactionRequestParams(params);
 
-  const [{ txBodyHashHex, derivationPaths }] = params;
+  const [{ txBodyCborHex, derivationPaths }] = params;
 
   await assertUserHasConfirmed(async () =>
-    renderSignTransactions(txBodyHashHex),
+    renderSignTransaction(txBodyCborHex),
   );
+
+  const txBodyHashHex = getTxBodyHash(txBodyCborHex);
 
   const witnesses = await Promise.all(
     derivationPaths.map(async (derivationPath) => {
@@ -86,6 +91,7 @@ export const signTransaction = async ({
 
   return {
     txBodyHashHex,
+    txBodyCborHex,
     witnesses,
   };
 };

@@ -15,14 +15,12 @@ const bip32Node = {
   ]),
 };
 
-describe('sdk', () => {
-  describe('bip32NodeToBip32PrivateKey', () => {
-    it('should convert a Bip32Node to a Bip32PrivateKey', () => {
-      const expectedPrivateKey =
-        '98f25c3313e03b7843072514c5f024782072406b37569403423d2361f356d2459ecc73a09adb2aa37e9f8530fd1e6745eee1ea248a85417a700e774182c7fa3d864cf884b7faf31f33733e6fc900d4446394d8d6ee55610473ef24c6bb3fb91f';
+describe('bip32NodeToBip32PrivateKey', () => {
+  it('should convert a Bip32Node to a Bip32PrivateKey', () => {
+    const expectedPrivateKey =
+      '98f25c3313e03b7843072514c5f024782072406b37569403423d2361f356d2459ecc73a09adb2aa37e9f8530fd1e6745eee1ea248a85417a700e774182c7fa3d864cf884b7faf31f33733e6fc900d4446394d8d6ee55610473ef24c6bb3fb91f';
 
-      const actualPrivateKey = bip32NodeToBip32PrivateKey(bip32Node);
-      expect(actualPrivateKey.hex()).toStrictEqual(expectedPrivateKey);
-    });
+    const actualPrivateKey = bip32NodeToBip32PrivateKey(bip32Node);
+    expect(actualPrivateKey.hex()).toStrictEqual(expectedPrivateKey);
   });
 });

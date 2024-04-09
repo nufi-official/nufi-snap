@@ -32,7 +32,9 @@
     "@metamask/snaps-jest": "https://github.com/nufi-official/metamask-snaps/releases/download/v37.0.0-cip3/metamask-snaps-jest-6.0.1-cip3.tgz",
     "@metamask/snaps-rpc-methods": "https://github.com/nufi-official/metamask-snaps/releases/download/v37.0.0-cip3/metamask-snaps-rpc-methods-7.0.1-cip3.tgz",
     "@metamask/snaps-sdk": "https://github.com/nufi-official/metamask-snaps/releases/download/v37.0.0-cip3/metamask-snaps-sdk-3.1.0-cip3.tgz",
-    "@metamask/snaps-utils": "https://github.com/nufi-official/metamask-snaps/releases/download/v37.0.0-cip3/metamask-snaps-utils-7.0.2-cip3.tgz"
+    "@metamask/snaps-utils": "https://github.com/nufi-official/metamask-snaps/releases/download/v37.0.0-cip3/metamask-snaps-utils-7.0.2-cip3.tgz",
+    "axios": "^0.28.0",
+    "webpack-dev-middleware": "^5.3.4"
   },
   "devDependencies": {
     "@lavamoat/allow-scripts": "^3.0.0",

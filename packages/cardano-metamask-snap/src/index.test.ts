@@ -206,8 +206,9 @@ describe('onRpcRequest', () => {
 
         const ui = await pendingResponse.getInterface();
         const copyableValue = (
-          ui.content.type === 'panel'
-            ? ui.content.children.find(
+          ui.content.type === 'panel' &&
+          ui.content.children[1]?.type === 'panel'
+            ? ui.content.children[1].children.find(
                 (element): element is Copyable => element.type === 'copyable',
               )
             : undefined

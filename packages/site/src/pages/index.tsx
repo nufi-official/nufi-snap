@@ -154,6 +154,22 @@ const Index = () => {
           paymentDerivationPath: null,
         },
       ],
+      [
+        {
+          addressType: 6,
+          networkId: 1,
+          paymentDerivationPath: ["1852'", "1815'", "0'", '0', '0'],
+          stakeDerivationPath: null,
+        },
+      ],
+      [
+        {
+          addressType: 6,
+          networkId: 1,
+          paymentDerivationPath: ["1852'", "1815'", "0'", '0', '2'],
+          stakeDerivationPath: null,
+        },
+      ],
     ];
     for (const param of params) {
       const res = await invokeSnap({

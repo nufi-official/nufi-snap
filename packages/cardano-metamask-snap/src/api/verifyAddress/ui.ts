@@ -1,4 +1,4 @@
-import { panel, text, copyable, heading } from '@metamask/snaps-sdk';
+import { panel, copyable, heading, text, row } from '@metamask/snaps-sdk';
 
 import type { VerifyAddressRequestParams } from '.';
 import { section } from '../ui';
@@ -9,17 +9,29 @@ export const renderVerifyAddress = async (
     VerifyAddressRequestParams[number]['networkId'],
     string
   >,
+  addressDescriptionForType: Record<
+    VerifyAddressRequestParams[number]['addressType'],
+    string
+  >,
+  accountAddressIndex: `${number}'` | null,
   address: string,
 ) => {
-  const headingText = 'Verify address';
+  const headingText = `Verify ${
+    accountAddressIndex
+      ? `account #${accountAddressIndex.slice(
+          0,
+          accountAddressIndex.length - 1,
+        )}`
+      : ''
+  } ${addressDescriptionForType[param.addressType]} address`;
 
   const addressUiElements = section([
-    text(`Network: ${networkNameForId[param.networkId]}`),
+    row('Network', text(`${networkNameForId[param.networkId]}`)),
     ...(param.paymentDerivationPath
-      ? [text(`Spending path: ${param.paymentDerivationPath.join('/')}`)]
+      ? [row('Payment path', text(`${param.paymentDerivationPath.join('/')}`))]
       : []),
     ...(param.stakeDerivationPath
-      ? [text(`Staking path: ${param.stakeDerivationPath.join('/')}`)]
+      ? [row('Stake path', text(`${param.stakeDerivationPath.join('/')}`))]
       : []),
     copyable(address),
   ]);

@@ -57,7 +57,7 @@ export type CardanoPaymentDerivationPath = [
   role:
     | typeof CARDANO_DERIVATION_PATH_PAYMENT_ROLE_EXTERNAL
     | typeof CARDANO_DERIVATION_PATH_PAYMENT_ROLE_INTERNAL,
-  ...rest: `${number}`[],
+  addressIndex: `${number}`,
 ];
 
 export type CardanoStakeDerivationPath = [
@@ -65,7 +65,7 @@ export type CardanoStakeDerivationPath = [
   coinType: typeof CARDANO_DERIVATION_PATH_COINTYPE,
   account: `${number}'`,
   role: typeof CARDANO_DERIVATION_PATH_STAKE_ROLE,
-  ...rest: `${number}`[],
+  addressIndex: `${number}`,
 ];
 
 /**
@@ -78,7 +78,7 @@ export function isPaymentDerivationPath(
   path: string[],
 ): path is CardanoPaymentDerivationPath {
   return Boolean(
-    path.length >= 4 &&
+    path.length === 5 &&
       path[0] === CARDANO_DERIVATION_PATH_PURPOSE &&
       path[1] === CARDANO_DERIVATION_PATH_COINTYPE &&
       path[2]?.endsWith("'") && // account index must be hardened
@@ -97,7 +97,7 @@ export function isStakeDerivationPath(
   path: string[],
 ): path is CardanoStakeDerivationPath {
   return Boolean(
-    path.length >= 4 &&
+    path.length === 5 &&
       path[0] === CARDANO_DERIVATION_PATH_PURPOSE &&
       path[1] === CARDANO_DERIVATION_PATH_COINTYPE &&
       path[2]?.endsWith("'") && // account index must be hardened

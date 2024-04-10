@@ -1,4 +1,4 @@
-import type { SupportedCardanoDerivationPath } from '../derivationPath';
+import type { CardanoDerivationPath } from '../derivationPath';
 
 export type Bip32Node = {
   privateKeyBytes: Uint8Array;
@@ -7,7 +7,7 @@ export type Bip32Node = {
 
 export type SignMessageResponse = {
   messageHex: string;
-  derivationPath: SupportedCardanoDerivationPath;
+  derivationPath: CardanoDerivationPath;
   signatureHex: string;
   extendedPublicKeyHex: string;
 };

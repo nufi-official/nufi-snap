@@ -9,10 +9,6 @@ export const accountsFixture = {
       deadbeefdeadbeef:
         '2bc38f21d507870c34b0aef6a9a8507207b13985f45b04714271c1107d6b66e3c0d8f35b9f73a85bb0bf9c0431de8d4e547d111167825f51845570b74c12e008',
     },
-    transactionSignatures: {
-      simple:
-        'a52eb9a499cedd16cde80cd341ff602e01256febf391eb16ec4f178d22cd2c37e90eee3f5c1ef382618d91741e3e651e4cd0fefd382cb9ec1fe042539deb0003',
-    },
     addresses: {
       // address test vectors created using cardano-serialization-lib
       // https://gist.github.com/PeterBenc/2fce3310c32f220371b7fdf7436c77be
@@ -22,11 +18,19 @@ export const accountsFixture = {
         derivationPath: ["1852'", "1815'", "0'", '0', '0'],
         extendedPublicKeyHex:
           '15382abbf262f01aba1deaf31d0bc442305c976a415bc612a1c9dc60930efba0fa7746b8c07f71d63d7f0b0b213eab08465d2772ece3dad88927d38f6bdd4160',
+        transactionSignatures: {
+          simple:
+            'b7b0c4489155f9b279f2911d0f002830d10427f4ec7cc3c7969e0f0f91b8f723bef2b86be9c5d0c2ca65a29ee1b196a2bedeea522f097915613c303a2ef4700a',
+        },
       },
       stakePart: {
         derivationPath: ["1852'", "1815'", "0'", '2', '0'],
         extendedPublicKeyHex:
           '24f959cebe939e3486fcaa4ddcac2d0a24967c34525cedfcc53c7c90670940a640a0d13fbe69bbe36c4d8068b7ed1b5dd0ee2facc2f8758fb78e0f2026d3cac6',
+        transactionSignatures: {
+          simple:
+            'afe5c9af375ed8ad1d5d499aba59c8261645707572102c7efad45e9cfc189cdbf33279301b26fd471ecb423d3ccf185a723da1934fc9b0c011a34f507b542209',
+        },
       },
       pointer: {
         slot: 2498243,
@@ -69,10 +73,6 @@ export const accountsFixture = {
     derivationPath: ["1852'", "1815'", "1'"],
     extendedPublicKeyHex:
       '49e6da6f02a6951b638707d42019fa36d0289ab5f13d663a01a79ad4c291248a7cb652286ec50053f106ab8d8bb9938f545610a3b6e746ed85bd1270ba08efc9',
-    transactionSignatures: {
-      simple:
-        'b0625da1e6b879e667af25abd8ff5e9cd21114fcfc5cc99eb9b9fcf740fdd85c7dbbeaa1b598abd70d737136bc235022f663fa9ba6cb8e703c4f683897402902',
-    },
     signing: {
       deadbeef:
         '02ac7e7fdb7ee589043ea509323a204f97ac00f70360c23a1b2c9bcbe697d794357453b6649ac064d68fdf978117cd33c68ea02dfa5ec92f8c6513bd78adf000',

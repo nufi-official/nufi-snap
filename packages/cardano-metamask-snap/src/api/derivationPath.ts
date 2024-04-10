@@ -1,18 +1,4 @@
-export const CARDANO_DERIVATION_PATH_COINTYPE = "1815'";
-export const CARDANO_DERIVATION_PATH_PURPOSE = "1852'";
-export const CARDANO_DERIVATION_PATH_VOTING_PURPOSE = "1694'";
-export const CARDANO_DERIVATION_PATH_PAYMENT_ROLE_EXTERNAL = '0';
-export const CARDANO_DERIVATION_PATH_PAYMENT_ROLE_INTERNAL = '1';
-export const CARDANO_DERIVATION_PATH_STAKE_ROLE = '2';
-
-export type SupportedCardanoDerivationPath = [
-  purpose:
-    | typeof CARDANO_DERIVATION_PATH_PURPOSE
-    | typeof CARDANO_DERIVATION_PATH_VOTING_PURPOSE,
-  coinType: typeof CARDANO_DERIVATION_PATH_COINTYPE,
-  account: `${number}'`,
-  ...rest: `${number}`[],
-];
+type DerivationPath = (`${number}` | `${number}'`)[];
 
 /**
  * Checks if the given param is a derivation path.
@@ -20,7 +6,7 @@ export type SupportedCardanoDerivationPath = [
  * @param path - The path to check.
  * @returns True if the param is a derivation path, false otherwise.
  */
-export function isDerivationPath(path: unknown): path is string[] {
+export function isDerivationPath(path: unknown): path is DerivationPath {
   return (
     Array.isArray(path) &&
     path.every((pathElement) => typeof pathElement === 'string') &&
@@ -32,21 +18,83 @@ export function isDerivationPath(path: unknown): path is string[] {
   );
 }
 
+export const CARDANO_DERIVATION_PATH_COINTYPE = "1815'";
+export const CARDANO_DERIVATION_PATH_PURPOSE = "1852'";
+export const CARDANO_DERIVATION_PATH_VOTING_PURPOSE = "1694'";
+export const CARDANO_DERIVATION_PATH_PAYMENT_ROLE_EXTERNAL = '0';
+export const CARDANO_DERIVATION_PATH_PAYMENT_ROLE_INTERNAL = '1';
+export const CARDANO_DERIVATION_PATH_STAKE_ROLE = '2';
+
+const isHardened = (
+  index: DerivationPath[number] | undefined,
+): index is `${number}'` => {
+  if (!index) {
+    return false;
+  }
+  return index.endsWith("'");
+};
+
+const isAccountIndex = (index: DerivationPath[number] | undefined): boolean => {
+  if (!index) {
+    return false;
+  }
+  return isHardened(index) && Number(index.slice(0, -1)) < 100;
+};
+
+export type CardanoDerivationPath = [
+  purpose:
+    | typeof CARDANO_DERIVATION_PATH_VOTING_PURPOSE
+    | typeof CARDANO_DERIVATION_PATH_PURPOSE,
+  coinType: typeof CARDANO_DERIVATION_PATH_COINTYPE,
+  account: `${number}'`,
+  ...rest: `${number}`[],
+];
+
 /**
- * Checks if the given derivation path is of supported type.
+ * Checks if the given derivation path is of voting type.
  *
  * @param path - The path to check.
- * @returns True if the param is a derivation path of supported type, false otherwise.
+ * @returns True if the param is a derivation path of payment type, false otherwise.
  */
-export function isSupportedDerivationPath(
-  path: string[],
-): path is SupportedCardanoDerivationPath {
+export function isCardanoDerivationPath(
+  path: DerivationPath,
+): path is CardanoDerivationPath {
   return Boolean(
     path.length >= 3 &&
-      (path[0] === CARDANO_DERIVATION_PATH_PURPOSE ||
-        path[0] === CARDANO_DERIVATION_PATH_VOTING_PURPOSE) &&
+      (path[0] === CARDANO_DERIVATION_PATH_VOTING_PURPOSE ||
+        path[0] === CARDANO_DERIVATION_PATH_PURPOSE) &&
       path[1] === CARDANO_DERIVATION_PATH_COINTYPE &&
-      path[2]?.endsWith("'"), // account index must be hardened
+      isAccountIndex(path[2]),
+  );
+}
+
+export type CardanoVotingDerivationPath = [
+  purpose: typeof CARDANO_DERIVATION_PATH_VOTING_PURPOSE,
+  coinType: typeof CARDANO_DERIVATION_PATH_COINTYPE,
+  account: `${number}'`,
+  role:
+    | typeof CARDANO_DERIVATION_PATH_PAYMENT_ROLE_EXTERNAL
+    | typeof CARDANO_DERIVATION_PATH_PAYMENT_ROLE_INTERNAL,
+  addressIndex: `${number}`,
+];
+
+/**
+ * Checks if the given derivation path is of voting type.
+ *
+ * @param path - The path to check.
+ * @returns True if the param is a derivation path of payment type, false otherwise.
+ */
+export function isVotingDerivationPath(
+  path: DerivationPath,
+): path is CardanoVotingDerivationPath {
+  return Boolean(
+    path.length === 5 &&
+      path[0] === CARDANO_DERIVATION_PATH_VOTING_PURPOSE &&
+      path[1] === CARDANO_DERIVATION_PATH_COINTYPE &&
+      isAccountIndex(path[2]) &&
+      (path[3] === CARDANO_DERIVATION_PATH_PAYMENT_ROLE_EXTERNAL ||
+        path[3] === CARDANO_DERIVATION_PATH_PAYMENT_ROLE_INTERNAL) &&
+      !isHardened(path[4]),
   );
 }
 
@@ -75,15 +123,16 @@ export type CardanoStakeDerivationPath = [
  * @returns True if the param is a derivation path of payment type, false otherwise.
  */
 export function isPaymentDerivationPath(
-  path: string[],
+  path: DerivationPath,
 ): path is CardanoPaymentDerivationPath {
   return Boolean(
     path.length === 5 &&
       path[0] === CARDANO_DERIVATION_PATH_PURPOSE &&
       path[1] === CARDANO_DERIVATION_PATH_COINTYPE &&
-      path[2]?.endsWith("'") && // account index must be hardened
+      isAccountIndex(path[2]) &&
       (path[3] === CARDANO_DERIVATION_PATH_PAYMENT_ROLE_EXTERNAL ||
-        path[3] === CARDANO_DERIVATION_PATH_PAYMENT_ROLE_INTERNAL),
+        path[3] === CARDANO_DERIVATION_PATH_PAYMENT_ROLE_INTERNAL) &&
+      !isHardened(path[4]),
   );
 }
 
@@ -94,13 +143,14 @@ export function isPaymentDerivationPath(
  * @returns True if the param is a derivation path of staking type, false otherwise.
  */
 export function isStakeDerivationPath(
-  path: string[],
+  path: DerivationPath,
 ): path is CardanoStakeDerivationPath {
   return Boolean(
     path.length === 5 &&
       path[0] === CARDANO_DERIVATION_PATH_PURPOSE &&
       path[1] === CARDANO_DERIVATION_PATH_COINTYPE &&
-      path[2]?.endsWith("'") && // account index must be hardened
-      path[3] === CARDANO_DERIVATION_PATH_STAKE_ROLE,
+      isAccountIndex(path[2]) &&
+      path[3] === CARDANO_DERIVATION_PATH_STAKE_ROLE &&
+      !isHardened(path[4]),
   );
 }

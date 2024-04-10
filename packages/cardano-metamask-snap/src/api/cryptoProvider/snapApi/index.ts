@@ -4,7 +4,7 @@ import {
   CARDANO_DERIVATION_PATH_COINTYPE,
   CARDANO_DERIVATION_PATH_PURPOSE,
   CARDANO_DERIVATION_PATH_VOTING_PURPOSE,
-  type SupportedCardanoDerivationPath,
+  type CardanoDerivationPath,
 } from '../../derivationPath';
 import type { Bip32Node } from '../types';
 
@@ -21,7 +21,7 @@ async function getMetamaskAccountSLIP10Node([
   purpose,
   coinType,
   accountIndex,
-]: SupportedCardanoDerivationPath): Promise<SLIP10Node> {
+]: CardanoDerivationPath): Promise<SLIP10Node> {
   if (
     purpose === CARDANO_DERIVATION_PATH_VOTING_PURPOSE &&
     coinType === CARDANO_DERIVATION_PATH_COINTYPE
@@ -64,7 +64,7 @@ async function getMetamaskAccountSLIP10Node([
  * @returns The SLIP10Node for the given derivation path.
  */
 export async function deriveNode(
-  derivationPath: SupportedCardanoDerivationPath,
+  derivationPath: CardanoDerivationPath,
 ): Promise<Bip32Node> {
   const [purpose, coinType, account, ...rest] = derivationPath;
   const accountSLIP10Node = await getMetamaskAccountSLIP10Node([

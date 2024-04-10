@@ -77,7 +77,10 @@ describe('onRpcRequest', () => {
     it('should sign transactions', async () => {
       const { request } = await installSnap();
 
-      const accounts = [accountsFixture.account0, accountsFixture.account1];
+      const addresses = [
+        accountsFixture.account0.addresses.paymentPart,
+        accountsFixture.account0.addresses.stakePart,
+      ];
 
       const txType = 'simple';
 
@@ -89,7 +92,7 @@ describe('onRpcRequest', () => {
         params: [
           {
             txBodyCborHex,
-            derivationPaths: accounts.map(
+            derivationPaths: addresses.map(
               ({ derivationPath }) => derivationPath,
             ),
           },
@@ -105,7 +108,7 @@ describe('onRpcRequest', () => {
         result: {
           txBodyHashHex,
           txBodyCborHex,
-          witnesses: accounts.map(
+          witnesses: addresses.map(
             ({
               derivationPath,
               extendedPublicKeyHex,

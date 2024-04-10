@@ -2,9 +2,11 @@ import { type JsonRpcRequest } from '@metamask/snaps-sdk';
 
 import { cryptoProvider } from '../cryptoProvider';
 import {
-  type SupportedCardanoDerivationPath,
+  type CardanoDerivationPath,
   isDerivationPath,
-  isSupportedDerivationPath,
+  isPaymentDerivationPath,
+  isStakeDerivationPath,
+  isVotingDerivationPath,
 } from '../derivationPath';
 import { getTxBodyHash, isValidTxBodyCborHex } from '../sdk';
 import { assertIsArray, assertUserHasConfirmed, isRecord } from '../utils';
@@ -13,7 +15,7 @@ import { renderSignTransaction } from './ui';
 export type SignTransactionRequestParams = [
   {
     txBodyCborHex: string;
-    derivationPaths: SupportedCardanoDerivationPath[];
+    derivationPaths: CardanoDerivationPath[];
   },
 ];
 
@@ -23,7 +25,7 @@ export type SignTransactionResponse = {
   witnesses: {
     extendedPublicKeyHex: string;
     signatureHex: string;
-    derivationPath: SupportedCardanoDerivationPath;
+    derivationPath: CardanoDerivationPath;
   }[];
 };
 
@@ -53,7 +55,11 @@ export function assertIsSignTransactionRequestParams(
       'derivationPaths' in param &&
       Array.isArray(param.derivationPaths) &&
       param.derivationPaths.every(
-        (path) => isDerivationPath(path) && isSupportedDerivationPath(path),
+        (path) =>
+          isDerivationPath(path) &&
+          (isPaymentDerivationPath(path) ||
+            isStakeDerivationPath(path) ||
+            isVotingDerivationPath(path)),
       ) &&
       'txBodyCborHex' in param &&
       typeof param.txBodyCborHex === 'string' &&

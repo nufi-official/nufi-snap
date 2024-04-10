@@ -2,19 +2,19 @@ import type { JsonRpcRequest } from '@metamask/snaps-sdk';
 
 import { cryptoProvider } from '../cryptoProvider';
 import {
-  type SupportedCardanoDerivationPath,
+  type CardanoDerivationPath,
+  isCardanoDerivationPath,
   isDerivationPath,
-  isSupportedDerivationPath,
 } from '../derivationPath';
 import { assertIsArray, isRecord } from '../utils';
 
 export type GetExtendedPublicKeyRequestParams = {
-  derivationPath: SupportedCardanoDerivationPath;
+  derivationPath: CardanoDerivationPath;
 }[];
 
 export type GetExtendedPublicKeyResponse = {
   extendedPublicKeyHex: string;
-  derivationPath: SupportedCardanoDerivationPath;
+  derivationPath: CardanoDerivationPath;
 };
 
 /**
@@ -34,7 +34,7 @@ export function assertIsGetExtendedPublicKeyRequestParams(
         isRecord(param) &&
         'derivationPath' in param &&
         isDerivationPath(param.derivationPath) &&
-        isSupportedDerivationPath(param.derivationPath)
+        isCardanoDerivationPath(param.derivationPath)
       )
     ) {
       throw new Error(

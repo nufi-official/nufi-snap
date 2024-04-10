@@ -6,7 +6,7 @@ export const renderSignTransaction = async (txBodyCborHex: string) => {
   const headingText = 'Sign transaction';
 
   const txUiElements = section([
-    text('Transaction body CBOR:'),
+    text('Transaction CBOR:'),
     copyable(txBodyCborHex),
   ]);
 

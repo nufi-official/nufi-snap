@@ -84,14 +84,14 @@ describe('onRpcRequest', () => {
 
       const txType = 'simple';
 
-      const { txBodyCborHex, txBodyHashHex } = transactionsFixture[txType];
+      const { txCborHex, txBodyHashHex } = transactionsFixture[txType];
 
       const pendingResponse = request({
         method: 'cardano__signTransaction',
         origin,
         params: [
           {
-            txBodyCborHex,
+            txCborHex,
             derivationPaths: addresses.map(
               ({ derivationPath }) => derivationPath,
             ),
@@ -107,7 +107,7 @@ describe('onRpcRequest', () => {
       const expectedResponse = {
         result: {
           txBodyHashHex,
-          txBodyCborHex,
+          txCborHex,
           witnesses: addresses.map(
             ({
               derivationPath,

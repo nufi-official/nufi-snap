@@ -1,28 +1,26 @@
 import { transactionsFixture } from '../../fixtures';
-import { getTxBodyHash, isValidTxBodyCborHex } from './transaction';
+import { getTxBodyHash, isValidTxCborHex } from './transaction';
 
 describe('getTxBodyHash', () => {
   Object.entries(transactionsFixture).forEach(
-    ([txType, { txBodyCborHex, txBodyHashHex }]) =>
+    ([txType, { txCborHex, txBodyHashHex }]) =>
       it(`should get txBodyHash for ${txType} transaction`, () => {
-        const expectedPrivateKey = txBodyHashHex;
+        const expectedTxBodyHashHex = txBodyHashHex;
 
-        const actualTxBodyHashHex = getTxBodyHash(txBodyCborHex);
-        expect(actualTxBodyHashHex).toStrictEqual(expectedPrivateKey);
+        const actualTxBodyHashHex = getTxBodyHash(txCborHex);
+        expect(actualTxBodyHashHex).toStrictEqual(expectedTxBodyHashHex);
       }),
   );
 });
 
 describe('isValidTxBodyCborHex', () => {
   it(`should detect invalid tx body`, () => {
-    const isValid = isValidTxBodyCborHex('deadbeef');
+    const isValid = isValidTxCborHex('deadbeef');
     expect(isValid).toBe(false);
   });
 
   it(`should detect valid tx body`, () => {
-    const isValid = isValidTxBodyCborHex(
-      transactionsFixture.simple.txBodyCborHex,
-    );
+    const isValid = isValidTxCborHex(transactionsFixture.simple.txCborHex);
     expect(isValid).toBe(true);
   });
 });

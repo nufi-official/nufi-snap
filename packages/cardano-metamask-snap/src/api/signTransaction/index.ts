@@ -81,9 +81,11 @@ export const signTransaction = async ({
 
   const [{ txCborHex, derivationPaths }] = params;
 
-  await assertUserHasConfirmed(async () => renderSignTransaction(txCborHex));
-
   const txBodyHashHex = getTxBodyHash(txCborHex);
+
+  await assertUserHasConfirmed(async () =>
+    renderSignTransaction(txCborHex, txBodyHashHex),
+  );
 
   const witnesses = await Promise.all(
     derivationPaths.map(async (derivationPath) => {

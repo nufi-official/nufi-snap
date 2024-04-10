@@ -2,12 +2,17 @@ import { panel, text, copyable, heading } from '@metamask/snaps-sdk';
 
 import { section } from '../ui';
 
-export const renderSignTransaction = async (txBodyCborHex: string) => {
+export const renderSignTransaction = async (
+  txCborHex: string,
+  txBodyHashHex: string,
+) => {
   const headingText = 'Sign transaction';
 
   const txUiElements = section([
+    text('Transaction body hash:'),
+    copyable(txBodyHashHex),
     text('Transaction CBOR:'),
-    copyable(txBodyCborHex),
+    copyable(txCborHex),
   ]);
 
   return snap.request({

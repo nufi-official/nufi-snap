@@ -16,6 +16,7 @@ const config: SnapConfig = {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     string_decoder: true,
     stream: true,
+    vm: true,
   },
   stats: {
     builtIns: {

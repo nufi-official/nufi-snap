@@ -141,34 +141,43 @@ const Index = () => {
     const params = [
       [
         {
-          addressType: 0,
+          addressParams: {
+            addressType: 0,
+
+            paymentDerivationPath: ["1852'", "1815'", "0'", '0', '0'],
+            stakeDerivationPath: ["1852'", "1815'", "0'", '2', '0'],
+          },
           networkId: 1,
-          paymentDerivationPath: ["1852'", "1815'", "0'", '0', '0'],
-          stakeDerivationPath: ["1852'", "1815'", "0'", '2', '0'],
         },
       ],
       [
         {
-          addressType: 14,
+          addressParams: {
+            addressType: 14,
+            stakeDerivationPath: ["1852'", "1815'", "0'", '2', '0'],
+            paymentDerivationPath: null,
+          },
           networkId: 1,
-          stakeDerivationPath: ["1852'", "1815'", "0'", '2', '0'],
-          paymentDerivationPath: null,
         },
       ],
       [
         {
-          addressType: 6,
+          addressParams: {
+            addressType: 6,
+            paymentDerivationPath: ["1852'", "1815'", "0'", '0', '0'],
+            stakeDerivationPath: null,
+          },
           networkId: 1,
-          paymentDerivationPath: ["1852'", "1815'", "0'", '0', '0'],
-          stakeDerivationPath: null,
         },
       ],
       [
         {
-          addressType: 6,
+          addressParams: {
+            addressType: 6,
+            paymentDerivationPath: ["1852'", "1815'", "0'", '0', '2'],
+            stakeDerivationPath: null,
+          },
           networkId: 1,
-          paymentDerivationPath: ["1852'", "1815'", "0'", '0', '2'],
-          stakeDerivationPath: null,
         },
       ],
     ];

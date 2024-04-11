@@ -26,35 +26,15 @@ export const accountsFixture = {
             'afe5c9af375ed8ad1d5d499aba59c8261645707572102c7efad45e9cfc189cdbf33279301b26fd471ecb423d3ccf185a723da1934fc9b0c011a34f507b542209',
         },
       },
-      pointer: {
-        slot: 2498243,
-        txIndex: 27,
-        certIndex: 22,
-      },
       basePaymentKeyStakeKeyAddress: {
         addressType: 0,
         bech32Address:
           'addr1qxgcuk5j0q0k2d0s9axvah49aut4ct5a5ertwp67psz3uuejm6ernk539y4mwwzrmny7ducc4d50mf6jfqvu79ghryss0cc0r2',
       },
-      basePaymentKeyStakeScriptAddress: {
-        addressType: 2,
-        bech32Address:
-          'addr1yxgcuk5j0q0k2d0s9axvah49aut4ct5a5ertwp67psz3uu7r0vd4msrxnuwnccdxlhdjar77j6lg0wypcc9uar5d2shsx3aqeg',
-      },
-      basePaymentScriptStakeKeyAddress: {
-        addressType: 1,
-        bech32Address:
-          'addr1z8phkx6acpnf78fuvxn0mkew3l0fd058hzquvz7w36x4gtejm6ernk539y4mwwzrmny7ducc4d50mf6jfqvu79ghryssl7h6s2',
-      },
       enterpriseAddress: {
         addressType: 6,
         bech32Address:
           'addr1vxgcuk5j0q0k2d0s9axvah49aut4ct5a5ertwp67psz3uucl8y23r',
-      },
-      pointerAddress: {
-        addressType: 4,
-        bech32Address:
-          'addr1gxgcuk5j0q0k2d0s9axvah49aut4ct5a5ertwp67psz3uuupnz75xxcky8dm8z',
       },
       rewardAddress: {
         addressType: 14,

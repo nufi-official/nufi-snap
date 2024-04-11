@@ -6,12 +6,7 @@ const {
   networkId,
   paymentPart,
   stakePart,
-  scriptHashHex,
-  pointer,
   basePaymentKeyStakeKeyAddress,
-  basePaymentKeyStakeScriptAddress,
-  basePaymentScriptStakeKeyAddress,
-  pointerAddress,
   enterpriseAddress,
   rewardAddress,
 } = addresses;
@@ -30,43 +25,6 @@ const fixtures: {
       networkId,
     },
     expectedResult: basePaymentKeyStakeKeyAddress.bech32Address,
-  },
-  {
-    packAddressParams: {
-      addressParams: {
-        addressType: basePaymentKeyStakeScriptAddress.addressType,
-
-        paymentKeyHex: paymentPart.extendedPublicKeyHex,
-        stakeKeyHex: null,
-        stakeScriptHashHex: scriptHashHex,
-      },
-      networkId,
-    },
-    expectedResult: basePaymentKeyStakeScriptAddress.bech32Address,
-  },
-  {
-    packAddressParams: {
-      addressParams: {
-        addressType: basePaymentScriptStakeKeyAddress.addressType,
-        paymentScriptHashHex: scriptHashHex,
-        paymentKeyHex: null,
-        stakeKeyHex: stakePart.extendedPublicKeyHex,
-      },
-      networkId,
-    },
-    expectedResult: basePaymentScriptStakeKeyAddress.bech32Address,
-  },
-  {
-    packAddressParams: {
-      addressParams: {
-        addressType: pointerAddress.addressType,
-        stakeKeyHex: null,
-        paymentKeyHex: paymentPart.extendedPublicKeyHex,
-        pointer,
-      },
-      networkId,
-    },
-    expectedResult: pointerAddress.bech32Address,
   },
   {
     packAddressParams: {

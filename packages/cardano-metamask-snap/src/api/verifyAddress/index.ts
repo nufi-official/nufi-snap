@@ -1,13 +1,11 @@
 import { Cardano } from '@cardano-sdk/core';
 import { type JsonRpcRequest } from '@metamask/snaps-sdk';
 
+import { addressTypes, isAddressParams, type AddressParams } from '../address';
 import { cryptoProvider } from '../cryptoProvider';
 import {
   type CardanoPaymentDerivationPath,
   type CardanoStakeDerivationPath,
-  isDerivationPath,
-  isPaymentDerivationPath,
-  isStakeDerivationPath,
   CARDANO_DERIVATION_PATH_PAYMENT_ROLE_EXTERNAL,
 } from '../derivationPath';
 import { assertIsArray, assertUserHasConfirmed, isRecord } from '../utils';
@@ -18,23 +16,12 @@ export const networkIds = {
   Testnet: Cardano.NetworkId.Testnet,
 } as const;
 
-// we support only a subset of addresses, rest of them are not used in dapp/wallet interactions
-// so we leave them out for now
-const addressTypes = {
-  BasePaymentKeyStakeKey: Cardano.AddressType.BasePaymentKeyStakeKey,
-  EnterpriseKey: Cardano.AddressType.EnterpriseKey,
-  RewardKey: Cardano.AddressType.RewardKey,
-} as const;
-
 export type NetworkId = (typeof networkIds)[keyof typeof networkIds];
-export type AddressType = (typeof addressTypes)[keyof typeof addressTypes];
 
 export type VerifyAddressRequestParams = [
   {
     networkId: NetworkId;
-    addressType: AddressType;
-    paymentDerivationPath: CardanoPaymentDerivationPath | null;
-    stakeDerivationPath: CardanoStakeDerivationPath | null;
+    addressParams: AddressParams;
   },
 ];
 
@@ -60,17 +47,9 @@ export function assertIsVerifyAddressRequestParams(
     !(
       isRecord(param) &&
       'networkId' in param &&
-      'addressType' in param &&
-      typeof param.addressType === 'number' &&
-      (Object.values(addressTypes) as number[]).includes(param.addressType) &&
-      'paymentDerivationPath' in param &&
-      (param.paymentDerivationPath === null ||
-        (isDerivationPath(param.paymentDerivationPath) &&
-          isPaymentDerivationPath(param.paymentDerivationPath))) &&
-      'stakeDerivationPath' in param &&
-      (param.stakeDerivationPath === null ||
-        (isDerivationPath(param.stakeDerivationPath) &&
-          isStakeDerivationPath(param.stakeDerivationPath)))
+      Object.values(networkIds).includes(param.networkId as NetworkId) &&
+      'addressParams' in param &&
+      isAddressParams(param.addressParams)
     )
   ) {
     throw new Error(
@@ -95,7 +74,7 @@ function getAccountAddressIndex({
   addressType,
   paymentDerivationPath,
   stakeDerivationPath,
-}: VerifyAddressRequestParams[number]) {
+}: VerifyAddressRequestParams[number]['addressParams']) {
   const getStakePathAccountAddressIndex = (
     path: CardanoStakeDerivationPath,
   ) => {
@@ -155,7 +134,7 @@ export const verifyAddress = async ({
           [addressTypes.EnterpriseKey]: 'enterprise',
           [addressTypes.RewardKey]: 'rewards',
         },
-        getAccountAddressIndex(param),
+        getAccountAddressIndex(param.addressParams),
         address,
       ),
     );

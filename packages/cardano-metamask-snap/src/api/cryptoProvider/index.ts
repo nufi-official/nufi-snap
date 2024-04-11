@@ -40,7 +40,8 @@ const signMessage = async (
 const getAddress = async (
   params: VerifyAddressRequestParams[number],
 ): Promise<string> => {
-  const { paymentDerivationPath, stakeDerivationPath, ...rest } = params;
+  const { addressParams, networkId } = params;
+  const { paymentDerivationPath, stakeDerivationPath, ...rest } = addressParams;
 
   const paymentKeyHex = paymentDerivationPath
     ? await bip32NodeToExtendedPublicKeyHex(
@@ -54,7 +55,10 @@ const getAddress = async (
       )
     : null;
 
-  return packAddress({ paymentKeyHex, stakeKeyHex, ...rest });
+  return packAddress({
+    networkId,
+    addressParams: { paymentKeyHex, stakeKeyHex, ...rest },
+  });
 };
 
 export const cryptoProvider = {

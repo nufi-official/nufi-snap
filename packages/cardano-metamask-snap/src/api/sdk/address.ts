@@ -7,19 +7,22 @@ import {
 
 import type { VerifyAddressRequestParams } from '../verifyAddress';
 
-export type PackAddressParams = Omit<
-  VerifyAddressRequestParams[number],
-  'paymentDerivationPath' | 'stakeDerivationPath'
-> & {
-  paymentKeyHex: string | null;
-  stakeKeyHex: string | null;
-  stakeScriptHashHex?: string;
-  paymentScriptHashHex?: string;
-  pointer?: {
-    slot: number;
-    txIndex: number;
-    certIndex: number;
+export type PackAddressParams = {
+  addressParams: Omit<
+    VerifyAddressRequestParams[number]['addressParams'],
+    'paymentDerivationPath' | 'stakeDerivationPath'
+  > & {
+    paymentKeyHex: string | null;
+    stakeKeyHex: string | null;
+    stakeScriptHashHex?: string;
+    paymentScriptHashHex?: string;
+    pointer?: {
+      slot: number;
+      txIndex: number;
+      certIndex: number;
+    };
   };
+  networkId: Cardano.NetworkId;
 };
 
 /**
@@ -51,7 +54,9 @@ async function getPaymentPart({
   paymentKeyHex,
   paymentScriptHashHex,
   stakeKeyHex,
-}: PackAddressParams): Promise<Cardano.AddressProps['paymentPart']> {
+}: PackAddressParams['addressParams']): Promise<
+  Cardano.AddressProps['paymentPart']
+> {
   // Note: by convention, the key inside reward addresses is NOT considered stake credential
   // but payment credential
   if (addressType === Cardano.AddressType.RewardKey) {
@@ -93,7 +98,9 @@ async function getDelegationPart({
   addressType,
   stakeKeyHex,
   stakeScriptHashHex,
-}: PackAddressParams): Promise<Cardano.AddressProps['delegationPart']> {
+}: PackAddressParams['addressParams']): Promise<
+  Cardano.AddressProps['delegationPart']
+> {
   // Note: by convention, the key inside reward addresses is NOT considered stake credential
   // but payment credential, so we do not need to handle them here
   if (addressType === Cardano.AddressType.RewardKey) {
@@ -119,12 +126,15 @@ async function getDelegationPart({
 
 /**
  * Packs the address based on the provided parameters.
- * @param addressParams - The parameters for packing the address.
+ * @param packAddressParams - The parameters for packing the address.
+ * @param packAddressParams.addressParams - Address parameters.
+ * @param packAddressParams.networkId - The network ID.
  * @returns The packed address.
  */
-export async function packAddress(
-  addressParams: PackAddressParams,
-): Promise<string> {
+export async function packAddress({
+  addressParams,
+  networkId,
+}: PackAddressParams): Promise<string> {
   const paymentPart = await getPaymentPart(addressParams);
   const delegationPart = await getDelegationPart(addressParams);
   return new Cardano.Address({
@@ -134,6 +144,6 @@ export async function packAddress(
     ...(addressParams.pointer
       ? { pointer: addressParams.pointer as Cardano.Pointer }
       : {}),
-    networkId: addressParams.networkId,
+    networkId,
   }).toBech32();
 }

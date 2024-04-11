@@ -167,52 +167,58 @@ describe('onRpcRequest', () => {
       stakePart.derivationPath as CardanoStakeDerivationPath;
 
     const fixtures: {
-      addressParams: VerifyAddressRequestParams;
+      verifyAddressParams: VerifyAddressRequestParams;
       expectedResult: string;
     }[] = [
       {
-        addressParams: [
+        verifyAddressParams: [
           {
-            addressType: basePaymentKeyStakeKeyAddress.addressType,
+            addressParams: {
+              addressType: basePaymentKeyStakeKeyAddress.addressType,
+              paymentDerivationPath,
+              stakeDerivationPath,
+            },
             networkId,
-            paymentDerivationPath,
-            stakeDerivationPath,
           },
         ],
         expectedResult: basePaymentKeyStakeKeyAddress.bech32Address,
       },
       {
-        addressParams: [
+        verifyAddressParams: [
           {
-            addressType: enterpriseAddress.addressType,
+            addressParams: {
+              addressType: enterpriseAddress.addressType,
+              paymentDerivationPath,
+              stakeDerivationPath: null,
+            },
             networkId,
-            paymentDerivationPath,
-            stakeDerivationPath: null,
           },
         ],
         expectedResult: enterpriseAddress.bech32Address,
       },
       {
-        addressParams: [
+        verifyAddressParams: [
           {
-            addressType: rewardAddress.addressType,
+            addressParams: {
+              addressType: rewardAddress.addressType,
+              stakeDerivationPath,
+              paymentDerivationPath: null,
+            },
             networkId,
-            stakeDerivationPath,
-            paymentDerivationPath: null,
           },
         ],
         expectedResult: rewardAddress.bech32Address,
       },
     ];
 
-    fixtures.forEach(({ addressParams, expectedResult }) =>
-      it(`should display copyable address for address type ${addressParams[0].addressType}`, async () => {
+    fixtures.forEach(({ verifyAddressParams, expectedResult }) =>
+      it(`should display copyable address for address type ${verifyAddressParams[0].addressParams.addressType}`, async () => {
         const { request } = await installSnap();
 
         const pendingResponse = request({
           method: 'cardano__verifyAddress',
           origin,
-          params: addressParams,
+          params: verifyAddressParams,
         });
 
         const ui = await pendingResponse.getInterface();

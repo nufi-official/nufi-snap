@@ -22,7 +22,7 @@ export const renderVerifyAddress = async (
     string
   >,
   addressDescriptionForType: Record<
-    VerifyAddressRequestParams[number]['addressType'],
+    VerifyAddressRequestParams[number]['addressParams']['addressType'],
     string
   >,
   accountAddressIndex: CardanoDerivationPath[2] | null,
@@ -30,15 +30,25 @@ export const renderVerifyAddress = async (
 ) => {
   const headingText = `Verify ${renderAddressAccountIndex(
     accountAddressIndex,
-  )} ${addressDescriptionForType[param.addressType]} address`;
+  )} ${addressDescriptionForType[param.addressParams.addressType]} address`;
 
   const addressUiElements = section([
     row('Network', text(`${networkNameForId[param.networkId]}`)),
-    ...(param.paymentDerivationPath
-      ? [row('Payment path', text(`${param.paymentDerivationPath.join('/')}`))]
+    ...(param.addressParams.paymentDerivationPath
+      ? [
+          row(
+            'Payment path',
+            text(`${param.addressParams.paymentDerivationPath.join('/')}`),
+          ),
+        ]
       : []),
-    ...(param.stakeDerivationPath
-      ? [row('Stake path', text(`${param.stakeDerivationPath.join('/')}`))]
+    ...(param.addressParams.stakeDerivationPath
+      ? [
+          row(
+            'Stake path',
+            text(`${param.addressParams.stakeDerivationPath.join('/')}`),
+          ),
+        ]
       : []),
     copyable(address),
   ]);

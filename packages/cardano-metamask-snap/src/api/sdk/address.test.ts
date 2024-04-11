@@ -16,71 +16,86 @@ const {
   rewardAddress,
 } = addresses;
 
-const fixtures: { addressParams: PackAddressParams; expectedResult: string }[] =
-  [
-    {
+const fixtures: {
+  packAddressParams: PackAddressParams;
+  expectedResult: string;
+}[] = [
+  {
+    packAddressParams: {
       addressParams: {
         addressType: basePaymentKeyStakeKeyAddress.addressType,
-        networkId,
         paymentKeyHex: paymentPart.extendedPublicKeyHex,
         stakeKeyHex: stakePart.extendedPublicKeyHex,
       },
-      expectedResult: basePaymentKeyStakeKeyAddress.bech32Address,
+      networkId,
     },
-    {
+    expectedResult: basePaymentKeyStakeKeyAddress.bech32Address,
+  },
+  {
+    packAddressParams: {
       addressParams: {
         addressType: basePaymentKeyStakeScriptAddress.addressType,
-        networkId,
+
         paymentKeyHex: paymentPart.extendedPublicKeyHex,
         stakeKeyHex: null,
         stakeScriptHashHex: scriptHashHex,
       },
-      expectedResult: basePaymentKeyStakeScriptAddress.bech32Address,
+      networkId,
     },
-    {
+    expectedResult: basePaymentKeyStakeScriptAddress.bech32Address,
+  },
+  {
+    packAddressParams: {
       addressParams: {
         addressType: basePaymentScriptStakeKeyAddress.addressType,
-        networkId,
         paymentScriptHashHex: scriptHashHex,
         paymentKeyHex: null,
         stakeKeyHex: stakePart.extendedPublicKeyHex,
       },
-      expectedResult: basePaymentScriptStakeKeyAddress.bech32Address,
+      networkId,
     },
-    {
+    expectedResult: basePaymentScriptStakeKeyAddress.bech32Address,
+  },
+  {
+    packAddressParams: {
       addressParams: {
         addressType: pointerAddress.addressType,
-        networkId,
         stakeKeyHex: null,
         paymentKeyHex: paymentPart.extendedPublicKeyHex,
         pointer,
       },
-      expectedResult: pointerAddress.bech32Address,
+      networkId,
     },
-    {
+    expectedResult: pointerAddress.bech32Address,
+  },
+  {
+    packAddressParams: {
       addressParams: {
         addressType: enterpriseAddress.addressType,
-        networkId,
         paymentKeyHex: paymentPart.extendedPublicKeyHex,
         stakeKeyHex: null,
       },
-      expectedResult: enterpriseAddress.bech32Address,
+      networkId,
     },
-    {
+    expectedResult: enterpriseAddress.bech32Address,
+  },
+  {
+    packAddressParams: {
       addressParams: {
         addressType: rewardAddress.addressType,
-        networkId,
         paymentKeyHex: null,
         stakeKeyHex: stakePart.extendedPublicKeyHex,
       },
-      expectedResult: rewardAddress.bech32Address,
+      networkId,
     },
-  ];
+    expectedResult: rewardAddress.bech32Address,
+  },
+];
 
 describe('packAddress', () => {
-  fixtures.forEach(({ addressParams, expectedResult }) =>
-    it(`should pack address of type ${addressParams.addressType}`, async () => {
-      const packedAddress = await packAddress(addressParams);
+  fixtures.forEach(({ packAddressParams, expectedResult }) =>
+    it(`should pack address of type ${packAddressParams.addressParams.addressType}`, async () => {
+      const packedAddress = await packAddress(packAddressParams);
       expect(packedAddress).toStrictEqual(expectedResult);
     }),
   );

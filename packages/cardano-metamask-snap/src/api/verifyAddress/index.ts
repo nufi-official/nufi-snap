@@ -1,4 +1,3 @@
-import { Cardano } from '@cardano-sdk/core';
 import { type JsonRpcRequest } from '@metamask/snaps-sdk';
 
 import { addressTypes, isAddressParams, type AddressParams } from '../address';
@@ -8,15 +7,9 @@ import {
   type CardanoStakeDerivationPath,
   CARDANO_DERIVATION_PATH_PAYMENT_ROLE_EXTERNAL,
 } from '../derivationPath';
+import { type NetworkId, isNetworkId, networkIds } from '../networkId';
 import { assertIsArray, assertUserHasConfirmed, isRecord } from '../utils';
 import { renderVerifyAddress } from './ui';
-
-export const networkIds = {
-  Mainnet: Cardano.NetworkId.Mainnet,
-  Testnet: Cardano.NetworkId.Testnet,
-} as const;
-
-export type NetworkId = (typeof networkIds)[keyof typeof networkIds];
 
 export type VerifyAddressRequestParams = [
   {
@@ -47,7 +40,7 @@ export function assertIsVerifyAddressRequestParams(
     !(
       isRecord(param) &&
       'networkId' in param &&
-      Object.values(networkIds).includes(param.networkId as NetworkId) &&
+      isNetworkId(param.networkId) &&
       'addressParams' in param &&
       isAddressParams(param.addressParams)
     )

@@ -73,7 +73,7 @@ export async function deriveNode(
     account,
   ]);
 
-  const { privateKeyBytes, chainCodeBytes } =
+  const { privateKeyBytes, chainCodeBytes, publicKeyBytes } =
     rest.length === 0
       ? accountSLIP10Node
       : await accountSLIP10Node.derive(
@@ -84,5 +84,5 @@ export async function deriveNode(
     throw new Error('Missing private key bytes');
   }
 
-  return { privateKeyBytes, chainCodeBytes };
+  return { privateKeyBytes, publicKeyBytes, chainCodeBytes };
 }

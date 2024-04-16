@@ -6,6 +6,7 @@ import {
 } from '@cardano-sdk/crypto';
 
 import type { VerifyAddressRequestParams } from '../verifyAddress';
+import { hexToBytes } from './utils';
 
 export type PackAddressParams = {
   addressParams: Omit<
@@ -115,3 +116,9 @@ export async function packAddress({
     networkId,
   }).toBech32();
 }
+
+export const addressToBytes = (address: string): Uint8Array => {
+  return hexToBytes(Cardano.Address.fromBech32(address).toBytes());
+};
+
+export const { AddressType } = Cardano;

@@ -6,6 +6,7 @@ import {
   ReconnectButton,
   Card,
   GetCardanoExtendedPublicKeyButton,
+  SignCardanoDataButton,
   SignCardanoTransactionButton,
   VerifyCardanoAddressButton,
 } from '../components';
@@ -118,6 +119,24 @@ const Index = () => {
       params: [{ derivationPath: ["1852'", "1815'", "0'"] }],
     });
     console.log('cardano extended public key result', res);
+  };
+
+  const handleCardanoSignDataClick = async () => {
+    const res = await invokeSnap({
+      method: 'cardano__signData',
+      params: [
+        {
+          networkId: 0,
+          addressParams: {
+            addressType: 14,
+            stakeDerivationPath: ["1852'", "1815'", "0'", '2', '0'],
+            paymentDerivationPath: null,
+          },
+          payloadHex: '436f6e6e65637420746f20434e4654206d61726b6574706c616365',
+        },
+      ],
+    });
+    console.log('cardano sign data key result', res);
   };
 
   const handleCardanoSignTransactionClick = async () => {
@@ -254,6 +273,24 @@ const Index = () => {
             button: (
               <GetCardanoExtendedPublicKeyButton
                 onClick={handleGetCardanoExtendedPublicKeyClick}
+                disabled={!installedSnap}
+              />
+            ),
+          }}
+          disabled={!installedSnap}
+          fullWidth={
+            isMetaMaskReady &&
+            Boolean(installedSnap) &&
+            !shouldDisplayReconnectButton(installedSnap)
+          }
+        />
+        <Card
+          content={{
+            title: 'Sign cardano data',
+            description: 'The result will be logged into console',
+            button: (
+              <SignCardanoDataButton
+                onClick={handleCardanoSignDataClick}
                 disabled={!installedSnap}
               />
             ),

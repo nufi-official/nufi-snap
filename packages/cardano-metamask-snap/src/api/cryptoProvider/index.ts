@@ -4,7 +4,13 @@ import {
   bip32NodeToExtendedPublicKeyHex,
   signWithBip32Node,
   packAddress,
+  addressToBytes,
+  signData as _signData,
+  hexToBytes,
+  bytesToHex,
+  AddressType,
 } from '../sdk';
+import type { SignDataRequestParams, SignDataResponse } from '../signData';
 import type { VerifyAddressRequestParams } from '../verifyAddress';
 import { deriveNode } from './snapApi';
 import type { SignMessageResponse } from './types';
@@ -61,8 +67,44 @@ const getAddress = async (
   });
 };
 
+const signData = async ({
+  addressParams,
+  networkId,
+  payloadHex,
+}: SignDataRequestParams[number]): Promise<SignDataResponse> => {
+  const derivationPath = (() => {
+    switch (addressParams.addressType) {
+      case AddressType.EnterpriseKey:
+        return addressParams.paymentDerivationPath;
+      case AddressType.BasePaymentKeyStakeKey:
+        return addressParams.paymentDerivationPath;
+      case AddressType.RewardKey:
+        return addressParams.stakeDerivationPath;
+      default:
+        throw new Error('Unsupported address type');
+    }
+  })();
+
+  const bip32Node = await deriveNode(derivationPath);
+  const { publicKeyBytes } = bip32Node;
+  const addressBytes = addressToBytes(
+    await getAddress({ addressParams, networkId }),
+  );
+
+  const signFn = async (toSign: Uint8Array) =>
+    hexToBytes(await signWithBip32Node(bip32Node, bytesToHex(toSign)));
+
+  return _signData(
+    hexToBytes(payloadHex),
+    addressBytes,
+    publicKeyBytes,
+    signFn,
+  );
+};
+
 export const cryptoProvider = {
   getExtendedPublicKey,
   signMessage,
   getAddress,
+  signData,
 };

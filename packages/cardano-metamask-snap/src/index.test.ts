@@ -7,7 +7,11 @@ import type {
   CardanoStakeDerivationPath,
 } from './api/derivationPath';
 import { type VerifyAddressRequestParams } from './api/verifyAddress';
-import { accountsFixture, transactionsFixture } from './fixtures';
+import {
+  accountsFixture,
+  signDataFixture,
+  transactionsFixture,
+} from './fixtures';
 
 describe('onRpcRequest', () => {
   // we allow only localhost and nu.fi origins, so we use localhost for testing
@@ -73,8 +77,48 @@ describe('onRpcRequest', () => {
     });
   });
 
+  describe('cardano__signData', () => {
+    Object.entries(signDataFixture).forEach(([addressName, params]) => {
+      it(`should sign data with ${addressName}`, async () => {
+        const { request } = await installSnap();
+
+        const { payloadHex, signatureHex, keyHex, networkId, addressParams } =
+          params;
+
+        const pendingResponse = request({
+          method: 'cardano__signData',
+          origin,
+          params: [
+            {
+              payloadHex,
+              addressParams,
+              networkId,
+            },
+          ],
+        });
+
+        const ui = await pendingResponse.getInterface();
+        await ui.ok();
+
+        const { response: actualResponse } = await pendingResponse;
+
+        const expectedResponse = {
+          result: {
+            signatureHex,
+            keyHex,
+            payloadHex,
+          },
+        };
+
+        expect(JSON.stringify(actualResponse)).toStrictEqual(
+          JSON.stringify(expectedResponse),
+        );
+      });
+    });
+  });
+
   describe('cardano__signTransaction', () => {
-    it('should sign transactions', async () => {
+    it('should sign transaction', async () => {
       const { request } = await installSnap();
 
       const addresses = [

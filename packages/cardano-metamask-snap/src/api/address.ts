@@ -19,11 +19,22 @@ export const addressTypes = {
   RewardKey: Cardano.AddressType.RewardKey,
 } as const;
 
-export type AddressParams = {
-  addressType: AddressType;
-  paymentDerivationPath: CardanoPaymentDerivationPath | null;
-  stakeDerivationPath: CardanoStakeDerivationPath | null;
-};
+export type AddressParams =
+  | {
+      addressType: Cardano.AddressType.BasePaymentKeyStakeKey;
+      paymentDerivationPath: CardanoPaymentDerivationPath;
+      stakeDerivationPath: CardanoStakeDerivationPath;
+    }
+  | {
+      addressType: Cardano.AddressType.RewardKey;
+      paymentDerivationPath: null;
+      stakeDerivationPath: CardanoStakeDerivationPath;
+    }
+  | {
+      addressType: Cardano.AddressType.EnterpriseKey;
+      paymentDerivationPath: CardanoPaymentDerivationPath;
+      stakeDerivationPath: null;
+    };
 
 export const isAddressParams = (params: unknown): params is AddressParams => {
   return (

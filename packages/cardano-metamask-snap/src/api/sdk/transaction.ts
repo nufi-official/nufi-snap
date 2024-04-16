@@ -1,7 +1,7 @@
 import { Serialization, type TxCBOR } from '@cardano-sdk/core';
 import { blake2b } from '@cardano-sdk/crypto';
-// eslint-disable-next-line import/no-nodejs-modules
-import { Buffer } from 'buffer';
+
+import { hexToBytes } from './utils';
 
 /**
  * Calculates the hash of a transaction body.
@@ -12,7 +12,7 @@ export function getTxBodyHash(txCborHex: string): string {
   const txBodyCborHex = Serialization.Transaction.fromCbor(txCborHex as TxCBOR)
     .body()
     .toCbor();
-  return blake2b(32).update(Buffer.from(txBodyCborHex, 'hex')).digest('hex');
+  return blake2b(32).update(hexToBytes(txBodyCborHex)).digest('hex');
 }
 
 /**

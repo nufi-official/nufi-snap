@@ -1,5 +1,5 @@
 import { transactionsFixture } from '../../fixtures';
-import { getTxBodyHash, isValidTxCborHex } from './transaction';
+import { getTxHash, isValidTxCborHex } from './transaction';
 
 describe('getTxBodyHash', () => {
   Object.entries(transactionsFixture).forEach(
@@ -7,7 +7,7 @@ describe('getTxBodyHash', () => {
       it(`should get txBodyHash for ${txType} transaction`, () => {
         const expectedTxBodyHashHex = txBodyHashHex;
 
-        const actualTxBodyHashHex = getTxBodyHash(txCborHex);
+        const actualTxBodyHashHex = getTxHash(txCborHex);
         expect(actualTxBodyHashHex).toStrictEqual(expectedTxBodyHashHex);
       }),
   );

@@ -8,7 +8,7 @@ import { hexToBytes } from './utils';
  * @param txCborHex - The hexadecimal representation of the transaction in CBOR format.
  * @returns The hash of the transaction body.
  */
-export function getTxBodyHash(txCborHex: string): string {
+export function getTxHash(txCborHex: string): string {
   const txBodyCborHex = Serialization.Transaction.fromCbor(txCborHex as TxCBOR)
     .body()
     .toCbor();

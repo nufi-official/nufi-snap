@@ -8,7 +8,7 @@ import {
   isStakeDerivationPath,
   isVotingDerivationPath,
 } from '../derivationPath';
-import { getTxBodyHash, isValidTxCborHex } from '../sdk';
+import { getTxHash, isValidTxCborHex } from '../sdk';
 import { assertIsArray, assertUserHasConfirmed, isRecord } from '../utils';
 import { renderSignTransaction } from './ui';
 
@@ -81,7 +81,7 @@ export const signTransaction = async ({
 
   const [{ txCborHex, derivationPaths }] = params;
 
-  const txBodyHashHex = getTxBodyHash(txCborHex);
+  const txBodyHashHex = getTxHash(txCborHex);
 
   await assertUserHasConfirmed(async () =>
     renderSignTransaction(txCborHex, txBodyHashHex),

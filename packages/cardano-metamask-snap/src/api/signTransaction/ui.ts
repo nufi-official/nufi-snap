@@ -9,9 +9,9 @@ export const renderSignTransaction = async (
   const headingText = 'Sign transaction';
 
   const txUiElements = section([
-    text('Transaction body hash:'),
+    text('Transaction hash:'),
     copyable(txBodyHashHex),
-    text('Transaction CBOR:'),
+    text('Raw transaction:'),
     copyable(txCborHex),
   ]);
 

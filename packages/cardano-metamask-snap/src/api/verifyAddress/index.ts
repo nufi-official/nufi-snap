@@ -63,7 +63,7 @@ export function assertIsVerifyAddressRequestParams(
  * @param params.stakeDerivationPath - The stake derivation path.
  * @returns The account index or null.
  */
-function getAccountAddressIndex({
+function getAddressAccountIndex({
   addressType,
   paymentDerivationPath,
   stakeDerivationPath,
@@ -127,7 +127,7 @@ export const verifyAddress = async ({
           [addressTypes.EnterpriseKey]: 'enterprise',
           [addressTypes.RewardKey]: 'rewards',
         },
-        getAccountAddressIndex(param.addressParams),
+        getAddressAccountIndex(param.addressParams),
         address,
       ),
     );

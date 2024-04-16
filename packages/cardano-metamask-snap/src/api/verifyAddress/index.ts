@@ -61,7 +61,7 @@ export function assertIsVerifyAddressRequestParams(
  * @param params.addressType - The type of address.
  * @param params.paymentDerivationPath - The payment derivation path.
  * @param params.stakeDerivationPath - The stake derivation path.
- * @returns The account index or null.
+ * @returns The account index if paths account indexes match, null if they don't or if we don't consider it a "standard" address path for the sake of NuFi wallet.
  */
 function getAddressAccountIndex({
   addressType,

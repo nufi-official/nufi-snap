@@ -13,7 +13,7 @@
     "snap.manifest.json"
   ],
   "scripts": {
-    "build": "mm-snap build",
+    "build": "npx mm-snap build",
     "build:clean": "yarn clean && yarn build",
     "clean": "rimraf dist",
     "lint": "yarn lint:eslint && yarn lint:misc --check",
@@ -21,8 +21,8 @@
     "lint:fix": "yarn lint:eslint --fix && yarn lint:misc --write",
     "lint:misc": "prettier '**/*.json' '**/*.md' '!CHANGELOG.md' --ignore-path packages/cardano-metamask-snap/snap.manifest.json",
     "prepublishOnly": "mm-snap manifest",
-    "serve": "mm-snap serve",
-    "start": "mm-snap serve",
+    "serve": "npx mm-snap serve",
+    "start": "npx mm-snap serve",
     "test": "jest"
   },
   "dependencies": {

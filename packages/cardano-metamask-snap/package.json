@@ -35,6 +35,7 @@
     "buffer": "^6.0.3"
   },
   "devDependencies": {
+    "@emurgo/cardano-message-signing-nodejs": "^1.0.1",
     "@jest/globals": "^29.5.0",
     "@metamask/auto-changelog": "^3.4.2",
     "@metamask/eslint-config": "^12.0.0",

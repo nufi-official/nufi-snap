@@ -22,7 +22,7 @@
     "lint:misc": "prettier '**/*.json' '**/*.md' '!CHANGELOG.md' --ignore-path packages/cardano-metamask-snap/snap.manifest.json",
     "prepublishOnly": "mm-snap manifest",
     "serve": "mm-snap serve",
-    "start": "mm-snap watch",
+    "start": "mm-snap serve",
     "test": "jest"
   },
   "dependencies": {

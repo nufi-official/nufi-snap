@@ -22,7 +22,8 @@
     "lint:eslint": "eslint . --cache --ext js,jsx,ts,tsx",
     "lint:fix": "yarn lint:eslint --fix && yarn lint:misc --write",
     "lint:misc": "prettier '**/*.json' '!packages/cardano-metamask-snap/snap.manifest.json' '**/*.md' '!**/CHANGELOG.md' '**/*.yml' --ignore-path .gitignore",
-    "start": "yarn workspaces foreach --parallel --interlaced --verbose run start",
+    "start": "yarn workspace @nufi/cardano-metamask-snap run start",
+    "start:all": "yarn workspaces foreach --parallel --interlaced --verbose run start",
     "test": "yarn workspace @nufi/cardano-metamask-snap run test"
   },
   "resolutions": {

@@ -32,20 +32,7 @@ async function getNufiUserId(): Promise<string> {
  * @returns The result of `snap_dialog`.
  * @throws If the request method is not valid for this snap.
  */
-export const onRpcRequest: OnRpcRequestHandler = async ({
-  request,
-  origin,
-}) => {
-  const urlObject = new URL(origin);
-  if (
-    !(
-      urlObject.hostname === 'localhost' ||
-      urlObject.hostname.endsWith('.nu.fi')
-    )
-  ) {
-    throw new Error('Invalid URL');
-  }
-
+export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
   switch (request.method) {
     case 'nufi__getUserId':
       return getNufiUserId();

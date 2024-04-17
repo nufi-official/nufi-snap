@@ -13,7 +13,6 @@
     "snap.manifest.json"
   ],
   "scripts": {
-    "allow-scripts": "yarn workspace root allow-scripts",
     "build": "mm-snap build",
     "build:clean": "yarn clean && yarn build",
     "clean": "rimraf dist",

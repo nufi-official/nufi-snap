@@ -31,7 +31,7 @@
     "@cardano-sdk/crypto": "^0.1.21",
     "@emurgo/cardano-message-signing-asmjs": "^1.0.1",
     "@metamask/key-tree": "^9.0.0",
-    "@metamask/snaps-sdk": "^3.1.0",
+    "@metamask/snaps-sdk": "^4.0.1",
     "buffer": "^6.0.3"
   },
   "devDependencies": {

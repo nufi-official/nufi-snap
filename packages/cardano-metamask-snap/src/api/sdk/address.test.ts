@@ -1,14 +1,11 @@
-import { accountsFixture } from '../../fixtures';
+import { accountFixture } from '../../tests/accountFixture';
 import { type PackAddressParams, packAddress } from './address';
 
-const { addresses } = accountsFixture.account0;
+const { addresses, paymentPart, stakePart } = accountFixture;
 const {
-  networkId,
-  paymentPart,
-  stakePart,
+  enterpriseKeyAddress,
+  rewardKeyAddress,
   basePaymentKeyStakeKeyAddress,
-  enterpriseAddress,
-  rewardAddress,
 } = addresses;
 
 const fixtures: {
@@ -18,35 +15,35 @@ const fixtures: {
   {
     packAddressParams: {
       addressParams: {
-        addressType: basePaymentKeyStakeKeyAddress.addressType,
+        addressType: basePaymentKeyStakeKeyAddress.addressParams.addressType,
         paymentKeyHex: paymentPart.extendedPublicKeyHex,
         stakeKeyHex: stakePart.extendedPublicKeyHex,
       },
-      networkId,
+      networkId: basePaymentKeyStakeKeyAddress.networkId,
     },
     expectedResult: basePaymentKeyStakeKeyAddress.bech32Address,
   },
   {
     packAddressParams: {
       addressParams: {
-        addressType: enterpriseAddress.addressType,
+        addressType: enterpriseKeyAddress.addressParams.addressType,
         paymentKeyHex: paymentPart.extendedPublicKeyHex,
         stakeKeyHex: null,
       },
-      networkId,
+      networkId: enterpriseKeyAddress.networkId,
     },
-    expectedResult: enterpriseAddress.bech32Address,
+    expectedResult: enterpriseKeyAddress.bech32Address,
   },
   {
     packAddressParams: {
       addressParams: {
-        addressType: rewardAddress.addressType,
+        addressType: rewardKeyAddress.addressParams.addressType,
         paymentKeyHex: null,
         stakeKeyHex: stakePart.extendedPublicKeyHex,
       },
-      networkId,
+      networkId: rewardKeyAddress.networkId,
     },
-    expectedResult: rewardAddress.bech32Address,
+    expectedResult: rewardKeyAddress.bech32Address,
   },
 ];
 

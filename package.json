@@ -17,14 +17,13 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "yarn workspaces foreach --parallel --topological --verbose run build",
+    "build": "yarn workspace site run build",
     "lint": "yarn lint:eslint && yarn lint:misc --check",
     "lint:eslint": "eslint . --cache --ext js,jsx,ts,tsx",
     "lint:fix": "yarn lint:eslint --fix && yarn lint:misc --write",
     "lint:misc": "prettier '**/*.json' '!packages/cardano-metamask-snap/snap.manifest.json' '**/*.md' '!**/CHANGELOG.md' '**/*.yml' --ignore-path .gitignore",
-    "start": "yarn workspace @nufi/cardano-metamask-snap run start",
-    "start:all": "yarn workspaces foreach --parallel --interlaced --verbose run start",
-    "test": "yarn workspace @nufi/cardano-metamask-snap run test"
+    "start": "yarn workspace site run start",
+    "test": "yarn workspace site run test"
   },
   "resolutions": {
     "@metamask/key-tree": "https://github.com/nufi-official/metamask-key-tree/releases/download/v10.0.0-cip3/metamask-key-tree-10.0.0-cip3.tgz",

@@ -21,7 +21,6 @@ export type SignTransactionRequestParams = [
 
 export type SignTransactionResponse = {
   txBodyHashHex: string;
-  txCborHex: string;
   witnesses: {
     extendedPublicKeyHex: string;
     signatureHex: string;
@@ -97,7 +96,6 @@ export const signTransaction = async ({
 
   return {
     txBodyHashHex,
-    txCborHex,
     witnesses,
   };
 };

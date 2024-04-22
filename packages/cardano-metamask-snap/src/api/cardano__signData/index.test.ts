@@ -1,7 +1,7 @@
 import { expect } from '@jest/globals';
 import { installSnap } from '@metamask/snaps-jest';
 
-import { accountFixture } from '../../fixtures/accountFixture';
+import { accountFixture } from '../../fixtures/account';
 import { origin } from '../../fixtures/constants';
 
 const signDataFixture = {

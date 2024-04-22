@@ -1,4 +1,4 @@
-import { transactionsFixture } from '../../fixtures/transactionsFixtures';
+import { transactionsFixture } from '../../fixtures/transactions';
 import { getTxHash, isValidTxCborHex } from './transaction';
 
 describe('getTxBodyHash', () => {

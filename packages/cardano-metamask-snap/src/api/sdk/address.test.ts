@@ -1,4 +1,4 @@
-import { accountFixture } from '../../fixtures/accountFixture';
+import { accountFixture } from '../../fixtures/account';
 import { type PackAddressParams, packAddress } from './address';
 
 const { addresses, paymentPart, stakePart } = accountFixture;

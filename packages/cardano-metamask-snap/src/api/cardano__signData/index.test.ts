@@ -1,8 +1,8 @@
 import { expect } from '@jest/globals';
 import { installSnap } from '@metamask/snaps-jest';
 
-import { accountFixture } from '../accountFixture';
-import { origin } from '../constants';
+import { accountFixture } from '../../fixtures/accountFixture';
+import { origin } from '../../fixtures/constants';
 
 const signDataFixture = {
   basePaymentKeyStakeKeyAddress: {

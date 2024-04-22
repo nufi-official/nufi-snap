@@ -1,7 +1,7 @@
 import { expect } from '@jest/globals';
 import { installSnap } from '@metamask/snaps-jest';
 
-import { origin } from '../constants';
+import { origin } from '../../fixtures/constants';
 
 const accountsFixtures = {
   account0: {
@@ -43,5 +43,19 @@ describe('cardano__getExtendedPublicKey', () => {
     expect(JSON.stringify(actualResponse)).toStrictEqual(
       JSON.stringify(expectedResponse),
     );
+  });
+
+  it('should return response containing error for invalid derivation path', async () => {
+    const { request } = await installSnap();
+    const { response: actualResponse } = await request({
+      method: 'cardano__getExtendedPublicKey',
+      origin,
+      params: [{ derivationPath: ["1'"] }],
+    });
+
+    const responseError =
+      'error' in actualResponse ? actualResponse.error : undefined;
+
+    expect(responseError).toBeDefined();
   });
 });

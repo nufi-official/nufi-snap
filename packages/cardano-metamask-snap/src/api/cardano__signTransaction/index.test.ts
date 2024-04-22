@@ -1,8 +1,8 @@
 import { expect } from '@jest/globals';
 import { installSnap } from '@metamask/snaps-jest';
 
-import { origin } from '../constants';
-import { transactionsFixture } from '../transactionsFixtures';
+import { origin } from '../../fixtures/constants';
+import { transactionsFixture } from '../../fixtures/transactionsFixtures';
 
 describe('cardano__signTransaction', () => {
   it('should sign transaction', async () => {

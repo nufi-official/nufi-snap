@@ -1,5 +1,5 @@
 import type { CardanoDerivationPath } from '../derivationPath';
-import type { GetExtendedPublicKeyResponse } from '../getExtendedPublicKey';
+import type { GetExtendedPublicKeyResponse } from '../cardano__getExtendedPublicKey';
 import {
   bip32NodeToExtendedPublicKeyHex,
   signWithBip32Node,
@@ -10,8 +10,11 @@ import {
   bytesToHex,
   AddressType,
 } from '../sdk';
-import type { SignDataRequestParams, SignDataResponse } from '../signData';
-import type { VerifyAddressRequestParams } from '../verifyAddress';
+import type {
+  SignDataRequestParams,
+  SignDataResponse,
+} from '../cardano__signData';
+import type { VerifyAddressRequestParams } from '../cardano__verifyAddress';
 import { deriveNode } from './snapApi';
 import type { SignMessageResponse } from './types';
 

@@ -1,7 +1,7 @@
-import { getExtendedPublicKey } from './getExtendedPublicKey';
-import { signData } from './signData';
-import { signTransaction } from './signTransaction';
-import { verifyAddress } from './verifyAddress';
+import { getExtendedPublicKey } from './cardano__getExtendedPublicKey';
+import { signData } from './cardano__signData';
+import { signTransaction } from './cardano__signTransaction';
+import { verifyAddress } from './cardano__verifyAddress';
 
 export const cardanoApi = {
   getExtendedPublicKey,

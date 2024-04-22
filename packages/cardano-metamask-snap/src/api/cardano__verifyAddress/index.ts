@@ -8,7 +8,7 @@ import {
   CARDANO_DERIVATION_PATH_PAYMENT_ROLE_EXTERNAL,
 } from '../derivationPath';
 import { type NetworkId, isNetworkId, networkIds } from '../networkId';
-import { assertIsArray, assertUserHasConfirmed, isRecord } from '../utils';
+import { assertIsArray, isRecord } from '../utils';
 import { renderVerifyAddress } from './ui';
 
 export type VerifyAddressRequestParams = [
@@ -109,30 +109,23 @@ function getAddressAccountIndex({
 
 export const verifyAddress = async ({
   params,
-}: JsonRpcRequest): Promise<boolean> => {
+}: JsonRpcRequest): Promise<void> => {
   assertIsVerifyAddressRequestParams(params);
   const [param] = params;
 
   const address = await cryptoProvider.getAddress(param);
-  try {
-    await assertUserHasConfirmed(async () =>
-      renderVerifyAddress(
-        param,
-        {
-          [networkIds.Testnet]: 'Testnet',
-          [networkIds.Mainnet]: 'Mainnet',
-        },
-        {
-          [addressTypes.BasePaymentKeyStakeKey]: '',
-          [addressTypes.EnterpriseKey]: 'enterprise',
-          [addressTypes.RewardKey]: 'rewards',
-        },
-        getAddressAccountIndex(param.addressParams),
-        address,
-      ),
-    );
-  } catch (error) {
-    return false;
-  }
-  return true;
+  await renderVerifyAddress(
+    param,
+    {
+      [networkIds.Testnet]: 'Testnet',
+      [networkIds.Mainnet]: 'Mainnet',
+    },
+    {
+      [addressTypes.BasePaymentKeyStakeKey]: '',
+      [addressTypes.EnterpriseKey]: 'enterprise',
+      [addressTypes.RewardKey]: 'rewards',
+    },
+    getAddressAccountIndex(param.addressParams),
+    address,
+  );
 };

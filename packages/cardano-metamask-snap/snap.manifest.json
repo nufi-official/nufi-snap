@@ -7,7 +7,7 @@
     "url": "https://github.com/nufi-official/nufi-snap"
   },
   "source": {
-    "shasum": "rpMnDG+7Yvcy/TG0RuK4iaJjrhD0hvy4kp57Zcpf7qU=",
+    "shasum": "Fj5+0qMnORvWySoF6y7KikUwGbGSDPTjfZRTiZRaX7s=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
@@ -29,14 +29,6 @@
         "path": [
           "m",
           "1852'",
-          "1815'"
-        ],
-        "curve": "ed25519Bip32"
-      },
-      {
-        "path": [
-          "m",
-          "1694'",
           "1815'"
         ],
         "curve": "ed25519Bip32"

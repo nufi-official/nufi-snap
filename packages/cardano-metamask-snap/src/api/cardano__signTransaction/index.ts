@@ -6,7 +6,6 @@ import {
   isDerivationPath,
   isPaymentDerivationPath,
   isStakeDerivationPath,
-  isVotingDerivationPath,
 } from '../derivationPath';
 import { getTxHash, isValidTxCborHex } from '../sdk';
 import { assertIsArray, assertUserHasConfirmed, isRecord } from '../utils';
@@ -56,9 +55,7 @@ export function assertIsSignTransactionRequestParams(
       param.derivationPaths.every(
         (path) =>
           isDerivationPath(path) &&
-          (isPaymentDerivationPath(path) ||
-            isStakeDerivationPath(path) ||
-            isVotingDerivationPath(path)),
+          (isPaymentDerivationPath(path) || isStakeDerivationPath(path)),
       ) &&
       'txCborHex' in param &&
       typeof param.txCborHex === 'string' &&

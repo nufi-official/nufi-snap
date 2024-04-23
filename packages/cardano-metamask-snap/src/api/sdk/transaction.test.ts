@@ -1,5 +1,5 @@
 import { transactionsFixture } from '../../fixtures/transactions';
-import { getTxHash, isValidTxCborHex } from './transaction';
+import { getTxHash, isValidTxCborHex, parseTransaction } from './transaction';
 
 describe('getTxBodyHash', () => {
   Object.entries(transactionsFixture).forEach(
@@ -23,4 +23,62 @@ describe('isValidTxBodyCborHex', () => {
     const isValid = isValidTxCborHex(transactionsFixture.simple.txCborHex);
     expect(isValid).toBe(true);
   });
+});
+
+const parseTxFixtures = {
+  simple: {
+    ...transactionsFixture.simple,
+    changeAddresses: [],
+    parsedTransaction: {
+      outputs: [
+        {
+          isChange: false,
+          address:
+            'addr_test1qqr585tvlc7ylnqvz8pyqwauzrdu0mxag3m7q56grgmgu7sxu2hyfhlkwuxupa9d5085eunq2qywy7hvmvej456flknswgndm3',
+          coin: '0.000000',
+        },
+      ],
+      fee: '0.123456',
+    },
+  },
+  simpleWithChangeOutput: {
+    ...transactionsFixture.simpleWithChangeOutput,
+    changeAddresses: [
+      'addr1qxgcuk5j0q0k2d0s9axvah49aut4ct5a5ertwp67psz3uuejm6ernk539y4mwwzrmny7ducc4d50mf6jfqvu79ghryss0cc0r2',
+    ],
+    parsedTransaction: {
+      outputs: [
+        {
+          isChange: true,
+          address:
+            'addr1qxgcuk5j0q0k2d0s9axvah49aut4ct5a5ertwp67psz3uuejm6ernk539y4mwwzrmny7ducc4d50mf6jfqvu79ghryss0cc0r2',
+          coin: '2.000000',
+        },
+        {
+          isChange: false,
+          address:
+            'addr1q9m75l05hh6sgntspdepjxyqjs0dzy6tam9luedzj5jw8hgl6azfkel48mkhfjsu7pk6ynw0wjp67qsyk2pwn577ywsqgw8grm',
+          coin: '1.176630',
+        },
+        {
+          isChange: false,
+          address:
+            'addr1q9m75l05hh6sgntspdepjxyqjs0dzy6tam9luedzj5jw8hgl6azfkel48mkhfjsu7pk6ynw0wjp67qsyk2pwn577ywsqgw8grm',
+          coin: '1.467024',
+        },
+      ],
+      fee: '0.174873',
+    },
+  },
+};
+
+describe('parseTransaction', () => {
+  Object.entries(parseTxFixtures).forEach(
+    ([txType, { parsedTransaction, txCborHex, changeAddresses }]) =>
+      it(`should parse ${txType} transaction`, () => {
+        expect(
+          JSON.stringify(parseTransaction({ txCborHex, changeAddresses })),
+        ).toBe(JSON.stringify(parsedTransaction));
+      }),
+  );
 });

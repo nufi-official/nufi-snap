@@ -23,6 +23,9 @@ export const CARDANO_DERIVATION_PATH_PURPOSE = "1852'";
 export const CARDANO_DERIVATION_PATH_PAYMENT_ROLE_EXTERNAL = '0';
 export const CARDANO_DERIVATION_PATH_PAYMENT_ROLE_INTERNAL = '1';
 export const CARDANO_DERIVATION_PATH_STAKE_ROLE = '2';
+export const CARDANO_DERIVATION_PATH_DREP_ROLE = '3';
+export const CARDANO_DERIVATION_PATH_COMMITTEE_COLD_ROLE = '4';
+export const CARDANO_DERIVATION_PATH_COMMITTEE_HOT_ROLE = '5';
 
 const isHardened = (
   index: DerivationPath[number] | undefined,
@@ -70,7 +73,10 @@ export type CardanoPaymentDerivationPath = [
   account: `${number}'`,
   role:
     | typeof CARDANO_DERIVATION_PATH_PAYMENT_ROLE_EXTERNAL
-    | typeof CARDANO_DERIVATION_PATH_PAYMENT_ROLE_INTERNAL,
+    | typeof CARDANO_DERIVATION_PATH_PAYMENT_ROLE_INTERNAL
+    | typeof CARDANO_DERIVATION_PATH_DREP_ROLE
+    | typeof CARDANO_DERIVATION_PATH_COMMITTEE_COLD_ROLE
+    | typeof CARDANO_DERIVATION_PATH_COMMITTEE_HOT_ROLE,
   addressIndex: `${number}`,
 ];
 
@@ -97,7 +103,10 @@ export function isPaymentDerivationPath(
       path[1] === CARDANO_DERIVATION_PATH_COINTYPE &&
       isAccountIndex(path[2]) &&
       (path[3] === CARDANO_DERIVATION_PATH_PAYMENT_ROLE_EXTERNAL ||
-        path[3] === CARDANO_DERIVATION_PATH_PAYMENT_ROLE_INTERNAL) &&
+        path[3] === CARDANO_DERIVATION_PATH_PAYMENT_ROLE_INTERNAL ||
+        path[3] === CARDANO_DERIVATION_PATH_DREP_ROLE ||
+        path[3] === CARDANO_DERIVATION_PATH_COMMITTEE_COLD_ROLE ||
+        path[3] === CARDANO_DERIVATION_PATH_COMMITTEE_HOT_ROLE) &&
       !isHardened(path[4]),
   );
 }

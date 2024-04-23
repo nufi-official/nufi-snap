@@ -10,7 +10,7 @@
     "lint:eslint": "eslint . --cache --ext js,ts",
     "lint:fix": "yarn lint:eslint --fix && yarn lint:misc --write",
     "lint:misc": "prettier '**/*.json' '**/*.md' '!CHANGELOG.md' --ignore-path .gitignore",
-    "start": "GATSBY_TELEMETRY_DISABLED=1 gatsby serve"
+    "start": "node src/index.js"
   },
   "browserslist": {
     "production": [
@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@metamask/providers": "^15.0.0",
+    "express": "^4.19.2",
     "gatsby": "^5.13.3",
     "gatsby-plugin-manifest": "^5.13.1",
     "gatsby-plugin-styled-components": "^6.13.1",

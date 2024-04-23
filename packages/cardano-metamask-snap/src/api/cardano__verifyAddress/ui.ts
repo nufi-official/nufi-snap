@@ -2,7 +2,7 @@ import { panel, copyable, heading, text, row } from '@metamask/snaps-sdk';
 
 import type { VerifyAddressRequestParams } from '.';
 import type { CardanoDerivationPath } from '../derivationPath';
-import { section } from '../ui';
+import { subSection } from '../ui';
 
 const renderAddressAccountIndex = (
   accountAddressIndex: CardanoDerivationPath[2] | null,
@@ -32,7 +32,7 @@ export const renderVerifyAddress = async (
     accountAddressIndex,
   )} ${addressDescriptionForType[param.addressParams.addressType]} address`;
 
-  const addressUiElements = section([
+  const addressUiElements = subSection([
     row('Network', text(`${networkNameForId[param.networkId]}`)),
     ...(param.addressParams.paymentDerivationPath
       ? [

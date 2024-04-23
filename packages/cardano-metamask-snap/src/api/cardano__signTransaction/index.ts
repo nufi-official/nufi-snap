@@ -1,5 +1,6 @@
 import { type JsonRpcRequest } from '@metamask/snaps-sdk';
 
+import { isAddressParams, type AddressParams } from '../address';
 import { cryptoProvider } from '../cryptoProvider';
 import {
   type CardanoDerivationPath,
@@ -7,7 +8,8 @@ import {
   isPaymentDerivationPath,
   isStakeDerivationPath,
 } from '../derivationPath';
-import { getTxHash, isValidTxCborHex } from '../sdk';
+import { isNetworkId, type NetworkId } from '../networkId';
+import { getTxHash, isValidTxCborHex, parseTransaction } from '../sdk';
 import { assertIsArray, assertUserHasConfirmed, isRecord } from '../utils';
 import { renderSignTransaction } from './ui';
 
@@ -15,6 +17,10 @@ export type SignTransactionRequestParams = [
   {
     txCborHex: string;
     derivationPaths: CardanoDerivationPath[];
+    changeOutputsParams: {
+      addressParamsBundle: AddressParams[];
+      networkId: NetworkId;
+    };
   },
 ];
 
@@ -42,7 +48,7 @@ export function assertIsSignTransactionRequestParams(
     throw new Error(
       `Invalid params for "cardano__signTransaction" method. Only one transaction can be signed at a time. ${JSON.stringify(
         params,
-      )}, `,
+      )}`,
     );
   }
 
@@ -59,7 +65,16 @@ export function assertIsSignTransactionRequestParams(
       ) &&
       'txCborHex' in param &&
       typeof param.txCborHex === 'string' &&
-      isValidTxCborHex(param.txCborHex)
+      isValidTxCborHex(param.txCborHex) &&
+      'changeOutputsParams' in param &&
+      isRecord(param.changeOutputsParams) &&
+      'addressParamsBundle' in param.changeOutputsParams &&
+      Array.isArray(param.changeOutputsParams.addressParamsBundle) &&
+      param.changeOutputsParams.addressParamsBundle.every((addressParams) =>
+        isAddressParams(addressParams),
+      ) &&
+      'networkId' in param.changeOutputsParams &&
+      isNetworkId(param.changeOutputsParams.networkId)
     )
   ) {
     throw new Error(
@@ -75,12 +90,26 @@ export const signTransaction = async ({
 }: JsonRpcRequest): Promise<SignTransactionResponse> => {
   assertIsSignTransactionRequestParams(params);
 
-  const [{ txCborHex, derivationPaths }] = params;
+  const [{ txCborHex, derivationPaths, changeOutputsParams }] = params;
+
+  const changeAddresses = await Promise.all(
+    changeOutputsParams.addressParamsBundle.map(async (addressParams) =>
+      cryptoProvider.getAddress({
+        addressParams,
+        networkId: changeOutputsParams.networkId,
+      }),
+    ),
+  );
 
   const txBodyHashHex = getTxHash(txCborHex);
 
+  const parsedTransaction = parseTransaction({
+    txCborHex,
+    changeAddresses,
+  });
+
   await assertUserHasConfirmed(async () =>
-    renderSignTransaction(txCborHex, txBodyHashHex),
+    renderSignTransaction(parsedTransaction),
   );
 
   const witnesses = await Promise.all(

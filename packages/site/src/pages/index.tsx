@@ -139,21 +139,31 @@ const Index = () => {
     console.log('cardano sign data key result', res);
   };
 
-  const handleCardanoSignTransactionClick = async () => {
+  const handleCardanoSignSimpleTransactionClick = async () => {
     const res = await invokeSnap({
       method: 'cardano__signTransaction',
       params: [
         {
           txCborHex:
-            '83a30081825820ba638246bd9be05aa46e865320c354efea75cf5796e88b763faaa30c9fbb78de000181825839000743d16cfe3c4fcc0c11c2403bbc10dbc7ecdd4477e053481a368e7a06e2ae44dff6770dc0f4ada3cf4cf2605008e27aecdb332ad349fda700021a0001e240a10081825820abd0f26723a5de57c10eb483b14c0aec1c365d911d46ab38684c2b9b2fa4a4915840f2b04185587ed5af88cac6778b0a8392f1cd4d51e6c3722d96db62cae9d716f2d71a22aac6bde7ec097e1357b9e2ffa70eb9ab5d757d24180c843593fb302f09f6',
+            '84a4008282582011d36dddc4d5e8a7583a2df902e1d345c601955248024141b12e9f023b4a8bcf0082582011d36dddc4d5e8a7583a2df902e1d345c601955248024141b12e9f023b4a8bcf01018282583900918c99cb5db556d566ac9b415cfd05da68efe0b7cbbe49947a79345af59ce15dfa526ec78d02fa6f73522ebd06cf22b145c6182f06f4664e1a075bccbc82583900f3db2225703e4cfbe2227772bdf057f9829449f18ac81e250ceb01ca0a84430507e150f0a06109dc3a7b1956b7a0586ae9078a55ef0e0b031b000000024a92020f021a0002985d031a037282d2a10080f5f6',
           derivationPaths: [
             ["1852'", "1815'", "0'", '0', '0'],
             ["1852'", "1815'", "0'", '2', '0'],
           ],
+          changeOutputsParams: {
+            addressParamsBundle: [
+              {
+                addressType: 0,
+                stakeDerivationPath: ["1852'", "1815'", "0'", '2', '0'],
+                paymentDerivationPath: ["1852'", "1815'", "0'", '0', '0'],
+              },
+            ],
+            networkId: 0,
+          },
         },
       ],
     });
-    console.log('cardano sign transaction key result', res);
+    console.log('cardano sign simple transaction result', res);
   };
 
   const handleCardanoVerifyAddressClick = async () => {
@@ -304,11 +314,11 @@ const Index = () => {
         />
         <Card
           content={{
-            title: 'Sign cardano transaction',
+            title: 'Sign SIMPLE cardano transaction',
             description: 'The result will be logged into console',
             button: (
               <SignCardanoTransactionButton
-                onClick={handleCardanoSignTransactionClick}
+                onClick={handleCardanoSignSimpleTransactionClick}
                 disabled={!installedSnap}
               />
             ),

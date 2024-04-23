@@ -5,7 +5,8 @@ const config: SnapConfig = {
   bundler: 'webpack',
   input: resolve(__dirname, 'src/index.ts'),
   server: {
-    port: 8080,
+    // eslint-disable-next-line n/no-process-env
+    port: Number(process.env.PORT) || 8080,
   },
   polyfills: {
     buffer: true,

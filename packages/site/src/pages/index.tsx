@@ -150,6 +150,7 @@ const Index = () => {
             ["1852'", "1815'", "0'", '0', '0'],
             ["1852'", "1815'", "0'", '2', '0'],
           ],
+          networkId: 0,
           changeOutputsParams: {
             addressParamsBundle: [
               {
@@ -158,7 +159,6 @@ const Index = () => {
                 paymentDerivationPath: ["1852'", "1815'", "0'", '0', '0'],
               },
             ],
-            networkId: 0,
           },
         },
       ],

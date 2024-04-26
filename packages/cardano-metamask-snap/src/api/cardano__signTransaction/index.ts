@@ -17,9 +17,9 @@ export type SignTransactionRequestParams = [
   {
     txCborHex: string;
     derivationPaths: CardanoDerivationPath[];
+    networkId: NetworkId;
     changeOutputsParams: {
       addressParamsBundle: AddressParams[];
-      networkId: NetworkId;
     };
   },
 ];
@@ -73,8 +73,8 @@ export function assertIsSignTransactionRequestParams(
       param.changeOutputsParams.addressParamsBundle.every((addressParams) =>
         isAddressParams(addressParams),
       ) &&
-      'networkId' in param.changeOutputsParams &&
-      isNetworkId(param.changeOutputsParams.networkId)
+      'networkId' in param &&
+      isNetworkId(param.networkId)
     )
   ) {
     throw new Error(
@@ -90,13 +90,14 @@ export const signTransaction = async ({
 }: JsonRpcRequest): Promise<SignTransactionResponse> => {
   assertIsSignTransactionRequestParams(params);
 
-  const [{ txCborHex, derivationPaths, changeOutputsParams }] = params;
+  const [{ txCborHex, derivationPaths, changeOutputsParams, networkId }] =
+    params;
 
   const changeAddresses = await Promise.all(
     changeOutputsParams.addressParamsBundle.map(async (addressParams) =>
       cryptoProvider.getAddress({
         addressParams,
-        networkId: changeOutputsParams.networkId,
+        networkId,
       }),
     ),
   );

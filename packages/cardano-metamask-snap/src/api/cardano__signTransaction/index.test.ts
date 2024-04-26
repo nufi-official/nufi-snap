@@ -21,7 +21,6 @@ const fixtures = {
       },
     ],
     changeOutputsParams: {
-      networkId: 1,
       addressParamsBundle: [],
     },
     stringifiedUi: `{"type":"confirmation","content":{"type":"panel","children":[{"type":"heading","value":"Sign transaction"},{"type":"panel","children":[{"type":"divider"},{"type":"divider"},{"type":"heading","value":"Send"},{"type":"row","label":"To address","value":{"type":"text","value":"addr_test1qqr585tvlc7ylnqvz8pyqwauzrdu0mxag3m7q56grgmgu7sxu2hyfhlkwuxupa9d5085eunq2qywy7hvmvej456flknswgndm3"}},{"type":"row","label":"Amount","value":{"type":"text","value":"**0.000000 ADA**"}}]},{"type":"panel","children":[{"type":"divider"},{"type":"divider"},{"type":"row","label":"Transaction fee","value":{"type":"text","value":"**0.123456 ADA**"}}]}]}}`,
@@ -36,7 +35,6 @@ const fixtures = {
       },
     ],
     changeOutputsParams: {
-      networkId: 1,
       addressParamsBundle: [
         {
           addressType: 0,
@@ -57,6 +55,7 @@ describe('cardano__signTransaction', () => {
         txCborHex,
         txBodyHashHex,
         changeOutputsParams,
+        networkId,
         stringifiedUi,
         witnesses,
       },
@@ -70,6 +69,7 @@ describe('cardano__signTransaction', () => {
           params: [
             {
               txCborHex,
+              networkId,
               changeOutputsParams,
               derivationPaths: witnesses.map(
                 ({ derivationPath }) => derivationPath,

@@ -107,6 +107,7 @@ export const signTransaction = async ({
   const parsedTransaction = parseTransaction({
     txCborHex,
     changeAddresses,
+    networkId,
   });
 
   await assertUserHasConfirmed(async () =>

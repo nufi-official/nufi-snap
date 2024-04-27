@@ -25,7 +25,7 @@ describe('isValidTxBodyCborHex', () => {
   });
 });
 
-const parseTxFixtures = {
+const parseTxSuccessFixtures = {
   simple: {
     ...transactionsFixture.simple,
     changeAddresses: [],
@@ -72,13 +72,34 @@ const parseTxFixtures = {
   },
 };
 
-describe('parseTransaction', () => {
-  Object.entries(parseTxFixtures).forEach(
-    ([txType, { parsedTransaction, txCborHex, changeAddresses }]) =>
+describe('parseTransaction success', () => {
+  Object.entries(parseTxSuccessFixtures).forEach(
+    ([txType, { parsedTransaction, txCborHex, changeAddresses, networkId }]) =>
       it(`should parse ${txType} transaction`, () => {
         expect(
-          JSON.stringify(parseTransaction({ txCborHex, changeAddresses })),
+          JSON.stringify(
+            parseTransaction({ txCborHex, changeAddresses, networkId }),
+          ),
         ).toBe(JSON.stringify(parsedTransaction));
+      }),
+  );
+});
+
+const parseTransactionFailureFixtures = {
+  notConsistentNetworkIdWithOutputs: {
+    ...parseTxSuccessFixtures.simple,
+    networkId: 1,
+    errorMessage: 'Transaction outputs networkId does not match',
+  },
+};
+
+describe('parseTransaction failure', () => {
+  Object.entries(parseTransactionFailureFixtures).forEach(
+    ([txType, { txCborHex, changeAddresses, networkId, errorMessage }]) =>
+      it(`should fail parsing transaction with ${txType}`, () => {
+        expect(() =>
+          parseTransaction({ txCborHex, changeAddresses, networkId }),
+        ).toThrow(errorMessage);
       }),
   );
 });

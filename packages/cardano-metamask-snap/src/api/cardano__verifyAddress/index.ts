@@ -109,7 +109,7 @@ function getAddressAccountIndex({
 
 export const verifyAddress = async ({
   params,
-}: JsonRpcRequest): Promise<void> => {
+}: JsonRpcRequest): Promise<true> => {
   assertIsVerifyAddressRequestParams(params);
   const [param] = params;
 
@@ -128,4 +128,5 @@ export const verifyAddress = async ({
     getAddressAccountIndex(param.addressParams),
     address,
   );
+  return true;
 };

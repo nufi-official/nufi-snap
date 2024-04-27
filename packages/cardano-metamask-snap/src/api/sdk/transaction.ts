@@ -1,5 +1,6 @@
 import { Serialization, type TxCBOR } from '@cardano-sdk/core';
 import { blake2b } from '@cardano-sdk/crypto';
+import { assert } from '@metamask/snaps-sdk';
 import BigNumber from 'bignumber.js';
 
 import type { SignTransactionRequestParams } from '../cardano__signTransaction';
@@ -38,9 +39,31 @@ const lovelaceToAda = (lovelaces: string): string => {
   return new BigNumber(lovelaces).dividedBy(base).toFixed(decimals);
 };
 
+const assertValidNetworkId = (
+  networkId: number,
+  txBody: Serialization.TransactionBody,
+): void => {
+  const txNetworkId = txBody.networkId();
+
+  if (txNetworkId) {
+    assert(txNetworkId === networkId, 'Transaction networkId does not match');
+  }
+
+  const outputsAddressNetworkIds = txBody.outputs().map((output) => {
+    return output.address().getNetworkId();
+  });
+
+  assert(
+    outputsAddressNetworkIds.every(
+      (outputAddressNetworkId) => outputAddressNetworkId === networkId,
+    ),
+    'Transaction outputs networkId does not match',
+  );
+};
+
 type ParseTransactionParams = Pick<
   SignTransactionRequestParams[number],
-  'txCborHex'
+  'txCborHex' | 'networkId'
 > & {
   changeAddresses: string[];
 };
@@ -48,10 +71,13 @@ type ParseTransactionParams = Pick<
 export const parseTransaction = ({
   txCborHex,
   changeAddresses,
+  networkId,
 }: ParseTransactionParams): ParsedTransaction => {
   const parsedTransaction = Serialization.Transaction.fromCbor(
     txCborHex as TxCBOR,
   ).body();
+
+  assertValidNetworkId(networkId, parsedTransaction);
 
   const outputs = parsedTransaction.outputs().map((output) => {
     const address = output.address().toBech32();

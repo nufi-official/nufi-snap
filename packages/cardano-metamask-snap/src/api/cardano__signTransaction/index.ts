@@ -16,7 +16,7 @@ import { renderSignTransaction } from './ui';
 export type SignTransactionRequestParams = [
   {
     txCborHex: string;
-    derivationPaths: CardanoDerivationPath[];
+    witnessKeysPaths: CardanoDerivationPath[];
     networkId: NetworkId;
     changeOutputsParams: {
       addressParamsBundle: AddressParams[];
@@ -29,7 +29,7 @@ export type SignTransactionResponse = {
   witnesses: {
     extendedPublicKeyHex: string;
     signatureHex: string;
-    derivationPath: CardanoDerivationPath;
+    witnessKeyPath: CardanoDerivationPath;
   }[];
 };
 
@@ -56,9 +56,9 @@ export function assertIsSignTransactionRequestParams(
   if (
     !(
       isRecord(param) &&
-      'derivationPaths' in param &&
-      Array.isArray(param.derivationPaths) &&
-      param.derivationPaths.every(
+      'witnessKeysPaths' in param &&
+      Array.isArray(param.witnessKeysPaths) &&
+      param.witnessKeysPaths.every(
         (path) =>
           isDerivationPath(path) &&
           (isPaymentDerivationPath(path) || isStakeDerivationPath(path)),
@@ -90,7 +90,7 @@ export const signTransaction = async ({
 }: JsonRpcRequest): Promise<SignTransactionResponse> => {
   assertIsSignTransactionRequestParams(params);
 
-  const [{ txCborHex, derivationPaths, changeOutputsParams, networkId }] =
+  const [{ txCborHex, witnessKeysPaths, changeOutputsParams, networkId }] =
     params;
 
   const changeAddresses = await Promise.all(
@@ -115,10 +115,10 @@ export const signTransaction = async ({
   );
 
   const witnesses = await Promise.all(
-    derivationPaths.map(async (derivationPath) => {
+    witnessKeysPaths.map(async (witnessKeyPath) => {
       const { extendedPublicKeyHex, signatureHex } =
-        await cryptoProvider.signMessage(derivationPath, txBodyHashHex);
-      return { derivationPath, extendedPublicKeyHex, signatureHex };
+        await cryptoProvider.signMessage(witnessKeyPath, txBodyHashHex);
+      return { witnessKeyPath, extendedPublicKeyHex, signatureHex };
     }),
   );
 

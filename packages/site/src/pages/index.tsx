@@ -151,15 +151,13 @@ const Index = () => {
             ["1852'", "1815'", "0'", '2', '0'],
           ],
           networkId: 0,
-          changeOutputsParams: {
-            addressParamsBundle: [
-              {
-                addressType: 0,
-                stakeDerivationPath: ["1852'", "1815'", "0'", '2', '0'],
-                paymentDerivationPath: ["1852'", "1815'", "0'", '0', '0'],
-              },
-            ],
-          },
+          ownAddresses: [
+            {
+              addressType: 0,
+              stakeDerivationPath: ["1852'", "1815'", "0'", '2', '0'],
+              paymentDerivationPath: ["1852'", "1815'", "0'", '0', '0'],
+            },
+          ],
         },
       ],
     });

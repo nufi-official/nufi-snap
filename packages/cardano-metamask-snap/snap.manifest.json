@@ -7,7 +7,7 @@
     "url": "https://github.com/nufi-official/nufi-snap"
   },
   "source": {
-    "shasum": "+PeYVsT8dt+4Agz8kVk+Roy8FJWw7lYb50aQ2Iv/rLo=",
+    "shasum": "RPG/rYicZIo+4WcCCZszGXeLD6QXv1+jBr68s9A/MxY=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",

@@ -22,9 +22,7 @@ const fixtures = {
           'afe5c9af375ed8ad1d5d499aba59c8261645707572102c7efad45e9cfc189cdbf33279301b26fd471ecb423d3ccf185a723da1934fc9b0c011a34f507b542209',
       },
     ],
-    changeOutputsParams: {
-      addressParamsBundle: [],
-    },
+    ownAddresses: [],
     stringifiedUi: `{"type":"confirmation","content":{"type":"panel","children":[{"type":"heading","value":"Sign transaction"},{"type":"panel","children":[{"type":"divider"},{"type":"divider"},{"type":"heading","value":"Send"},{"type":"row","label":"To address","value":{"type":"text","value":"addr_test1qqr585tvlc7ylnqvz8pyqwauzrdu0mxag3m7q56grgmgu7sxu2hyfhlkwuxupa9d5085eunq2qywy7hvmvej456flknswgndm3"}},{"type":"row","label":"Amount","value":{"type":"text","value":"**0.000000 ADA**"}}]},{"type":"panel","children":[{"type":"divider"},{"type":"divider"},{"type":"row","label":"Transaction fee","value":{"type":"text","value":"**0.123456 ADA**"}}]}]}}`,
   },
   simpleWithChangeOutput: {
@@ -37,15 +35,13 @@ const fixtures = {
           '1e66e1dd9b4d808109a8217cb7d76869cebf34a4bbb9c13fd2cad7cf5c2f0f628166d452d7ec53b656f1b4fc50a6d06f9e902720584414ca2d8f2feb69a7a506',
       },
     ],
-    changeOutputsParams: {
-      addressParamsBundle: [
-        {
-          addressType: 0,
-          paymentDerivationPath: ["1852'", "1815'", "0'", '0', '0'],
-          stakeDerivationPath: ["1852'", "1815'", "0'", '2', '0'],
-        },
-      ],
-    },
+    ownAddresses: [
+      {
+        addressType: 0,
+        paymentDerivationPath: ["1852'", "1815'", "0'", '0', '0'],
+        stakeDerivationPath: ["1852'", "1815'", "0'", '2', '0'],
+      },
+    ],
     stringifiedUi: `{"type":"confirmation","content":{"type":"panel","children":[{"type":"heading","value":"Sign transaction"},{"type":"panel","children":[{"type":"divider"},{"type":"divider"},{"type":"heading","value":"Send"},{"type":"row","label":"To address","value":{"type":"text","value":"addr1q9m75l05hh6sgntspdepjxyqjs0dzy6tam9luedzj5jw8hgl6azfkel48mkhfjsu7pk6ynw0wjp67qsyk2pwn577ywsqgw8grm"}},{"type":"row","label":"Amount","value":{"type":"text","value":"**1.176630 ADA**"}}]},{"type":"panel","children":[{"type":"divider"},{"type":"divider"},{"type":"heading","value":"Send"},{"type":"row","label":"To address","value":{"type":"text","value":"addr1q9m75l05hh6sgntspdepjxyqjs0dzy6tam9luedzj5jw8hgl6azfkel48mkhfjsu7pk6ynw0wjp67qsyk2pwn577ywsqgw8grm"}},{"type":"row","label":"Amount","value":{"type":"text","value":"**1.467024 ADA**"}}]},{"type":"panel","children":[{"type":"divider"},{"type":"divider"},{"type":"row","label":"Transaction fee","value":{"type":"text","value":"**0.174873 ADA**"}}]}]}}`,
   },
 };
@@ -57,7 +53,7 @@ describe('cardano__signTransaction', () => {
       {
         txCborHex,
         txBodyHashHex,
-        changeOutputsParams,
+        ownAddresses,
         networkId,
         stringifiedUi,
         witnesses,
@@ -73,7 +69,7 @@ describe('cardano__signTransaction', () => {
             {
               txCborHex,
               networkId,
-              changeOutputsParams,
+              ownAddresses,
               witnessKeysPaths: witnesses.map(
                 ({ witnessKeyPath }) => witnessKeyPath,
               ),

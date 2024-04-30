@@ -1,4 +1,4 @@
-import { Serialization, type TxCBOR } from '@cardano-sdk/core';
+import { Cardano, Serialization, type TxCBOR } from '@cardano-sdk/core';
 import { blake2b } from '@cardano-sdk/crypto';
 import { assert } from '@metamask/snaps-sdk';
 import BigNumber from 'bignumber.js';
@@ -87,6 +87,20 @@ export const parseTransaction = ({
       isChange: changeAddresses.includes(address),
       address,
       coin: lovelaceToAda(output.amount().coin().toString()),
+      tokenBundle: Array.from(
+        output.amount().multiasset()?.entries() ?? [],
+      ).map(([assetId, value]) => {
+        const policyId = Cardano.AssetId.getPolicyId(assetId);
+        const assetName = Cardano.AssetId.getAssetName(assetId);
+        const fingerPrint = Cardano.AssetFingerprint.fromParts(
+          policyId,
+          assetName,
+        );
+        return {
+          fingerPrint: fingerPrint.toString(),
+          amount: value.toString(),
+        };
+      }),
     };
   });
 

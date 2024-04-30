@@ -164,6 +164,22 @@ const Index = () => {
     console.log('cardano sign simple transaction result', res);
   };
 
+  const handleCardanoSignTxWithMultiassetTransactionClick = async () => {
+    const res = await invokeSnap({
+      method: 'cardano__signTransaction',
+      params: [
+        {
+          txCborHex:
+            '84A40082825820141D22542AD9B43073C1CF7E829089E5D7F9F27392B7868D42AC66E62EADD9790182582085D84FCF975EE7AE4C5CEF2C67FF7228573688DC92E3B21258EFBFD6A9BAC59201018282583901A39FBD8DA0D8EED2CEFB7B12D6730B3221EBFB120442050445FEC8CD16BDD5C45F332EC53F7CDBCED0359D78FD0C0146C0A2F964BADF2F9F821A00117E5CA1581CA0028F350AAABE0545FDCB56B039BFB08E4BB4D8C4D7C3C7D481C235A145484F534B5918EA82583901A39FBD8DA0D8EED2CEFB7B12D6730B3221EBFB120442050445FEC8CD16BDD5C45F332EC53F7CDBCED0359D78FD0C0146C0A2F964BADF2F9F821A00CD7378A1581C0029CB7C88C7567B63D1A512C0ED626AA169688EC980730C0473B913A1456C702063021A0009564A021A00049C29031A07538C9CA10080F5F6',
+          witnessKeysPaths: [["1852'", "1815'", "0'", '0', '0']],
+          networkId: 1,
+          ownAddresses: [],
+        },
+      ],
+    });
+    console.log('cardano sign multiasset transaction result', res);
+  };
+
   const handleCardanoVerifyAddressClick = async () => {
     const params = [
       [
@@ -317,6 +333,24 @@ const Index = () => {
             button: (
               <SignCardanoTransactionButton
                 onClick={handleCardanoSignSimpleTransactionClick}
+                disabled={!installedSnap}
+              />
+            ),
+          }}
+          disabled={!installedSnap}
+          fullWidth={
+            isMetaMaskReady &&
+            Boolean(installedSnap) &&
+            !shouldDisplayReconnectButton(installedSnap)
+          }
+        />
+        <Card
+          content={{
+            title: 'Sign MULTIASSET cardano transaction',
+            description: 'The result will be logged into console',
+            button: (
+              <SignCardanoTransactionButton
+                onClick={handleCardanoSignTxWithMultiassetTransactionClick}
                 disabled={!installedSnap}
               />
             ),

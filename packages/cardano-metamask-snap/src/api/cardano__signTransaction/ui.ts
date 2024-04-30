@@ -1,6 +1,6 @@
 import { panel, text, heading, row } from '@metamask/snaps-sdk';
 
-import { section } from '../ui';
+import { section, subSection } from '../ui';
 
 const adaValue = (value: string) => `**${value} ADA**`;
 
@@ -19,6 +19,13 @@ const renderOutputs = (outputs: ParsedTransaction['outputs']) => {
           heading('Send'),
           row('To address', text(output.address)),
           row('Amount', text(adaValue(output.coin))),
+          ...output.tokenBundle.map((token) => {
+            const { fingerPrint, amount } = token;
+            return subSection([
+              row('Asset fingerprint', text(fingerPrint)),
+              row('Token Amount', text(amount)),
+            ]);
+          }),
         ]);
       }),
   ];
@@ -29,6 +36,10 @@ export type ParsedTransaction = {
     isChange: boolean;
     address: string;
     coin: string;
+    tokenBundle: {
+      fingerPrint: string;
+      amount: string;
+    }[];
   }[];
   fee: string;
 };

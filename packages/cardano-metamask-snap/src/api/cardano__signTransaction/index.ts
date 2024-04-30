@@ -9,7 +9,12 @@ import {
   isStakeDerivationPath,
 } from '../derivationPath';
 import { isNetworkId, type NetworkId } from '../networkId';
-import { getTxHash, isValidTxCborHex, parseTransaction } from '../sdk';
+import {
+  getTxHash,
+  isValidTxCborHex,
+  parseTransaction,
+  tokenWhitelist,
+} from '../sdk';
 import { assertIsArray, assertUserHasConfirmed, isRecord } from '../utils';
 import { renderSignTransaction } from './ui';
 
@@ -103,6 +108,7 @@ export const signTransaction = async ({
     txCborHex,
     changeAddresses,
     networkId,
+    tokenWhitelist,
   });
 
   await assertUserHasConfirmed(async () =>

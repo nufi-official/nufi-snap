@@ -29,6 +29,7 @@ const parseTxSuccessFixtures = {
   simple: {
     ...transactionsFixture.simple,
     changeAddresses: [],
+    tokenWhitelist: {},
     parsedTransaction: {
       outputs: [
         {
@@ -47,6 +48,7 @@ const parseTxSuccessFixtures = {
     changeAddresses: [
       'addr1qxgcuk5j0q0k2d0s9axvah49aut4ct5a5ertwp67psz3uuejm6ernk539y4mwwzrmny7ducc4d50mf6jfqvu79ghryss0cc0r2',
     ],
+    tokenWhitelist: {},
     parsedTransaction: {
       outputs: [
         {
@@ -77,6 +79,7 @@ const parseTxSuccessFixtures = {
   multiAsset: {
     ...transactionsFixture.multiAsset,
     changeAddresses: [],
+    tokenWhitelist: {},
     parsedTransaction: {
       outputs: [
         {
@@ -111,14 +114,25 @@ const parseTxSuccessFixtures = {
 
 describe('parseTransaction success', () => {
   Object.entries(parseTxSuccessFixtures).forEach(
-    ([txType, { parsedTransaction, txCborHex, changeAddresses, networkId }]) =>
+    ([
+      txType,
+      {
+        parsedTransaction,
+        txCborHex,
+        changeAddresses,
+        networkId,
+        tokenWhitelist,
+      },
+    ]) =>
       it(`should parse ${txType} transaction`, () => {
-        console.log(
-          parseTransaction({ txCborHex, changeAddresses, networkId }),
-        );
         expect(
           JSON.stringify(
-            parseTransaction({ txCborHex, changeAddresses, networkId }),
+            parseTransaction({
+              txCborHex,
+              changeAddresses,
+              networkId,
+              tokenWhitelist,
+            }),
           ),
         ).toBe(JSON.stringify(parsedTransaction));
       }),
@@ -135,10 +149,18 @@ const parseTransactionFailureFixtures = {
 
 describe('parseTransaction failure', () => {
   Object.entries(parseTransactionFailureFixtures).forEach(
-    ([txType, { txCborHex, changeAddresses, networkId, errorMessage }]) =>
+    ([
+      txType,
+      { txCborHex, changeAddresses, networkId, errorMessage, tokenWhitelist },
+    ]) =>
       it(`should fail parsing transaction with ${txType}`, () => {
         expect(() =>
-          parseTransaction({ txCborHex, changeAddresses, networkId }),
+          parseTransaction({
+            txCborHex,
+            changeAddresses,
+            networkId,
+            tokenWhitelist,
+          }),
         ).toThrow(errorMessage);
       }),
   );

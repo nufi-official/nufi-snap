@@ -96,13 +96,13 @@ export const parseTransaction = ({
       ).map(([assetId, value]) => {
         const policyId = Cardano.AssetId.getPolicyId(assetId);
         const assetName = Cardano.AssetId.getAssetName(assetId);
-        const fingerPrint = Cardano.AssetFingerprint.fromParts(
+        const fingerprint = Cardano.AssetFingerprint.fromParts(
           policyId,
           assetName,
         ).toString();
-        const tokenMetadata = tokenWhitelist[fingerPrint];
+        const tokenMetadata = tokenWhitelist[fingerprint];
         return {
-          fingerPrint,
+          fingerprint,
           amount: applyDecimals(value.toString(), tokenMetadata?.decimals ?? 0),
           name: tokenMetadata?.name,
           ticker: tokenMetadata?.ticker,

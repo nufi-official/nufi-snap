@@ -34,11 +34,14 @@ export function isValidTxCborHex(txCborHex: string): boolean {
   }
 }
 
-const ADA_DECIMALS = 6;
-
 const applyDecimals = (value: string, decimals: number): string => {
   const base = new BigNumber(10 ** decimals);
   return new BigNumber(value).dividedBy(base).toFixed(decimals);
+};
+
+const lovelaceToAda = (lovelaces: string): string => {
+  const decimals = 6;
+  return applyDecimals(lovelaces, decimals);
 };
 
 const assertValidNetworkId = (
@@ -88,7 +91,7 @@ export const parseTransaction = ({
     return {
       isChange: changeAddresses.includes(address),
       address,
-      coin: applyDecimals(output.amount().coin().toString(), ADA_DECIMALS),
+      coin: lovelaceToAda(output.amount().coin().toString()),
       tokenBundle: Array.from(
         output.amount().multiasset()?.entries() ?? [],
       ).map(([assetId, value]) => {
@@ -109,6 +112,6 @@ export const parseTransaction = ({
     };
   });
 
-  const fee = applyDecimals(parsedTransaction.fee().toString(), ADA_DECIMALS);
+  const fee = lovelaceToAda(parsedTransaction.fee().toString());
   return { outputs, fee };
 };

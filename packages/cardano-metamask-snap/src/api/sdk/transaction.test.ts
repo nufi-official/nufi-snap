@@ -89,7 +89,7 @@ const parseTxSuccessFixtures = {
           coin: '1.146460',
           tokenBundle: [
             {
-              fingerPrint: 'asset17q7r59zlc3dgw0venc80pdv566q6yguw03f0d9',
+              fingerprint: 'asset17q7r59zlc3dgw0venc80pdv566q6yguw03f0d9',
               amount: '234',
             },
           ],
@@ -101,7 +101,7 @@ const parseTxSuccessFixtures = {
           coin: '13.464440',
           tokenBundle: [
             {
-              fingerPrint: 'asset1t5mz75px5h2m436flfmc04ux0u2y5hye7r7e87',
+              fingerprint: 'asset1t5mz75px5h2m436flfmc04ux0u2y5hye7r7e87',
               amount: '611914',
             },
           ],

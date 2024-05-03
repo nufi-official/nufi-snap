@@ -25,7 +25,7 @@ const renderOutputs = (outputs: ParsedTransaction['outputs']) => {
           row('To address', text(output.address)),
           row('Amount', text(assetValue(output.coin, ADA_TICKER))),
           ...output.tokenBundle.map((token) => {
-            const { fingerPrint, amount, name, ticker } = token;
+            const { fingerprint: fingerPrint, amount, name, ticker } = token;
             return subSection([
               ...(name ? [text(bold(name))] : []),
               row('Asset fingerprint', text(fingerPrint)),
@@ -46,7 +46,7 @@ export type ParsedTransaction = {
     address: string;
     coin: string;
     tokenBundle: {
-      fingerPrint: string;
+      fingerprint: string;
       amount: string;
       name: string | undefined;
       ticker: string | undefined;

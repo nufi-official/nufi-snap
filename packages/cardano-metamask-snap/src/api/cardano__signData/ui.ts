@@ -18,7 +18,11 @@ export const renderSignData = async (payloadHex: string) => {
     method: 'snap_dialog',
     params: {
       type: 'confirmation',
-      content: panel([heading(headingText), messageUiElements]),
+      content: panel([
+        heading(headingText),
+        text('Verify the content before signing!'),
+        messageUiElements,
+      ]),
     },
   });
 };

@@ -5,6 +5,7 @@ import { hexToBytes } from './utils';
 
 /**
  * Calculates the hash of a transaction body.
+ *
  * @param txCborHex - The hexadecimal representation of the transaction in CBOR format.
  * @returns The hash of the transaction body.
  */
@@ -17,6 +18,7 @@ export function getTxHash(txCborHex: string): string {
 
 /**
  * Checks if the given transaction body hexadecimal string is valid CBOR format.
+ *
  * @param txCborHex - The hexadecimal representation of the transaction in CBOR format.
  * @returns True if the transaction body is valid CBOR format, false otherwise.
  */

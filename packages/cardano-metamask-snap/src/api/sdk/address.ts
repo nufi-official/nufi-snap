@@ -21,6 +21,7 @@ export type PackAddressParams = {
 
 /**
  * Converts a key in hexadecimal format to a hash in hexadecimal format.
+ *
  * @param key - The key in hexadecimal format.
  * @returns The hash in hexadecimal format.
  */
@@ -36,6 +37,7 @@ async function keyToHashHex(key: string): Promise<Hash28ByteBase16> {
 
 /**
  * Retrieves the payment part of the address.
+ *
  * @param addressParams - The parameters for packing the address.
  * @param addressParams.addressType - Type of address.
  * @param addressParams.paymentKeyHex - Payment key in hex.
@@ -71,6 +73,7 @@ async function getPaymentPart({
 
 /**
  * Retrieves the delegation part of the address.
+ *
  * @param addressParams - The parameters for packing the address.
  * @param addressParams.addressType - Type of address.
  * @param addressParams.stakeKeyHex - Staking key hex.
@@ -98,6 +101,7 @@ async function getDelegationPart({
 
 /**
  * Packs the address based on the provided parameters.
+ *
  * @param packAddressParams - The parameters for packing the address.
  * @param packAddressParams.addressParams - Address parameters.
  * @param packAddressParams.networkId - The network ID.

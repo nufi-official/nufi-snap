@@ -5,7 +5,7 @@ export const networkIds = {
   Testnet: Cardano.NetworkId.Testnet,
 } as const;
 
-export type NetworkId = (typeof networkIds)[keyof typeof networkIds];
+export type NetworkId = typeof networkIds[keyof typeof networkIds];
 
 export const isNetworkId = (value: unknown): value is NetworkId =>
   Object.values(networkIds).includes(value as NetworkId);

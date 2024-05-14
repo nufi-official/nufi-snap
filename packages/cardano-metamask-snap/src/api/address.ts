@@ -9,7 +9,7 @@ import {
 } from './derivationPath';
 import { isRecord } from './utils';
 
-export type AddressType = (typeof addressTypes)[keyof typeof addressTypes];
+export type AddressType = typeof addressTypes[keyof typeof addressTypes];
 
 // we support only a subset of addresses, rest of them are not used in dapp/wallet interactions
 // so we leave them out for now

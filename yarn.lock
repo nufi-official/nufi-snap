@@ -3208,17 +3208,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@metamask/eslint-config-jest@npm:12.0.0":
-  version: 12.0.0
-  resolution: "@metamask/eslint-config-jest@npm:12.0.0"
-  peerDependencies:
-    "@metamask/eslint-config": ^12.0.0
-    eslint: ^8.27.0
-    eslint-plugin-jest: ^27.1.5
-  checksum: 80b3366c558f7c466e2cb7a63b9633b8c1fc374a7730f43bb7136a3bb6fe29d473f09473084d8858f0e89970706787d8fae131ee963693b97722e74929e633b2
-  languageName: node
-  linkType: hard
-
 "@metamask/eslint-config-jest@npm:12.1.0":
   version: 12.1.0
   resolution: "@metamask/eslint-config-jest@npm:12.1.0"
@@ -4143,7 +4132,7 @@ __metadata:
     "@jest/globals": 29.5.0
     "@metamask/auto-changelog": 3.4.2
     "@metamask/eslint-config": 12.0.0
-    "@metamask/eslint-config-jest": 12.0.0
+    "@metamask/eslint-config-jest": 12.1.0
     "@metamask/eslint-config-nodejs": 12.0.0
     "@metamask/eslint-config-typescript": 12.0.0
     "@metamask/key-tree": 9.0.0
@@ -18465,7 +18454,7 @@ __metadata:
     "@lavamoat/allow-scripts": 3.0.0
     "@lavamoat/preinstall-always-fail": 2.0.0
     "@metamask/eslint-config": 12.0.0
-    "@metamask/eslint-config-jest": 12.0.0
+    "@metamask/eslint-config-jest": 12.1.0
     "@metamask/eslint-config-nodejs": 12.0.0
     "@metamask/eslint-config-typescript": 12.0.0
     "@typescript-eslint/eslint-plugin": 5.42.1

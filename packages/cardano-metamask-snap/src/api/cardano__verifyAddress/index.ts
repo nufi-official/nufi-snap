@@ -3,9 +3,8 @@ import { type JsonRpcRequest } from '@metamask/snaps-sdk';
 import { addressTypes, isAddressParams, type AddressParams } from '../address';
 import { cryptoProvider } from '../cryptoProvider';
 import {
-  type CardanoPaymentDerivationPath,
-  type CardanoStakeDerivationPath,
-  CARDANO_DERIVATION_PATH_PAYMENT_ROLE_EXTERNAL,
+  getPaymentPathAccountIndex,
+  getStakePathAccountIndex,
 } from '../derivationPath';
 import { type NetworkId, isNetworkId, networkIds } from '../networkId';
 import { assertIsArray, isRecord } from '../utils';
@@ -68,41 +67,25 @@ function getAddressAccountIndex({
   paymentDerivationPath,
   stakeDerivationPath,
 }: VerifyAddressRequestParams[number]['addressParams']) {
-  const getStakePathAccountAddressIndex = (
-    path: CardanoStakeDerivationPath,
-  ) => {
-    const [, , stakeAccountIndex, , stakeAddressIndex] = path;
-    return stakeAddressIndex === '0' ? stakeAccountIndex : null;
-  };
-  const getPaymentPathAccountAddressIndex = (
-    path: CardanoPaymentDerivationPath,
-  ) => {
-    const [, , paymentAccountIndex, paymentRole, paymentAddressIndex] = path;
-    return paymentRole === CARDANO_DERIVATION_PATH_PAYMENT_ROLE_EXTERNAL &&
-      paymentAddressIndex === '0'
-      ? paymentAccountIndex
-      : null;
-  };
-
   if (
     addressType === addressTypes.BasePaymentKeyStakeKey &&
     paymentDerivationPath &&
     stakeDerivationPath
   ) {
-    const paymentAccountAddressIndex = getPaymentPathAccountAddressIndex(
+    const paymentAccountAddressIndex = getPaymentPathAccountIndex(
       paymentDerivationPath,
     );
     const stakeAccountAddressIndex =
-      getStakePathAccountAddressIndex(stakeDerivationPath);
+      getStakePathAccountIndex(stakeDerivationPath);
     return paymentAccountAddressIndex === stakeAccountAddressIndex
       ? stakeAccountAddressIndex
       : null;
   }
   if (addressType === addressTypes.EnterpriseKey && paymentDerivationPath) {
-    return getPaymentPathAccountAddressIndex(paymentDerivationPath);
+    return getPaymentPathAccountIndex(paymentDerivationPath);
   }
   if (addressType === addressTypes.RewardKey && stakeDerivationPath) {
-    return getStakePathAccountAddressIndex(stakeDerivationPath);
+    return getStakePathAccountIndex(stakeDerivationPath);
   }
   return null;
 }

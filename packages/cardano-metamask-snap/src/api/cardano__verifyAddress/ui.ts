@@ -2,18 +2,7 @@ import { panel, copyable, heading, text, row } from '@metamask/snaps-sdk';
 
 import type { VerifyAddressRequestParams } from '.';
 import type { CardanoDerivationPath } from '../derivationPath';
-import { subSection } from '../ui';
-
-const renderAddressAccountIndex = (
-  accountAddressIndex: CardanoDerivationPath[2] | null,
-) => {
-  if (!accountAddressIndex) {
-    return '';
-  }
-  // hw wallets also number accounts from 1
-  const accountIndex = Number(accountAddressIndex.slice(0, -1)) + 1;
-  return `account #${accountIndex}`;
-};
+import { getUiAccountIndex, subSection } from '../ui';
 
 export const renderVerifyAddress = async (
   param: VerifyAddressRequestParams[number],
@@ -28,9 +17,9 @@ export const renderVerifyAddress = async (
   accountAddressIndex: CardanoDerivationPath[2] | null,
   address: string,
 ) => {
-  const headingText = `Verify ${renderAddressAccountIndex(
-    accountAddressIndex,
-  )} ${addressDescriptionForType[param.addressParams.addressType]} address`;
+  const headingText = `Verify ${getUiAccountIndex(accountAddressIndex)} ${
+    addressDescriptionForType[param.addressParams.addressType]
+  } address`;
 
   const addressUiElements = subSection([
     row('Network', text(`${networkNameForId[param.networkId]}`)),

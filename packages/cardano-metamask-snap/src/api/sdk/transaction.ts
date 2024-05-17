@@ -5,7 +5,7 @@ import BigNumber from 'bignumber.js';
 
 import type { SignTransactionRequestParams } from '../cardano__signTransaction';
 import type { ParsedTransaction } from '../cardano__signTransaction/ui';
-import type { TokenWhitelist } from './tokenWhitelist';
+import type { TokenList } from './tokenList';
 import { hexToBytes } from './utils';
 
 /**
@@ -71,14 +71,14 @@ type ParseTransactionParams = Pick<
   'txCborHex' | 'networkId'
 > & {
   changeAddresses: string[];
-  tokenWhitelist: TokenWhitelist;
+  tokenList: TokenList;
 };
 
 export const parseTransaction = ({
   txCborHex,
   changeAddresses,
   networkId,
-  tokenWhitelist,
+  tokenList,
 }: ParseTransactionParams): ParsedTransaction => {
   const parsedTransaction = Serialization.Transaction.fromCbor(
     txCborHex as TxCBOR,
@@ -101,7 +101,7 @@ export const parseTransaction = ({
           policyId,
           assetName,
         ).toString();
-        const tokenMetadata = tokenWhitelist[fingerprint];
+        const tokenMetadata = tokenList[fingerprint];
         return {
           fingerprint,
           amount: applyDecimals(value.toString(), tokenMetadata?.decimals ?? 0),

@@ -1,3 +1,4 @@
+// inspired by https://github.com/vacuumlabs/adalite-backend/blob/b504db717f9fdfe59acfc56391dfde964b1c8dc6/src/tokenRegistry.js
 const extractZip = require('extract-zip');
 const fs = require('fs');
 const { readFile, mkdir, rm, readdir } = require('fs/promises');

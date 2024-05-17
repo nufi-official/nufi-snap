@@ -180,6 +180,22 @@ const Index = () => {
     console.log('cardano sign multiasset transaction result', res);
   };
 
+  const handleCardanoSignTxWithStakingTransactionClick = async () => {
+    const res = await invokeSnap({
+      method: 'cardano__signTransaction',
+      params: [
+        {
+          txCborHex:
+            '84a50082825820bcd267fa1313b84075935c28f2732e35a4077db2d480e893c8b19ec1ba35b20f00825820bcd267fa1313b84075935c28f2732e35a4077db2d480e893c8b19ec1ba35b20f01018182583900f3db2225703e4cfbe2227772bdf057f9829449f18ac81e250ceb01ca0a84430507e150f0a06109dc3a7b1956b7a0586ae9078a55ef0e0b031a0016a619021a0002af0d031a0392d449048282008200581c0a84430507e150f0a06109dc3a7b1956b7a0586ae9078a55ef0e0b0383028200581c0a84430507e150f0a06109dc3a7b1956b7a0586ae9078a55ef0e0b03581c1d9302a3fb4b3b1935e02b27f0339798d3f08a55fbfdcd43a449a96fa10080f5f6',
+          witnessKeysPaths: [["1852'", "1815'", "0'", '2', '0']],
+          networkId: 0,
+          ownAddresses: [],
+        },
+      ],
+    });
+    console.log('cardano sign multiasset transaction result', res);
+  };
+
   const handleCardanoVerifyAddressClick = async () => {
     const params = [
       [
@@ -351,6 +367,24 @@ const Index = () => {
             button: (
               <SignCardanoTransactionButton
                 onClick={handleCardanoSignTxWithMultiassetTransactionClick}
+                disabled={!installedSnap}
+              />
+            ),
+          }}
+          disabled={!installedSnap}
+          fullWidth={
+            isMetaMaskReady &&
+            Boolean(installedSnap) &&
+            !shouldDisplayReconnectButton(installedSnap)
+          }
+        />
+        <Card
+          content={{
+            title: 'Sign STAKING cardano transaction',
+            description: 'The result will be logged into console',
+            button: (
+              <SignCardanoTransactionButton
+                onClick={handleCardanoSignTxWithStakingTransactionClick}
                 disabled={!installedSnap}
               />
             ),

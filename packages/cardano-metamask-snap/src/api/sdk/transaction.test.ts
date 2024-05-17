@@ -1,4 +1,6 @@
+import { accountFixture } from '../../fixtures/account';
 import { transactionsFixture } from '../../fixtures/transactions';
+import { type AddressParams } from '../address';
 import { type CardanoStakeDerivationPath } from '../derivationPath';
 import { getTxHash, isValidTxCborHex, parseTransaction } from './transaction';
 
@@ -29,7 +31,7 @@ describe('isValidTxBodyCborHex', () => {
 const parseTxSuccessFixtures = {
   simple: {
     ...transactionsFixture.simple,
-    changeAddresses: [],
+    ownAddresses: [],
     tokenList: {},
     ownCredentials: [],
     parsedTransaction: {
@@ -48,8 +50,13 @@ const parseTxSuccessFixtures = {
   },
   simpleWithChangeOutput: {
     ...transactionsFixture.simpleWithChangeOutput,
-    changeAddresses: [
-      'addr1qxgcuk5j0q0k2d0s9axvah49aut4ct5a5ertwp67psz3uuejm6ernk539y4mwwzrmny7ducc4d50mf6jfqvu79ghryss0cc0r2',
+    ownAddresses: [
+      {
+        ...(accountFixture.addresses.basePaymentKeyStakeKeyAddress
+          .addressParams as AddressParams),
+        address:
+          'addr1qxgcuk5j0q0k2d0s9axvah49aut4ct5a5ertwp67psz3uuejm6ernk539y4mwwzrmny7ducc4d50mf6jfqvu79ghryss0cc0r2',
+      },
     ],
     tokenList: {},
     ownCredentials: [],
@@ -83,7 +90,7 @@ const parseTxSuccessFixtures = {
   },
   multiAsset: {
     ...transactionsFixture.multiAsset,
-    changeAddresses: [],
+    ownAddresses: [],
     tokenList: {},
     ownCredentials: [],
     parsedTransaction: {
@@ -119,8 +126,13 @@ const parseTxSuccessFixtures = {
   },
   registerStakeAndDelegate: {
     ...transactionsFixture.registerStakeAndDelegate,
-    changeAddresses: [
-      'addr1q9q26vn0gq2wgkfrpyvljjpanm7n0ys96p7ja5l0aru6psfwn2q83p279mk88ajutnyzas3udyzy3utk0t9an07rsjtqm692kj',
+    ownAddresses: [
+      {
+        ...(accountFixture.addresses.basePaymentKeyStakeKeyAddress
+          .addressParams as AddressParams),
+        address:
+          'addr1q9q26vn0gq2wgkfrpyvljjpanm7n0ys96p7ja5l0aru6psfwn2q83p279mk88ajutnyzas3udyzy3utk0t9an07rsjtqm692kj',
+      },
     ],
     tokenList: {},
     ownCredentials: [
@@ -184,7 +196,7 @@ describe('parseTransaction success', () => {
       {
         parsedTransaction,
         txCborHex,
-        changeAddresses,
+        ownAddresses,
         networkId,
         tokenList,
         ownCredentials,
@@ -195,7 +207,7 @@ describe('parseTransaction success', () => {
           JSON.stringify(
             parseTransaction({
               txCborHex,
-              changeAddresses,
+              ownAddresses,
               networkId,
               tokenList,
               ownCredentials,
@@ -220,7 +232,7 @@ describe('parseTransaction failure', () => {
       txType,
       {
         txCborHex,
-        changeAddresses,
+        ownAddresses,
         networkId,
         errorMessage,
         tokenList,
@@ -231,7 +243,7 @@ describe('parseTransaction failure', () => {
         expect(() =>
           parseTransaction({
             txCborHex,
-            changeAddresses,
+            ownAddresses,
             networkId,
             tokenList,
             ownCredentials,

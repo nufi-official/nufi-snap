@@ -1,10 +1,10 @@
 import { type Serialization, Cardano } from '@cardano-sdk/core';
 import { assert } from '@metamask/snaps-sdk';
 
-import {
-  type TxCredential,
-  type OwnTxCredential,
-  type ParsedTransaction,
+import type {
+  OwnTxCredential,
+  ParsedTransaction,
+  TxCredential,
 } from '../cardano__signTransaction/ui';
 import {
   isStakeDerivationPath,

@@ -12,6 +12,8 @@ import { isNetworkId, type NetworkId } from '../networkId';
 import {
   getTxHash,
   isValidTxCborHex,
+  keyHashHexToBech32,
+  keyToHashHex,
   parseTransaction,
   tokenList,
 } from '../sdk';
@@ -104,11 +106,28 @@ export const signTransaction = async ({
 
   const txBodyHashHex = getTxHash(txCborHex);
 
+  const ownCredentials = await Promise.all(
+    witnessKeysPaths.map(async (derivationPath) => {
+      const { extendedPublicKeyHex } =
+        await cryptoProvider.getExtendedPublicKey(derivationPath);
+
+      return {
+        keyHashBech32: keyHashHexToBech32(
+          await keyToHashHex(extendedPublicKeyHex),
+        ),
+        derivationPath,
+        isOwn: true as const,
+        type: 'keyHash' as const,
+      };
+    }),
+  );
+
   const parsedTransaction = parseTransaction({
     txCborHex,
     changeAddresses,
     networkId,
     tokenList,
+    ownCredentials,
   });
 
   await assertUserHasConfirmed(async () =>

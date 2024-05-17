@@ -4,7 +4,12 @@ import { assert } from '@metamask/snaps-sdk';
 import BigNumber from 'bignumber.js';
 
 import type { SignTransactionRequestParams } from '../cardano__signTransaction';
-import type { ParsedTransaction } from '../cardano__signTransaction/ui';
+import type {
+  OwnTxCredential,
+  ParsedTransaction,
+} from '../cardano__signTransaction/ui';
+import { type CardanoDerivationPath } from '../derivationPath';
+import { parseCertificates } from './certificate';
 import type { TokenList } from './tokenList';
 import { hexToBytes } from './utils';
 
@@ -72,6 +77,7 @@ type ParseTransactionParams = Pick<
 > & {
   changeAddresses: string[];
   tokenList: TokenList;
+  ownCredentials: OwnTxCredential<CardanoDerivationPath>[];
 };
 
 export const parseTransaction = ({
@@ -79,6 +85,7 @@ export const parseTransaction = ({
   changeAddresses,
   networkId,
   tokenList,
+  ownCredentials,
 }: ParseTransactionParams): ParsedTransaction => {
   const parsedTransaction = Serialization.Transaction.fromCbor(
     txCborHex as TxCBOR,
@@ -112,6 +119,11 @@ export const parseTransaction = ({
     };
   });
 
+  const certificates = parseCertificates(
+    parsedTransaction.certs(),
+    ownCredentials,
+  );
+
   const fee = lovelaceToAda(parsedTransaction.fee().toString());
-  return { outputs, fee };
+  return { outputs, fee, certificates };
 };

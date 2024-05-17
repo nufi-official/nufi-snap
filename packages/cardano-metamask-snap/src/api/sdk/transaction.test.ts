@@ -29,7 +29,7 @@ const parseTxSuccessFixtures = {
   simple: {
     ...transactionsFixture.simple,
     changeAddresses: [],
-    tokenWhitelist: {},
+    tokenList: {},
     parsedTransaction: {
       outputs: [
         {
@@ -48,7 +48,7 @@ const parseTxSuccessFixtures = {
     changeAddresses: [
       'addr1qxgcuk5j0q0k2d0s9axvah49aut4ct5a5ertwp67psz3uuejm6ernk539y4mwwzrmny7ducc4d50mf6jfqvu79ghryss0cc0r2',
     ],
-    tokenWhitelist: {},
+    tokenList: {},
     parsedTransaction: {
       outputs: [
         {
@@ -79,7 +79,7 @@ const parseTxSuccessFixtures = {
   multiAsset: {
     ...transactionsFixture.multiAsset,
     changeAddresses: [],
-    tokenWhitelist: {},
+    tokenList: {},
     parsedTransaction: {
       outputs: [
         {
@@ -116,13 +116,7 @@ describe('parseTransaction success', () => {
   Object.entries(parseTxSuccessFixtures).forEach(
     ([
       txType,
-      {
-        parsedTransaction,
-        txCborHex,
-        changeAddresses,
-        networkId,
-        tokenWhitelist,
-      },
+      { parsedTransaction, txCborHex, changeAddresses, networkId, tokenList },
     ]) =>
       it(`should parse ${txType} transaction`, () => {
         expect(
@@ -131,7 +125,7 @@ describe('parseTransaction success', () => {
               txCborHex,
               changeAddresses,
               networkId,
-              tokenWhitelist,
+              tokenList,
             }),
           ),
         ).toBe(JSON.stringify(parsedTransaction));
@@ -151,7 +145,7 @@ describe('parseTransaction failure', () => {
   Object.entries(parseTransactionFailureFixtures).forEach(
     ([
       txType,
-      { txCborHex, changeAddresses, networkId, errorMessage, tokenWhitelist },
+      { txCborHex, changeAddresses, networkId, errorMessage, tokenList },
     ]) =>
       it(`should fail parsing transaction with ${txType}`, () => {
         expect(() =>
@@ -159,7 +153,7 @@ describe('parseTransaction failure', () => {
             txCborHex,
             changeAddresses,
             networkId,
-            tokenWhitelist,
+            tokenList,
           }),
         ).toThrow(errorMessage);
       }),

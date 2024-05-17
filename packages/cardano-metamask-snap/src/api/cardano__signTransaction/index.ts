@@ -13,7 +13,7 @@ import {
   getTxHash,
   isValidTxCborHex,
   parseTransaction,
-  tokenWhitelist,
+  tokenList,
 } from '../sdk';
 import { assertIsArray, assertUserHasConfirmed, isRecord } from '../utils';
 import { renderSignTransaction } from './ui';
@@ -108,7 +108,7 @@ export const signTransaction = async ({
     txCborHex,
     changeAddresses,
     networkId,
-    tokenWhitelist,
+    tokenList,
   });
 
   await assertUserHasConfirmed(async () =>

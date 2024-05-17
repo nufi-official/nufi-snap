@@ -52,3 +52,5 @@ export const isAddressParams = (params: unknown): params is AddressParams => {
         isStakeDerivationPath(params.stakeDerivationPath)))
   );
 };
+
+export type OwnAddress = AddressParams & { address: string };

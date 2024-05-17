@@ -25,7 +25,7 @@ export type SignTransactionRequestParams = [
     txCborHex: string;
     witnessKeysPaths: CardanoDerivationPath[];
     networkId: NetworkId;
-    ownAddresses: AddressParams[];
+    ownAddressParams: AddressParams[];
   },
 ];
 
@@ -71,9 +71,9 @@ export function assertIsSignTransactionRequestParams(
       'txCborHex' in param &&
       typeof param.txCborHex === 'string' &&
       isValidTxCborHex(param.txCborHex) &&
-      'ownAddresses' in param &&
-      Array.isArray(param.ownAddresses) &&
-      param.ownAddresses.every((addressParams) =>
+      'ownAddressParams' in param &&
+      Array.isArray(param.ownAddressParams) &&
+      param.ownAddressParams.every((addressParams) =>
         isAddressParams(addressParams),
       ) &&
       'networkId' in param &&
@@ -93,15 +93,16 @@ export const signTransaction = async ({
 }: JsonRpcRequest): Promise<SignTransactionResponse> => {
   assertIsSignTransactionRequestParams(params);
 
-  const [{ txCborHex, witnessKeysPaths, ownAddresses, networkId }] = params;
+  const [{ txCborHex, witnessKeysPaths, ownAddressParams, networkId }] = params;
 
-  const changeAddresses = await Promise.all(
-    ownAddresses.map(async (addressParams) =>
-      cryptoProvider.getAddress({
+  const ownAddresses = await Promise.all(
+    ownAddressParams.map(async (addressParams) => ({
+      ...addressParams,
+      address: await cryptoProvider.getAddress({
         addressParams,
         networkId,
       }),
-    ),
+    })),
   );
 
   const txBodyHashHex = getTxHash(txCborHex);
@@ -124,7 +125,7 @@ export const signTransaction = async ({
 
   const parsedTransaction = parseTransaction({
     txCborHex,
-    changeAddresses,
+    ownAddresses,
     networkId,
     tokenList,
     ownCredentials,

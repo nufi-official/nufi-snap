@@ -3,6 +3,7 @@ import { blake2b } from '@cardano-sdk/crypto';
 import { assert } from '@metamask/snaps-sdk';
 import BigNumber from 'bignumber.js';
 
+import { type OwnAddress } from '../address';
 import type { SignTransactionRequestParams } from '../cardano__signTransaction';
 import type {
   OwnTxCredential,
@@ -75,14 +76,14 @@ type ParseTransactionParams = Pick<
   SignTransactionRequestParams[number],
   'txCborHex' | 'networkId'
 > & {
-  changeAddresses: string[];
+  ownAddresses: OwnAddress[];
   tokenList: TokenList;
   ownCredentials: OwnTxCredential<CardanoDerivationPath>[];
 };
 
 export const parseTransaction = ({
   txCborHex,
-  changeAddresses,
+  ownAddresses,
   networkId,
   tokenList,
   ownCredentials,
@@ -96,7 +97,9 @@ export const parseTransaction = ({
   const outputs = parsedTransaction.outputs().map((output) => {
     const address = output.address().toBech32();
     return {
-      isChange: changeAddresses.includes(address),
+      isChange: ownAddresses.some(
+        (ownAddress) => ownAddress.address === address,
+      ),
       address,
       coin: lovelaceToAda(output.amount().coin().toString()),
       tokenBundle: Array.from(

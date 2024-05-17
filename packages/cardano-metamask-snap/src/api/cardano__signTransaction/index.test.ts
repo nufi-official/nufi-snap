@@ -46,13 +46,27 @@ const fixtures = {
   },
   multiAsset: {
     ...transactionsFixture.multiAsset,
-    witnesses: [],
+    witnesses: [
+      {
+        witnessKeyPath: accountFixture.paymentPart.derivationPath,
+        extendedPublicKeyHex: accountFixture.paymentPart.extendedPublicKeyHex,
+        signatureHex:
+          '32bbcb0bca0ade8ea4360de278a72fe89b99a30ae84aed88599bc1bf7cfe4e3cd12e9bff9b7b87a5aaa1341788a6dc03c2a555f191b82f4bf2b300cf94f24806',
+      },
+    ],
     ownAddresses: [],
     stringifiedUi: `{"type":"confirmation","content":{"type":"panel","children":[{"type":"heading","value":"Sign transaction"},{"type":"panel","children":[{"type":"divider"},{"type":"divider"},{"type":"heading","value":"Send"},{"type":"row","label":"To address","value":{"type":"text","value":"addr1qx3el0vd5rvwa5kwlda394nnpvezr6lmzgzyypgyghlv3ngkhh2ughen9mzn7lxmemgrt8tcl5xqz3kq5tukfwkl970s50sw6j"}},{"type":"row","label":"Amount","value":{"type":"text","value":"**1.146460 ADA**"}},{"type":"panel","children":[{"type":"divider"},{"type":"text","value":"**HOSKY Token**"},{"type":"row","label":"Asset fingerprint","value":{"type":"text","value":"asset17q7r59zlc3dgw0venc80pdv566q6yguw03f0d9"}},{"type":"row","label":"Token amount","value":{"type":"text","value":"**234 HOSKY**"}}]}]},{"type":"panel","children":[{"type":"divider"},{"type":"divider"},{"type":"heading","value":"Send"},{"type":"row","label":"To address","value":{"type":"text","value":"addr1qx3el0vd5rvwa5kwlda394nnpvezr6lmzgzyypgyghlv3ngkhh2ughen9mzn7lxmemgrt8tcl5xqz3kq5tukfwkl970s50sw6j"}},{"type":"row","label":"Amount","value":{"type":"text","value":"**13.464440 ADA**"}},{"type":"panel","children":[{"type":"divider"},{"type":"row","label":"Asset fingerprint","value":{"type":"text","value":"asset1t5mz75px5h2m436flfmc04ux0u2y5hye7r7e87"}},{"type":"row","label":"Token amount","value":{"type":"text","value":"611914"}}]}]},{"type":"panel","children":[{"type":"divider"},{"type":"divider"},{"type":"row","label":"Transaction fee","value":{"type":"text","value":"**0.302121 ADA**"}}]}]}}`,
   },
   registerStakeAndDelegate: {
     ...transactionsFixture.registerStakeAndDelegate,
-    witnesses: [],
+    witnesses: [
+      {
+        witnessKeyPath: accountFixture.stakePart.derivationPath,
+        extendedPublicKeyHex: accountFixture.stakePart.extendedPublicKeyHex,
+        signatureHex:
+          'ea4b4a2649d59a6c049fe0a371672d4caed30a776811836c60507f3cb7930a7ade1efc39f9e900ddd9f6fa636f9ceeb2a287d1abdc2505e23496fe000ed09c0f',
+      },
+    ],
     ownAddresses: [],
     stringifiedUi: `{"type":"confirmation","content":{"type":"panel","children":[{"type":"heading","value":"Sign transaction"},{"type":"panel","children":[{"type":"divider"},{"type":"divider"},{"type":"heading","value":"Send"},{"type":"row","label":"To address","value":{"type":"text","value":"addr1q9q26vn0gq2wgkfrpyvljjpanm7n0ys96p7ja5l0aru6psfwn2q83p279mk88ajutnyzas3udyzy3utk0t9an07rsjtqm692kj"}},{"type":"row","label":"Amount","value":{"type":"text","value":"**1.825699 ADA**"}}]},{"type":"panel","children":[{"type":"divider"},{"type":"divider"},{"type":"heading","value":"Stake registration "},{"type":"row","label":"For key","value":{"type":"text","value":"stake_vkey196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvwyspmz"}}]},{"type":"panel","children":[{"type":"divider"},{"type":"divider"},{"type":"heading","value":"Stake delegation "},{"type":"row","label":"For key","value":{"type":"text","value":"stake_vkey196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvwyspmz"}},{"type":"row","label":"To pool","value":{"type":"text","value":"pool1ecvcst7k9eul4ggnljh0jw2s5nc2tyfmyzsx3xg3kmmz6ptgfwj"}}]},{"type":"panel","children":[{"type":"divider"},{"type":"divider"},{"type":"row","label":"Transaction fee","value":{"type":"text","value":"**0.174301 ADA**"}}]}]}}`,
   },

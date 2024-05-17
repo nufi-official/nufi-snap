@@ -129,3 +129,18 @@ export function isStakeDerivationPath(
       !isHardened(path[4]),
   );
 }
+
+export const getStakePathAccountIndex = (path: CardanoStakeDerivationPath) => {
+  const [, , stakeAccountIndex, , stakeAddressIndex] = path;
+  return stakeAddressIndex === '0' ? stakeAccountIndex : null;
+};
+
+export const getPaymentPathAccountIndex = (
+  path: CardanoPaymentDerivationPath,
+) => {
+  const [, , paymentAccountIndex, paymentRole, paymentAddressIndex] = path;
+  return paymentRole === CARDANO_DERIVATION_PATH_PAYMENT_ROLE_EXTERNAL &&
+    paymentAddressIndex === '0'
+    ? paymentAccountIndex
+    : null;
+};

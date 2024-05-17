@@ -33,7 +33,6 @@ const parseTransactionCredential = <
       return (
         matchingOwnCredential ?? {
           type: 'keyHash',
-          isOwn: false,
           keyHashBech32: keyHashHexToBech32(credential.hash),
         }
       );
@@ -41,7 +40,6 @@ const parseTransactionCredential = <
     case Cardano.CredentialType.ScriptHash:
       return {
         type: 'scriptHash',
-        isOwn: false,
         scriptHashBech32: scriptHashHexToBech32(credential.hash),
       };
     default:

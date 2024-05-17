@@ -47,7 +47,7 @@ const renderOutputs = (outputs: ParsedTransaction['outputs']) => {
 
 const renderCredential = (credential: TxCredential<CardanoDerivationPath>) => {
   if (credential.type === 'keyHash') {
-    if (credential.isOwn) {
+    if ('derivationPath' in credential) {
       return [
         row('For key', text(credential.keyHashBech32)),
         row('Derivation path', text(`${credential.derivationPath.join('/')}`)),
@@ -61,7 +61,7 @@ const renderCredential = (credential: TxCredential<CardanoDerivationPath>) => {
 const renderAccountIndex = (
   certificate: ParsedTransaction['certificates'][number],
 ) => {
-  if (certificate.credential.isOwn) {
+  if ('derivationPath' in certificate.credential) {
     return `for ${getUiAccountIndex(
       getStakePathAccountIndex(certificate.credential.derivationPath),
     )}`;
@@ -123,24 +123,24 @@ const renderCertificates = (
   });
 };
 
-export type OwnTxCredential<TDerivationPath extends CardanoDerivationPath> = {
-  isOwn: true;
-  derivationPath: TDerivationPath;
-  type: 'keyHash';
-  keyHashBech32: string;
-};
+type BaseTxCredential =
+  | {
+      type: 'keyHash';
+      keyHashBech32: string;
+    }
+  | {
+      type: 'scriptHash';
+      scriptHashBech32: string;
+    };
+
+export type OwnTxCredential<TDerivationPath extends CardanoDerivationPath> =
+  BaseTxCredential & {
+    type: 'keyHash';
+    derivationPath: TDerivationPath;
+  };
 
 export type TxCredential<TDerivationPath extends CardanoDerivationPath> =
-  | {
-      scriptHashBech32: string;
-      isOwn: false;
-      type: 'scriptHash';
-    }
-  | {
-      keyHashBech32: string;
-      isOwn: false;
-      type: 'keyHash';
-    }
+  | BaseTxCredential
   | OwnTxCredential<TDerivationPath>;
 
 export type ParsedTransaction = {

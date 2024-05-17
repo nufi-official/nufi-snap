@@ -56,3 +56,22 @@ export async function signWithBip32Node(
     ).hex()
   );
 }
+
+/**
+ * Converts a key in hexadecimal format to a hash in hexadecimal format.
+ * @param key - The key in hexadecimal format.
+ * @returns The hash in hexadecimal format.
+ */
+export async function keyToHashHex(
+  key: string,
+): Promise<cardanoCrypto.Hash28ByteBase16> {
+  return cardanoCrypto.Hash28ByteBase16.fromEd25519KeyHashHex(
+    (
+      await cardanoCrypto.Bip32PublicKey.fromHex(
+        key as cardanoCrypto.Bip32PublicKeyHex,
+      )
+        .toRawKey()
+        .hash()
+    ).hex(),
+  );
+}

@@ -1,11 +1,7 @@
 import { Cardano } from '@cardano-sdk/core';
-import {
-  Bip32PublicKey,
-  type Bip32PublicKeyHex,
-  Hash28ByteBase16,
-} from '@cardano-sdk/crypto';
 
 import type { VerifyAddressRequestParams } from '../cardano__verifyAddress';
+import { keyToHashHex } from './keys';
 import { hexToBytes } from './utils';
 
 export type PackAddressParams = {
@@ -18,21 +14,6 @@ export type PackAddressParams = {
   };
   networkId: Cardano.NetworkId;
 };
-
-/**
- * Converts a key in hexadecimal format to a hash in hexadecimal format.
- * @param key - The key in hexadecimal format.
- * @returns The hash in hexadecimal format.
- */
-async function keyToHashHex(key: string): Promise<Hash28ByteBase16> {
-  return Hash28ByteBase16.fromEd25519KeyHashHex(
-    (
-      await Bip32PublicKey.fromHex(key as Bip32PublicKeyHex)
-        .toRawKey()
-        .hash()
-    ).hex(),
-  );
-}
 
 /**
  * Retrieves the payment part of the address.

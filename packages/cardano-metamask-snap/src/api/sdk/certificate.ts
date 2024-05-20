@@ -16,6 +16,7 @@ import {
   poolIdHexToBech32,
   scriptHashHexToBech32,
 } from './bech32';
+import { lovelaceToAda } from './utils';
 
 const parseTransactionCredential = <
   TDerivationPath extends CardanoDerivationPath,
@@ -98,6 +99,32 @@ export const parseCertificates = (
           type: 'stake_delegation',
           credential,
           poolIdBech32: poolIdHexToBech32(stakeDelegation.poolKeyHash()),
+        };
+      }
+      case 7: {
+        const stakeDeregistration = certificate.asRegistrationCert();
+        assert(stakeDeregistration, 'Certificate must be defined');
+        const credential = parseTransactionCredential(
+          stakeDeregistration.stakeCredential(),
+          ownStakeCredentials,
+        );
+        return {
+          type: 'registration',
+          credential,
+          deposit: lovelaceToAda(stakeDeregistration.deposit().toString()),
+        };
+      }
+      case 8: {
+        const stakeDeregistration = certificate.asUnregistrationCert();
+        assert(stakeDeregistration, 'Certificate must be defined');
+        const credential = parseTransactionCredential(
+          stakeDeregistration.stakeCredential(),
+          ownStakeCredentials,
+        );
+        return {
+          type: 'unregistration',
+          credential,
+          deposit: lovelaceToAda(stakeDeregistration.deposit().toString()),
         };
       }
       default:

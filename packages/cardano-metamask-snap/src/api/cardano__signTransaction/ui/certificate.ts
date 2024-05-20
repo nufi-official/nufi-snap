@@ -6,6 +6,7 @@ import {
   type CardanoStakeDerivationPath,
 } from '../../derivationPath';
 import { getUiAccountIndex, section } from '../../ui';
+import { ADA_TICKER, assetValue } from './utils';
 
 type BaseTxCredential =
   | {
@@ -40,6 +41,16 @@ export type Certificate =
       type: 'stake_delegation';
       credential: TxCredential<CardanoStakeDerivationPath>;
       poolIdBech32: string;
+    }
+  | {
+      type: 'registration';
+      credential: TxCredential<CardanoStakeDerivationPath>;
+      deposit: string;
+    }
+  | {
+      type: 'unregistration';
+      credential: TxCredential<CardanoStakeDerivationPath>;
+      deposit: string;
     };
 
 const renderCredential = (credential: TxCredential<CardanoDerivationPath>) => {
@@ -65,20 +76,32 @@ const renderAccountIndex = (certificate: Certificate) => {
 };
 
 const renderStakeRegistrationCertificate = (
-  certificate: Extract<Certificate, { type: 'stake_registration' }>,
+  certificate: Extract<
+    Certificate,
+    { type: 'stake_registration' } | { type: 'registration' }
+  >,
 ) => {
   return section([
     heading(`Stake registration ${renderAccountIndex(certificate)}`),
     ...renderCredential(certificate.credential),
+    ...('deposit' in certificate
+      ? [row('Deposit', text(assetValue(certificate.deposit, ADA_TICKER)))]
+      : []),
   ]);
 };
 
 const renderStakeDeregistrationCertificate = (
-  certificate: Extract<Certificate, { type: 'stake_deregistration' }>,
+  certificate: Extract<
+    Certificate,
+    { type: 'stake_deregistration' } | { type: 'unregistration' }
+  >,
 ) => {
   return section([
     heading(`Stake deregistration ${renderAccountIndex(certificate)}`),
     ...renderCredential(certificate.credential),
+    ...('deposit' in certificate
+      ? [row('Deposit', text(assetValue(certificate.deposit, ADA_TICKER)))]
+      : []),
   ]);
 };
 
@@ -98,8 +121,10 @@ export const renderCertificates = (certificates: Certificate[]) => {
       case 'stake_delegation':
         return renderStakeDelegationCertificate(certificate);
       case 'stake_registration':
+      case 'registration':
         return renderStakeRegistrationCertificate(certificate);
       case 'stake_deregistration':
+      case 'unregistration':
         return renderStakeDeregistrationCertificate(certificate);
       default:
         throw new Error('Unsupported certificate type');

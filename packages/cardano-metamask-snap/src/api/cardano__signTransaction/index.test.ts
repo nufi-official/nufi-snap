@@ -70,6 +70,19 @@ const fixtures = {
     ownAddressParams: [],
     stringifiedUi: `{"type":"confirmation","content":{"type":"panel","children":[{"type":"heading","value":"Sign transaction"},{"type":"panel","children":[{"type":"divider"},{"type":"divider"},{"type":"heading","value":"Send"},{"type":"row","label":"To address","value":{"type":"text","value":"addr1q9q26vn0gq2wgkfrpyvljjpanm7n0ys96p7ja5l0aru6psfwn2q83p279mk88ajutnyzas3udyzy3utk0t9an07rsjtqm692kj"}},{"type":"row","label":"Amount","value":{"type":"text","value":"**1.825699 ADA**"}}]},{"type":"panel","children":[{"type":"divider"},{"type":"divider"},{"type":"heading","value":"Stake registration "},{"type":"row","label":"For key","value":{"type":"text","value":"stake_vkey196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvwyspmz"}}]},{"type":"panel","children":[{"type":"divider"},{"type":"divider"},{"type":"heading","value":"Stake delegation "},{"type":"row","label":"For key","value":{"type":"text","value":"stake_vkey196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvwyspmz"}},{"type":"row","label":"To pool","value":{"type":"text","value":"pool1ecvcst7k9eul4ggnljh0jw2s5nc2tyfmyzsx3xg3kmmz6ptgfwj"}}]},{"type":"panel","children":[{"type":"divider"},{"type":"divider"},{"type":"row","label":"Transaction fee","value":{"type":"text","value":"**0.174301 ADA**"}}]}]}}`,
   },
+  newRegisterStakeAndUnregister: {
+    ...transactionsFixture.newRegisterStakeAndUnregister,
+    witnesses: [
+      {
+        witnessKeyPath: accountFixture.stakePart.derivationPath,
+        extendedPublicKeyHex: accountFixture.stakePart.extendedPublicKeyHex,
+        signatureHex:
+          'e16c51b15403d44b07999deb2b6093836f75cb757b8681de82386d09af6aee33a882d9b180381b06141213e74fcea6dcbd1cd24ec092a6e8df2a3a4296ac340c',
+      },
+    ],
+    ownAddressParams: [],
+    stringifiedUi: `{"type":"confirmation","content":{"type":"panel","children":[{"type":"heading","value":"Sign transaction"},{"type":"panel","children":[{"type":"divider"},{"type":"divider"},{"type":"heading","value":"Send"},{"type":"row","label":"To address","value":{"type":"text","value":"addr1q9q26vn0gq2wgkfrpyvljjpanm7n0ys96p7ja5l0aru6psfwn2q83p279mk88ajutnyzas3udyzy3utk0t9an07rsjtqm692kj"}},{"type":"row","label":"Amount","value":{"type":"text","value":"**1.825699 ADA**"}}]},{"type":"panel","children":[{"type":"divider"},{"type":"divider"},{"type":"heading","value":"Stake registration "},{"type":"row","label":"For key","value":{"type":"text","value":"stake_vkey196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvwyspmz"}},{"type":"row","label":"Deposit","value":{"type":"text","value":"**6.000000 ADA**"}}]},{"type":"panel","children":[{"type":"divider"},{"type":"divider"},{"type":"heading","value":"Stake deregistration "},{"type":"row","label":"For key","value":{"type":"text","value":"stake_vkey196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvwyspmz"}},{"type":"row","label":"Deposit","value":{"type":"text","value":"**6.000000 ADA**"}}]},{"type":"panel","children":[{"type":"divider"},{"type":"divider"},{"type":"row","label":"Transaction fee","value":{"type":"text","value":"**0.174301 ADA**"}}]}]}}`,
+  },
 };
 
 describe('cardano__signTransaction', () => {

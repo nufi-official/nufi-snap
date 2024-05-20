@@ -1,7 +1,6 @@
 import { Cardano, Serialization, type TxCBOR } from '@cardano-sdk/core';
 import { blake2b } from '@cardano-sdk/crypto';
 import { assert } from '@metamask/snaps-sdk';
-import BigNumber from 'bignumber.js';
 
 import { type OwnAddress } from '../address';
 import type { SignTransactionRequestParams } from '../cardano__signTransaction';
@@ -12,10 +11,11 @@ import type {
 import { type CardanoDerivationPath } from '../derivationPath';
 import { parseCertificates } from './certificate';
 import type { TokenList } from './tokenList';
-import { hexToBytes } from './utils';
+import { applyDecimals, hexToBytes, lovelaceToAda } from './utils';
 
 /**
  * Calculates the hash of a transaction body.
+ *
  * @param txCborHex - The hexadecimal representation of the transaction in CBOR format.
  * @returns The hash of the transaction body.
  */
@@ -28,6 +28,7 @@ export function getTxHash(txCborHex: string): string {
 
 /**
  * Checks if the given transaction body hexadecimal string is valid CBOR format.
+ *
  * @param txCborHex - The hexadecimal representation of the transaction in CBOR format.
  * @returns True if the transaction body is valid CBOR format, false otherwise.
  */
@@ -39,16 +40,6 @@ export function isValidTxCborHex(txCborHex: string): boolean {
     return false;
   }
 }
-
-const applyDecimals = (value: string, decimals: number): string => {
-  const base = new BigNumber(10 ** decimals);
-  return new BigNumber(value).dividedBy(base).toFixed(decimals);
-};
-
-const lovelaceToAda = (lovelaces: string): string => {
-  const decimals = 6;
-  return applyDecimals(lovelaces, decimals);
-};
 
 const assertValidNetworkId = (
   networkId: number,

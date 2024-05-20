@@ -187,6 +187,69 @@ const parseTxSuccessFixtures = {
       ],
     },
   },
+  newRegisterStakeAndUnregister: {
+    ...transactionsFixture.newRegisterStakeAndUnregister,
+    ownAddresses: [
+      {
+        ...(accountFixture.addresses.basePaymentKeyStakeKeyAddress
+          .addressParams as AddressParams),
+        address:
+          'addr1q9q26vn0gq2wgkfrpyvljjpanm7n0ys96p7ja5l0aru6psfwn2q83p279mk88ajutnyzas3udyzy3utk0t9an07rsjtqm692kj',
+      },
+    ],
+    tokenList: {},
+    ownCredentials: [
+      {
+        type: 'keyHash' as const,
+        isOwn: true as const,
+        keyHashBech32:
+          'stake_vkey196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvwyspmz',
+        derivationPath: [
+          "1852'",
+          "1815'",
+          "0'",
+          '2',
+          '0',
+        ] as CardanoStakeDerivationPath,
+      },
+    ],
+    parsedTransaction: {
+      outputs: [
+        {
+          isChange: true,
+          address:
+            'addr1q9q26vn0gq2wgkfrpyvljjpanm7n0ys96p7ja5l0aru6psfwn2q83p279mk88ajutnyzas3udyzy3utk0t9an07rsjtqm692kj',
+          coin: '1.825699',
+          tokenBundle: [],
+        },
+      ],
+      fee: '0.174301',
+      certificates: [
+        {
+          type: 'registration',
+          credential: {
+            type: 'keyHash',
+            isOwn: true,
+            keyHashBech32:
+              'stake_vkey196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvwyspmz',
+            derivationPath: ["1852'", "1815'", "0'", '2', '0'],
+          },
+          deposit: '6.000000',
+        },
+        {
+          type: 'unregistration',
+          credential: {
+            type: 'keyHash',
+            isOwn: true,
+            keyHashBech32:
+              'stake_vkey196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvwyspmz',
+            derivationPath: ["1852'", "1815'", "0'", '2', '0'],
+          },
+          deposit: '6.000000',
+        },
+      ],
+    },
+  },
 };
 
 describe('parseTransaction success', () => {

@@ -43,12 +43,12 @@ export type Certificate =
       poolIdBech32: string;
     }
   | {
-      type: 'registration';
+      type: 'dynamic_deposit_stake_registration';
       credential: TxCredential<CardanoStakeDerivationPath>;
       deposit: string;
     }
   | {
-      type: 'unregistration';
+      type: 'dynamic_deposit_stake_deregistration';
       credential: TxCredential<CardanoStakeDerivationPath>;
       deposit: string;
     };
@@ -78,7 +78,8 @@ const renderAccountIndex = (certificate: Certificate) => {
 const renderStakeRegistrationCertificate = (
   certificate: Extract<
     Certificate,
-    { type: 'stake_registration' } | { type: 'registration' }
+    | { type: 'stake_registration' }
+    | { type: 'dynamic_deposit_stake_registration' }
   >,
 ) => {
   return section([
@@ -93,14 +94,20 @@ const renderStakeRegistrationCertificate = (
 const renderStakeDeregistrationCertificate = (
   certificate: Extract<
     Certificate,
-    { type: 'stake_deregistration' } | { type: 'unregistration' }
+    | { type: 'stake_deregistration' }
+    | { type: 'dynamic_deposit_stake_deregistration' }
   >,
 ) => {
   return section([
     heading(`Stake deregistration ${renderAccountIndex(certificate)}`),
     ...renderCredential(certificate.credential),
     ...('deposit' in certificate
-      ? [row('Deposit', text(assetValue(certificate.deposit, ADA_TICKER)))]
+      ? [
+          row(
+            'Deposit returned',
+            text(assetValue(certificate.deposit, ADA_TICKER)),
+          ),
+        ]
       : []),
   ]);
 };
@@ -121,10 +128,10 @@ export const renderCertificates = (certificates: Certificate[]) => {
       case 'stake_delegation':
         return renderStakeDelegationCertificate(certificate);
       case 'stake_registration':
-      case 'registration':
+      case 'dynamic_deposit_stake_registration':
         return renderStakeRegistrationCertificate(certificate);
       case 'stake_deregistration':
-      case 'unregistration':
+      case 'dynamic_deposit_stake_deregistration':
         return renderStakeDeregistrationCertificate(certificate);
       default:
         throw new Error('Unsupported certificate type');

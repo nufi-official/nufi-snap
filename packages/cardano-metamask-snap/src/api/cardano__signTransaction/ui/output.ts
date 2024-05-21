@@ -16,9 +16,6 @@ export type Output = {
 };
 
 export const renderOutputs = (outputs: Output[]) => {
-  if (outputs.length === 0) {
-    return [];
-  }
   return [
     ...outputs
       .filter(({ isChange }) => !isChange)

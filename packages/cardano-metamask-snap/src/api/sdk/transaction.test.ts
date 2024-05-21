@@ -226,7 +226,7 @@ const parseTxSuccessFixtures = {
       fee: '0.174301',
       certificates: [
         {
-          type: 'registration',
+          type: 'dynamic_deposit_stake_registration',
           credential: {
             type: 'keyHash',
             isOwn: true,
@@ -237,7 +237,7 @@ const parseTxSuccessFixtures = {
           deposit: '6.000000',
         },
         {
-          type: 'unregistration',
+          type: 'dynamic_deposit_stake_deregistration',
           credential: {
             type: 'keyHash',
             isOwn: true,

@@ -109,7 +109,7 @@ export const parseCertificates = (
           ownStakeCredentials,
         );
         return {
-          type: 'registration',
+          type: 'dynamic_deposit_stake_registration',
           credential,
           deposit: lovelaceToAda(stakeDeregistration.deposit().toString()),
         };
@@ -122,7 +122,7 @@ export const parseCertificates = (
           ownStakeCredentials,
         );
         return {
-          type: 'unregistration',
+          type: 'dynamic_deposit_stake_deregistration',
           credential,
           deposit: lovelaceToAda(stakeDeregistration.deposit().toString()),
         };

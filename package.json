@@ -28,8 +28,8 @@
   "resolutions": {
     "@metamask/snaps-controllers/@metamask/snaps-rpc-methods": "9.0.0",
     "@metamask/snaps-jest/@metamask/snaps-rpc-methods": "9.0.0",
-    "axios": "0.28.0",
-    "webpack-dev-middleware": "5.3.4"
+    "gatsby/axios": "0.28.0",
+    "gatsby/webpack-dev-middleware": "5.3.4"
   },
   "devDependencies": {
     "@lavamoat/allow-scripts": "3.0.0",

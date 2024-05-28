@@ -27,7 +27,7 @@ export const renderOutputs = (outputs: Output[]) => {
           ...output.tokenBundle.map((token) => {
             const { fingerprint: fingerPrint, amount, name, ticker } = token;
             return subSection([
-              ...(name ? [text(bold(name))] : []),
+              text(bold(name ?? 'Unknown asset')),
               row('Asset fingerprint', text(fingerPrint)),
               row(
                 'Token amount',

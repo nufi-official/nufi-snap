@@ -1,4 +1,4 @@
-import { heading, row, text, panel } from '@metamask/snaps-sdk';
+import { heading, row, text, panel, copyable } from '@metamask/snaps-sdk';
 
 import { section } from '../../ui';
 import { renderCertificates, type Certificate } from './certificate';
@@ -14,7 +14,7 @@ export type ParsedTransaction = {
   fee: string;
 };
 
-export const renderSignTransaction = async (
+export const renderSignParsedTransaction = async (
   parsedTransaction: ParsedTransaction,
 ) => {
   const headingText = 'Sign transaction';
@@ -30,6 +30,28 @@ export const renderSignTransaction = async (
     params: {
       type: 'confirmation',
       content: panel([heading(headingText), ...txUiElements]),
+    },
+  });
+};
+
+export const renderBlindSignTransaction = async (
+  txCborHex: string,
+  txBodyHashHex: string,
+) => {
+  const headingText = 'Sign transaction';
+
+  const txUiElements = section([
+    text('Transaction hash:'),
+    copyable(txBodyHashHex),
+    text('Raw transaction:'),
+    copyable(txCborHex),
+  ]);
+
+  return snap.request({
+    method: 'snap_dialog',
+    params: {
+      type: 'confirmation',
+      content: panel([heading(headingText), txUiElements]),
     },
   });
 };

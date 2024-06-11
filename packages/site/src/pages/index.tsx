@@ -193,7 +193,7 @@ const Index = () => {
         },
       ],
     });
-    console.log('cardano sign multiasset transaction result', res);
+    console.log('cardano sign staking transaction result', res);
   };
 
   const handleCardanoVoteDelegationTransactionClick = async () => {
@@ -209,7 +209,23 @@ const Index = () => {
         },
       ],
     });
-    console.log('cardano sign multiasset transaction result', res);
+    console.log('cardano sign vote delegation transaction result', res);
+  };
+
+  const handleCardanoUnsupportedTransactionClick = async () => {
+    const res = await invokeSnap({
+      method: 'cardano__signTransaction',
+      params: [
+        {
+          txCborHex:
+            '83a500818258201af8fa0b754ff99253d983894e63a2b09cbb56c833ba18c3384210163f63dcfc0001818258390140ad326f4014e459230919f9483d9efd379205d07d2ed3efe8f9a0c12e9a8078855e2eec73f65c5cc82ec23c690448f1767acbd9bfc384961a002dd2e802182a030a04818304581cdbfee4665e58c8f8e9b9ff02b17f32e08a42c855476a5d867c2737b7186da0f6 ',
+          witnessKeysPaths: [["1852'", "1815'", "0'", '2', '0']],
+          networkId: 1,
+          ownAddressParams: [],
+        },
+      ],
+    });
+    console.log('cardano sign unsupported transaction result', res);
   };
 
   const handleCardanoVerifyAddressClick = async () => {
@@ -360,6 +376,24 @@ const Index = () => {
         />
         <Card
           content={{
+            title: 'Verify cardano address',
+            description: 'The result will be logged into console',
+            button: (
+              <VerifyCardanoAddressButton
+                onClick={handleCardanoVerifyAddressClick}
+                disabled={!installedSnap}
+              />
+            ),
+          }}
+          disabled={!installedSnap}
+          fullWidth={
+            isMetaMaskReady &&
+            Boolean(installedSnap) &&
+            !shouldDisplayReconnectButton(installedSnap)
+          }
+        />
+        <Card
+          content={{
             title: 'Sign SIMPLE cardano transaction',
             description: 'The result will be logged into console',
             button: (
@@ -432,11 +466,11 @@ const Index = () => {
         />
         <Card
           content={{
-            title: 'Verify cardano address',
+            title: 'Sign UNSUPPORTED cardano transaction',
             description: 'The result will be logged into console',
             button: (
-              <VerifyCardanoAddressButton
-                onClick={handleCardanoVerifyAddressClick}
+              <SignCardanoTransactionButton
+                onClick={handleCardanoUnsupportedTransactionClick}
                 disabled={!installedSnap}
               />
             ),

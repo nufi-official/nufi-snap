@@ -28,6 +28,22 @@ export type TxCredential<TDerivationPath extends CardanoDerivationPath> =
   | BaseTxCredential
   | OwnTxCredential<TDerivationPath>;
 
+export type DRep =
+  | {
+      type: 'keyHash';
+      keyHashBech32: string;
+    }
+  | {
+      type: 'scriptHash';
+      scriptHashBech32: string;
+    }
+  | {
+      type: 'alwaysNoConfidence';
+    }
+  | {
+      type: 'alwaysAbstain';
+    };
+
 export type Certificate =
   | {
       type: 'stake_registration';
@@ -51,6 +67,11 @@ export type Certificate =
       type: 'dynamic_deposit_stake_deregistration';
       credential: TxCredential<CardanoStakeDerivationPath>;
       deposit: string;
+    }
+  | {
+      type: 'vote_delegation';
+      credential: TxCredential<CardanoStakeDerivationPath>;
+      dRep: DRep;
     };
 
 const renderCredential = (credential: TxCredential<CardanoDerivationPath>) => {
@@ -122,6 +143,31 @@ const renderStakeDelegationCertificate = (
   ]);
 };
 
+const renderDRep = (dRep: DRep) => {
+  switch (dRep.type) {
+    case 'keyHash':
+      return row('Delegating to key', text(dRep.keyHashBech32));
+    case 'scriptHash':
+      return row('Delegating to script', text(dRep.scriptHashBech32));
+    case 'alwaysNoConfidence':
+      return row('Delegating to', text('Always no confidence'));
+    case 'alwaysAbstain':
+      return row('Delegating to', text('Always abstain'));
+    default:
+      throw new Error('Unsupported DRep type');
+  }
+};
+
+const renderVoteDelegationCertificate = (
+  certificate: Extract<Certificate, { type: 'vote_delegation' }>,
+) => {
+  return section([
+    heading(`Vote delegation ${renderAccountIndex(certificate)}`),
+    ...renderCredential(certificate.credential),
+    renderDRep(certificate.dRep),
+  ]);
+};
+
 export const renderCertificates = (certificates: Certificate[]) => {
   return certificates.map((certificate) => {
     switch (certificate.type) {
@@ -133,6 +179,8 @@ export const renderCertificates = (certificates: Certificate[]) => {
       case 'stake_deregistration':
       case 'dynamic_deposit_stake_deregistration':
         return renderStakeDeregistrationCertificate(certificate);
+      case 'vote_delegation':
+        return renderVoteDelegationCertificate(certificate);
       default:
         throw new Error('Unsupported certificate type');
     }

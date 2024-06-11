@@ -196,6 +196,22 @@ const Index = () => {
     console.log('cardano sign multiasset transaction result', res);
   };
 
+  const handleCardanoVoteDelegationTransactionClick = async () => {
+    const res = await invokeSnap({
+      method: 'cardano__signTransaction',
+      params: [
+        {
+          txCborHex:
+            '84a500818258208fe6fb18567f18bb7a3486dd9aa5695cd1f2b8a5c471b36d470d21a042ec23180001818258390140ad326f4014e459230919f9483d9efd379205d07d2ed3efe8f9a0c12e9a8078855e2eec73f65c5cc82ec23c690448f1767acbd9bfc384961a001bdba3021a0002a8dd031a0760a5c6048483098200581c2e9a8078855e2eec73f65c5cc82ec23c690448f1767acbd9bfc384968200581c7293814591e7543561361bafe399d9b5012d537c46cf70fa5e4faa9f83098200581c2e9a8078855e2eec73f65c5cc82ec23c690448f1767acbd9bfc384968201581c7293814591e7543561361bafe399d9b5012d537c46cf70fa5e4faa9f83098200581c2e9a8078855e2eec73f65c5cc82ec23c690448f1767acbd9bfc38496810283098200581c2e9a8078855e2eec73f65c5cc82ec23c690448f1767acbd9bfc384968103a10080f5f6 ',
+          witnessKeysPaths: [["1852'", "1815'", "0'", '2', '0']],
+          networkId: 1,
+          ownAddressParams: [],
+        },
+      ],
+    });
+    console.log('cardano sign multiasset transaction result', res);
+  };
+
   const handleCardanoVerifyAddressClick = async () => {
     const params = [
       [
@@ -385,6 +401,24 @@ const Index = () => {
             button: (
               <SignCardanoTransactionButton
                 onClick={handleCardanoSignTxWithStakingTransactionClick}
+                disabled={!installedSnap}
+              />
+            ),
+          }}
+          disabled={!installedSnap}
+          fullWidth={
+            isMetaMaskReady &&
+            Boolean(installedSnap) &&
+            !shouldDisplayReconnectButton(installedSnap)
+          }
+        />
+        <Card
+          content={{
+            title: 'Sign VOTE DELEGATION cardano transaction',
+            description: 'The result will be logged into console',
+            button: (
+              <SignCardanoTransactionButton
+                onClick={handleCardanoVoteDelegationTransactionClick}
                 disabled={!installedSnap}
               />
             ),

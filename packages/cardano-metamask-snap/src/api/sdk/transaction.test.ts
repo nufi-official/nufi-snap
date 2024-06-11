@@ -250,6 +250,99 @@ const parseTxSuccessFixtures = {
       ],
     },
   },
+  voteDelegation: {
+    ...transactionsFixture.voteDelegation,
+    ownAddresses: [
+      {
+        ...(accountFixture.addresses.basePaymentKeyStakeKeyAddress
+          .addressParams as AddressParams),
+        address:
+          'addr1q9q26vn0gq2wgkfrpyvljjpanm7n0ys96p7ja5l0aru6psfwn2q83p279mk88ajutnyzas3udyzy3utk0t9an07rsjtqm692kj',
+      },
+    ],
+    tokenList: {},
+    ownCredentials: [
+      {
+        type: 'keyHash' as const,
+        isOwn: true as const,
+        keyHashBech32:
+          'stake_vkey196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvwyspmz',
+        derivationPath: [
+          "1852'",
+          "1815'",
+          "0'",
+          '2',
+          '0',
+        ] as CardanoStakeDerivationPath,
+      },
+    ],
+    parsedTransaction: {
+      outputs: [
+        {
+          isChange: true,
+          address:
+            'addr1q9q26vn0gq2wgkfrpyvljjpanm7n0ys96p7ja5l0aru6psfwn2q83p279mk88ajutnyzas3udyzy3utk0t9an07rsjtqm692kj',
+          coin: '1.825699',
+          tokenBundle: [],
+        },
+      ],
+      fee: '0.174301',
+      certificates: [
+        {
+          type: 'vote_delegation',
+          credential: {
+            type: 'keyHash',
+            isOwn: true,
+            keyHashBech32:
+              'stake_vkey196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvwyspmz',
+            derivationPath: ["1852'", "1815'", "0'", '2', '0'],
+          },
+          dRep: {
+            type: 'keyHash',
+            keyHashBech32:
+              'drep1w2fcz3v3ua2r2cfkrwh78xwek5qj65mugm8hp7j7f74f7vtfa42',
+          },
+        },
+        {
+          type: 'vote_delegation',
+          credential: {
+            type: 'keyHash',
+            isOwn: true,
+            keyHashBech32:
+              'stake_vkey196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvwyspmz',
+            derivationPath: ["1852'", "1815'", "0'", '2', '0'],
+          },
+          dRep: {
+            type: 'scriptHash',
+            scriptHashBech32:
+              'drep_script1w2fcz3v3ua2r2cfkrwh78xwek5qj65mugm8hp7j7f74f7rf54ft',
+          },
+        },
+        {
+          type: 'vote_delegation',
+          credential: {
+            type: 'keyHash',
+            isOwn: true,
+            keyHashBech32:
+              'stake_vkey196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvwyspmz',
+            derivationPath: ["1852'", "1815'", "0'", '2', '0'],
+          },
+          dRep: { type: 'alwaysAbstain' },
+        },
+        {
+          type: 'vote_delegation',
+          credential: {
+            type: 'keyHash',
+            isOwn: true,
+            keyHashBech32:
+              'stake_vkey196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvwyspmz',
+            derivationPath: ["1852'", "1815'", "0'", '2', '0'],
+          },
+          dRep: { type: 'alwaysNoConfidence' },
+        },
+      ],
+    },
+  },
 };
 
 describe('parseTransaction success', () => {

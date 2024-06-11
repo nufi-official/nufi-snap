@@ -1,4 +1,4 @@
-import { type Serialization, Cardano } from '@cardano-sdk/core';
+import { Serialization, Cardano } from '@cardano-sdk/core';
 import { assert } from '@metamask/snaps-sdk';
 
 import type {
@@ -28,23 +28,55 @@ const parseTransactionCredential = <
     case Cardano.CredentialType.KeyHash: {
       const matchingOwnCredential = ownCredentials.find((ownCredential) => {
         return (
-          ownCredential.keyHashBech32 === keyHashHexToBech32(credential.hash)
+          ownCredential.keyHashBech32 ===
+          keyHashHexToBech32(credential.hash, 'stake_vkey')
         );
       });
       return (
         matchingOwnCredential ?? {
           type: 'keyHash',
-          keyHashBech32: keyHashHexToBech32(credential.hash),
+          keyHashBech32: keyHashHexToBech32(credential.hash, 'stake_vkey'),
         }
       );
     }
     case Cardano.CredentialType.ScriptHash:
       return {
         type: 'scriptHash',
-        scriptHashBech32: scriptHashHexToBech32(credential.hash),
+        scriptHashBech32: scriptHashHexToBech32(credential.hash, 'script'),
       };
     default:
       throw new Error('Unsupported credential type');
+  }
+};
+
+const parseDRep = (dRep: Serialization.DRep) => {
+  switch (dRep.kind()) {
+    case Serialization.DRepKind.KeyHash: {
+      const keyHash = dRep.toKeyHash();
+      assert(keyHash, 'DRep keyHash must be defined');
+      return {
+        type: 'keyHash' as const,
+        keyHashBech32: keyHashHexToBech32(keyHash, 'drep'),
+      };
+    }
+    case Serialization.DRepKind.ScriptHash: {
+      const scriptHash = dRep.toScriptHash();
+      assert(scriptHash, 'DRep scriptHash must be defined');
+      return {
+        type: 'scriptHash' as const,
+        scriptHashBech32: scriptHashHexToBech32(scriptHash, 'drep_script'),
+      };
+    }
+    case Serialization.DRepKind.Abstain:
+      return {
+        type: 'alwaysAbstain' as const,
+      };
+    case Serialization.DRepKind.NoConfidence:
+      return {
+        type: 'alwaysNoConfidence' as const,
+      };
+    default:
+      throw new Error('Unsupported DRep kind');
   }
 };
 
@@ -125,6 +157,20 @@ export const parseCertificates = (
           type: 'dynamic_deposit_stake_deregistration',
           credential,
           deposit: lovelaceToAda(stakeDeregistration.deposit().toString()),
+        };
+      }
+      case 9: {
+        const voteDelegation = certificate.asVoteDelegationCert();
+        assert(voteDelegation, 'Certificate must be defined');
+        const credential = parseTransactionCredential(
+          voteDelegation.stakeCredential(),
+          ownStakeCredentials,
+        );
+        const dRep = parseDRep(voteDelegation.dRep());
+        return {
+          type: 'vote_delegation',
+          credential,
+          dRep,
         };
       }
       default:

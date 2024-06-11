@@ -18,7 +18,7 @@ import {
   tokenList,
 } from '../sdk';
 import { assertIsArray, assertUserHasConfirmed, isRecord } from '../utils';
-import { renderSignTransaction } from './ui';
+import { renderBlindSignTransaction, renderSignParsedTransaction } from './ui';
 
 export type SignTransactionRequestParams = [
   {
@@ -124,17 +124,21 @@ export const signTransaction = async ({
     }),
   );
 
-  const parsedTransaction = parseTransaction({
-    txCborHex,
-    ownAddresses,
-    networkId,
-    tokenList,
-    ownCredentials,
-  });
+  await assertUserHasConfirmed(async () => {
+    try {
+      const parsedTransaction = parseTransaction({
+        txCborHex,
+        ownAddresses,
+        networkId,
+        tokenList,
+        ownCredentials,
+      });
 
-  await assertUserHasConfirmed(async () =>
-    renderSignTransaction(parsedTransaction),
-  );
+      return renderSignParsedTransaction(parsedTransaction);
+    } catch (error) {
+      return renderBlindSignTransaction(txCborHex, txBodyHashHex);
+    }
+  });
 
   const witnesses = await Promise.all(
     witnessKeysPaths.map(async (witnessKeyPath) => {

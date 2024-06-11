@@ -5,13 +5,23 @@ import { renderCertificates, type Certificate } from './certificate';
 import { renderOutputs, type Output } from './output';
 import { ADA_TICKER, assetValue } from './utils';
 
-export const renderTransactionFee = (fee: string) =>
-  section([row('Transaction fee', text(assetValue(fee, ADA_TICKER)))]);
+export const renderTransactionInfo = (parsedTransaction: ParsedTransaction) =>
+  section([
+    ...(parsedTransaction.validityIntervalStart
+      ? [row('Valid since slot', text(parsedTransaction.validityIntervalStart))]
+      : []),
+    ...(parsedTransaction.ttl
+      ? [row('Valid until slot', text(parsedTransaction.ttl))]
+      : []),
+    row('Transaction fee', text(assetValue(parsedTransaction.fee, ADA_TICKER))),
+  ]);
 
 export type ParsedTransaction = {
   outputs: Output[];
   certificates: Certificate[];
   fee: string;
+  validityIntervalStart: string | undefined;
+  ttl: string | undefined;
 };
 
 export const renderSignParsedTransaction = async (
@@ -22,7 +32,7 @@ export const renderSignParsedTransaction = async (
   const txUiElements = [
     ...renderOutputs(parsedTransaction.outputs),
     ...renderCertificates(parsedTransaction.certificates),
-    renderTransactionFee(parsedTransaction.fee),
+    renderTransactionInfo(parsedTransaction),
   ];
 
   return snap.request({
@@ -38,7 +48,10 @@ export const renderBlindSignTransaction = async (
   txCborHex: string,
   txBodyHashHex: string,
 ) => {
-  const headingText = 'Sign transaction';
+  const warningText = text(
+    '**Failed to show transaction details, please proceed with extra caution!**',
+  );
+  const headingText = heading('Sign transaction');
 
   const txUiElements = section([
     text('Transaction hash:'),
@@ -51,7 +64,7 @@ export const renderBlindSignTransaction = async (
     method: 'snap_dialog',
     params: {
       type: 'confirmation',
-      content: panel([heading(headingText), txUiElements]),
+      content: panel([warningText, headingText, txUiElements]),
     },
   });
 };

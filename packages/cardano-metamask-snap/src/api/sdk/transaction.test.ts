@@ -86,6 +86,7 @@ const parseTxSuccessFixtures = {
       ],
       fee: '0.174873',
       certificates: [],
+      ttl: '121962385',
     },
   },
   multiAsset: {
@@ -122,6 +123,7 @@ const parseTxSuccessFixtures = {
       ],
       fee: '0.302121',
       certificates: [],
+      ttl: '122915996',
     },
   },
   registerStakeAndDelegate: {
@@ -140,7 +142,7 @@ const parseTxSuccessFixtures = {
         type: 'keyHash' as const,
         isOwn: true as const,
         keyHashBech32:
-          'stake_vkey196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvwyspmz',
+          'stake_vkh196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvkc9yt3',
         derivationPath: [
           "1852'",
           "1815'",
@@ -168,7 +170,7 @@ const parseTxSuccessFixtures = {
             type: 'keyHash',
             isOwn: true,
             keyHashBech32:
-              'stake_vkey196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvwyspmz',
+              'stake_vkh196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvkc9yt3',
             derivationPath: ["1852'", "1815'", "0'", '2', '0'],
           },
         },
@@ -178,13 +180,14 @@ const parseTxSuccessFixtures = {
             type: 'keyHash',
             isOwn: true,
             keyHashBech32:
-              'stake_vkey196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvwyspmz',
+              'stake_vkh196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvkc9yt3',
             derivationPath: ["1852'", "1815'", "0'", '2', '0'],
           },
           poolIdBech32:
             'pool1ecvcst7k9eul4ggnljh0jw2s5nc2tyfmyzsx3xg3kmmz6ptgfwj',
         },
       ],
+      ttl: '123774406',
     },
   },
   newRegisterStakeAndUnregister: {
@@ -203,7 +206,7 @@ const parseTxSuccessFixtures = {
         type: 'keyHash' as const,
         isOwn: true as const,
         keyHashBech32:
-          'stake_vkey196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvwyspmz',
+          'stake_vkh196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvkc9yt3',
         derivationPath: [
           "1852'",
           "1815'",
@@ -231,7 +234,7 @@ const parseTxSuccessFixtures = {
             type: 'keyHash',
             isOwn: true,
             keyHashBech32:
-              'stake_vkey196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvwyspmz',
+              'stake_vkh196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvkc9yt3',
             derivationPath: ["1852'", "1815'", "0'", '2', '0'],
           },
           deposit: '6.000000',
@@ -242,12 +245,13 @@ const parseTxSuccessFixtures = {
             type: 'keyHash',
             isOwn: true,
             keyHashBech32:
-              'stake_vkey196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvwyspmz',
+              'stake_vkh196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvkc9yt3',
             derivationPath: ["1852'", "1815'", "0'", '2', '0'],
           },
           deposit: '6.000000',
         },
       ],
+      ttl: '123774406',
     },
   },
   voteDelegation: {
@@ -266,7 +270,7 @@ const parseTxSuccessFixtures = {
         type: 'keyHash' as const,
         isOwn: true as const,
         keyHashBech32:
-          'stake_vkey196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvwyspmz',
+          'stake_vkh196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvkc9yt3',
         derivationPath: [
           "1852'",
           "1815'",
@@ -294,7 +298,7 @@ const parseTxSuccessFixtures = {
             type: 'keyHash',
             isOwn: true,
             keyHashBech32:
-              'stake_vkey196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvwyspmz',
+              'stake_vkh196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvkc9yt3',
             derivationPath: ["1852'", "1815'", "0'", '2', '0'],
           },
           dRep: {
@@ -309,7 +313,7 @@ const parseTxSuccessFixtures = {
             type: 'keyHash',
             isOwn: true,
             keyHashBech32:
-              'stake_vkey196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvwyspmz',
+              'stake_vkh196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvkc9yt3',
             derivationPath: ["1852'", "1815'", "0'", '2', '0'],
           },
           dRep: {
@@ -324,7 +328,7 @@ const parseTxSuccessFixtures = {
             type: 'keyHash',
             isOwn: true,
             keyHashBech32:
-              'stake_vkey196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvwyspmz',
+              'stake_vkh196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvkc9yt3',
             derivationPath: ["1852'", "1815'", "0'", '2', '0'],
           },
           dRep: { type: 'alwaysAbstain' },
@@ -335,12 +339,13 @@ const parseTxSuccessFixtures = {
             type: 'keyHash',
             isOwn: true,
             keyHashBech32:
-              'stake_vkey196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvwyspmz',
+              'stake_vkh196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvkc9yt3',
             derivationPath: ["1852'", "1815'", "0'", '2', '0'],
           },
           dRep: { type: 'alwaysNoConfidence' },
         },
       ],
+      ttl: '123774406',
     },
   },
 };

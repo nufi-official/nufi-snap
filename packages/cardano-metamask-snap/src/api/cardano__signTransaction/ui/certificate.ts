@@ -29,14 +29,7 @@ export type TxCredential<TDerivationPath extends CardanoDerivationPath> =
   | OwnTxCredential<TDerivationPath>;
 
 export type DRep =
-  | {
-      type: 'keyHash';
-      keyHashBech32: string;
-    }
-  | {
-      type: 'scriptHash';
-      scriptHashBech32: string;
-    }
+  | BaseTxCredential
   | {
       type: 'alwaysNoConfidence';
     }
@@ -146,9 +139,9 @@ const renderStakeDelegationCertificate = (
 const renderDRep = (dRep: DRep) => {
   switch (dRep.type) {
     case 'keyHash':
-      return row('Delegating to key', text(dRep.keyHashBech32));
+      return row('Delegating to DRep key', text(dRep.keyHashBech32));
     case 'scriptHash':
-      return row('Delegating to script', text(dRep.scriptHashBech32));
+      return row('Delegating to DRep script', text(dRep.scriptHashBech32));
     case 'alwaysNoConfidence':
       return row('Delegating to', text('Always no confidence'));
     case 'alwaysAbstain':

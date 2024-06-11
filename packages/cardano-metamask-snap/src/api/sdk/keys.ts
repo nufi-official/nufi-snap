@@ -59,6 +59,7 @@ export async function signWithBip32Node(
 
 /**
  * Converts a key in hexadecimal format to a hash in hexadecimal format.
+ *
  * @param key - The key in hexadecimal format.
  * @returns The hash in hexadecimal format.
  */

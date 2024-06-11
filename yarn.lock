@@ -2118,6 +2118,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@cardano-sdk/util@npm:0.15.1":
+  version: 0.15.1
+  resolution: "@cardano-sdk/util@npm:0.15.1"
+  dependencies:
+    bech32: ^2.0.0
+    lodash: ^4.17.21
+    serialize-error: ^8
+    ts-custom-error: ^3.2.0
+    ts-log: ^2.2.4
+    type-fest: ^2.19.0
+  checksum: e3b82ba6bff2139918f7ceb4edb20bcec748f36048cfaac94516cf140766f2da49c973c822a409756aed745bd67826514c1c4f2b6e76f74fcd55ca1a27d13c3a
+  languageName: node
+  linkType: hard
+
 "@cardano-sdk/util@npm:~0.15.0":
   version: 0.15.0
   resolution: "@cardano-sdk/util@npm:0.15.0"
@@ -4217,6 +4231,7 @@ __metadata:
   dependencies:
     "@cardano-sdk/core": 0.28.5
     "@cardano-sdk/crypto": 0.1.21
+    "@cardano-sdk/util": 0.15.1
     "@emurgo/cardano-message-signing-asmjs": 1.0.1
     "@emurgo/cardano-message-signing-nodejs": 1.0.1
     "@jest/globals": 29.5.0

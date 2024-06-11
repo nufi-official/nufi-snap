@@ -10,14 +10,15 @@ export const poolIdHexToBech32 = (poolIdHex: string): string => {
 
 export const scriptHashHexToBech32 = (
   scriptHashHex: string,
-  prefix: string,
+  prefix: 'script' | 'drep_script',
 ): string => {
   return HexBlob.toTypedBech32(prefix, HexBlob(scriptHashHex));
 };
 
-export const keyHashHexToBech32 = (
-  keyHashHex: string,
-  prefix: string,
-): string => {
-  return HexBlob.toTypedBech32(prefix, HexBlob(keyHashHex));
+export const drepKeyHashHexToBech32 = (keyHashHex: string): string => {
+  return HexBlob.toTypedBech32('drep', HexBlob(keyHashHex));
+};
+
+export const stakeKeyHashHexToBech32 = (keyHashHex: string): string => {
+  return HexBlob.toTypedBech32('stake_vkh', HexBlob(keyHashHex));
 };

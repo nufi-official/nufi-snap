@@ -12,9 +12,10 @@ import {
   type CardanoStakeDerivationPath,
 } from '../derivationPath';
 import {
-  keyHashHexToBech32,
+  stakeKeyHashHexToBech32,
   poolIdHexToBech32,
   scriptHashHexToBech32,
+  drepKeyHashHexToBech32,
 } from './bech32';
 import { lovelaceToAda } from './utils';
 
@@ -26,16 +27,14 @@ const parseTransactionCredential = <
 ): TxCredential<TDerivationPath> => {
   switch (credential.type) {
     case Cardano.CredentialType.KeyHash: {
+      const keyHashBech32 = stakeKeyHashHexToBech32(credential.hash);
       const matchingOwnCredential = ownCredentials.find((ownCredential) => {
-        return (
-          ownCredential.keyHashBech32 ===
-          keyHashHexToBech32(credential.hash, 'stake_vkey')
-        );
+        return ownCredential.keyHashBech32 === keyHashBech32;
       });
       return (
         matchingOwnCredential ?? {
           type: 'keyHash',
-          keyHashBech32: keyHashHexToBech32(credential.hash, 'stake_vkey'),
+          keyHashBech32,
         }
       );
     }
@@ -56,7 +55,7 @@ const parseDRep = (dRep: Serialization.DRep) => {
       assert(keyHash, 'DRep keyHash must be defined');
       return {
         type: 'keyHash' as const,
-        keyHashBech32: keyHashHexToBech32(keyHash, 'drep'),
+        keyHashBech32: drepKeyHashHexToBech32(keyHash),
       };
     }
     case Serialization.DRepKind.ScriptHash: {

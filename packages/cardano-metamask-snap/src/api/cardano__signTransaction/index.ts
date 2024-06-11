@@ -12,7 +12,7 @@ import { isNetworkId, type NetworkId } from '../networkId';
 import {
   getTxHash,
   isValidTxCborHex,
-  keyHashHexToBech32,
+  stakeKeyHashHexToBech32,
   keyToHashHex,
   parseTransaction,
   tokenList,
@@ -113,9 +113,8 @@ export const signTransaction = async ({
         await cryptoProvider.getExtendedPublicKey(derivationPath);
 
       return {
-        keyHashBech32: keyHashHexToBech32(
+        keyHashBech32: stakeKeyHashHexToBech32(
           await keyToHashHex(extendedPublicKeyHex),
-          'stake_vkey',
         ),
         derivationPath,
         isOwn: true as const,

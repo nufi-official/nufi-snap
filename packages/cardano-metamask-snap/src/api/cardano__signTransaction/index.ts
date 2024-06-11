@@ -115,6 +115,7 @@ export const signTransaction = async ({
       return {
         keyHashBech32: keyHashHexToBech32(
           await keyToHashHex(extendedPublicKeyHex),
+          'stake_vkey',
         ),
         derivationPath,
         isOwn: true as const,

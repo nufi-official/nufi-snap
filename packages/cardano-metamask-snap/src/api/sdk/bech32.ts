@@ -8,10 +8,16 @@ export const poolIdHexToBech32 = (poolIdHex: string): string => {
   return HexBlob.toTypedBech32('pool', HexBlob(poolIdHex));
 };
 
-export const scriptHashHexToBech32 = (scriptHashHex: string): string => {
-  return HexBlob.toTypedBech32('script', HexBlob(scriptHashHex));
+export const scriptHashHexToBech32 = (
+  scriptHashHex: string,
+  prefix: string,
+): string => {
+  return HexBlob.toTypedBech32(prefix, HexBlob(scriptHashHex));
 };
 
-export const keyHashHexToBech32 = (keyHashHex: string): string => {
-  return HexBlob.toTypedBech32('stake_vkey', HexBlob(keyHashHex));
+export const keyHashHexToBech32 = (
+  keyHashHex: string,
+  prefix: string,
+): string => {
+  return HexBlob.toTypedBech32(prefix, HexBlob(keyHashHex));
 };

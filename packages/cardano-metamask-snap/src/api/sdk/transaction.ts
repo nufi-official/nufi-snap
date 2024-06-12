@@ -92,15 +92,18 @@ export const parseTransaction = ({
     tokenList,
   );
 
+  const fee = lovelaceToAda(parsedTransactionBody.fee().toString());
+
+  const ttl = parsedTransactionBody.ttl()?.toString();
+
   const certificates = parseCertificates(
     parsedTransactionBody.certs(),
     ownCredentials,
   );
 
-  const ttl = parsedTransactionBody.ttl()?.toString();
   const validityIntervalStart = parsedTransactionBody
     .validityStartInterval()
     ?.toString();
-  const fee = lovelaceToAda(parsedTransactionBody.fee().toString());
+
   return { outputs, fee, certificates, ttl, validityIntervalStart };
 };

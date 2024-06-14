@@ -1,6 +1,8 @@
 import { Cardano } from '@cardano-sdk/core';
 
 import {
+  getPaymentPathAccountIndex,
+  getStakePathAccountIndex,
   isDerivationPath,
   isPaymentDerivationPath,
   isStakeDerivationPath,
@@ -54,3 +56,41 @@ export const isAddressParams = (params: unknown): params is AddressParams => {
 };
 
 export type OwnAddress = AddressParams & { address: string };
+
+/**
+ * Addresses which payment derivation path is equal to 1852'/1815'/<accountIndex>'/0/0
+ * and stake derivation path is equal to 1852'/1815'/<accountIndex>'/2/0 are considered account addresses.
+ *
+ * @param params - Address params.
+ * @param params.addressType - The type of address.
+ * @param params.paymentDerivationPath - The payment derivation path.
+ * @param params.stakeDerivationPath - The stake derivation path.
+ * @returns The account index if paths account indexes match, null if they don't or if we don't consider it a "standard" address path for the sake of NuFi wallet.
+ */
+export function getAddressAccountIndex({
+  addressType,
+  paymentDerivationPath,
+  stakeDerivationPath,
+}: AddressParams) {
+  if (
+    addressType === addressTypes.BasePaymentKeyStakeKey &&
+    paymentDerivationPath &&
+    stakeDerivationPath
+  ) {
+    const paymentAccountAddressIndex = getPaymentPathAccountIndex(
+      paymentDerivationPath,
+    );
+    const stakeAccountAddressIndex =
+      getStakePathAccountIndex(stakeDerivationPath);
+    return paymentAccountAddressIndex === stakeAccountAddressIndex
+      ? stakeAccountAddressIndex
+      : null;
+  }
+  if (addressType === addressTypes.EnterpriseKey && paymentDerivationPath) {
+    return getPaymentPathAccountIndex(paymentDerivationPath);
+  }
+  if (addressType === addressTypes.RewardKey && stakeDerivationPath) {
+    return getStakePathAccountIndex(stakeDerivationPath);
+  }
+  return null;
+}

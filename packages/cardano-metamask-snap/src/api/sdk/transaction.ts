@@ -13,6 +13,7 @@ import { parseCertificates } from './certificate';
 import type { TokenList } from './tokenList';
 import { hexToBytes, lovelaceToAda } from './utils';
 import { parseOutputs } from './output';
+import { parseCollateralReturn, parseTotalCollateral } from './collateral';
 
 /**
  * Calculates the hash of a transaction body.
@@ -105,5 +106,28 @@ export const parseTransaction = ({
     .validityStartInterval()
     ?.toString();
 
-  return { outputs, fee, certificates, ttl, validityIntervalStart };
+  const collateralReturn = parseCollateralReturn(
+    parsedTransactionBody.collateralReturn(),
+    ownAddresses,
+  );
+  const totalCollateral = parseTotalCollateral(
+    parsedTransactionBody.totalCollateral(),
+  );
+
+  const collateral =
+    collateralReturn || totalCollateral
+      ? {
+          collateralReturn,
+          totalCollateral,
+        }
+      : undefined;
+
+  return {
+    outputs,
+    fee,
+    certificates,
+    ttl,
+    validityIntervalStart,
+    collateral,
+  };
 };

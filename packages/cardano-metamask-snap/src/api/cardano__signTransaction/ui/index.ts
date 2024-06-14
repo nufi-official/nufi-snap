@@ -2,6 +2,11 @@ import { heading, row, text, panel, copyable } from '@metamask/snaps-sdk';
 
 import { section } from '../../ui';
 import { renderCertificates, type Certificate } from './certificate';
+import {
+  type Collateral,
+  renderCollateralReturn,
+  renderTotalCollateral,
+} from './collateral';
 import { renderOutputs, type Output } from './output';
 import { ADA_TICKER, assetValue } from './utils';
 
@@ -13,6 +18,9 @@ export const renderTransactionInfo = (parsedTransaction: ParsedTransaction) =>
     ...(parsedTransaction.ttl
       ? [row('Valid until slot', text(parsedTransaction.ttl))]
       : []),
+    ...(parsedTransaction.collateral
+      ? [renderTotalCollateral(parsedTransaction.collateral)]
+      : []),
     row('Transaction fee', text(assetValue(parsedTransaction.fee, ADA_TICKER))),
   ]);
 
@@ -22,6 +30,7 @@ export type ParsedTransaction = {
   fee: string;
   validityIntervalStart: string | undefined;
   ttl: string | undefined;
+  collateral: Collateral | undefined;
 };
 
 export const renderSignParsedTransaction = async (
@@ -32,6 +41,9 @@ export const renderSignParsedTransaction = async (
   const txUiElements = [
     ...renderOutputs(parsedTransaction.outputs),
     ...renderCertificates(parsedTransaction.certificates),
+    ...(parsedTransaction.collateral?.collateralReturn
+      ? [renderCollateralReturn(parsedTransaction.collateral.collateralReturn)]
+      : []),
     renderTransactionInfo(parsedTransaction),
   ];
 
@@ -71,3 +83,4 @@ export const renderBlindSignTransaction = async (
 
 export * from './certificate';
 export * from './output';
+export * from './collateral';

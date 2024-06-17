@@ -37,6 +37,20 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   origin,
 }) => {
   const urlObject = new URL(origin);
+  console.log({
+    method: 'onRpcRequest',
+    request,
+    origin,
+    urlObject,
+    urlstr: urlObject.toString(),
+    urlJson: JSON.stringify(urlObject),
+    isLocalHost: urlObject.hostname === 'localhost',
+    isNufi: urlObject.hostname.endsWith('.nu.fi'),
+    isOk: !(
+      urlObject.hostname === 'localhost' ||
+      urlObject.hostname.endsWith('.nu.fi')
+    ),
+  });
   if (
     !(
       urlObject.hostname === 'localhost' ||

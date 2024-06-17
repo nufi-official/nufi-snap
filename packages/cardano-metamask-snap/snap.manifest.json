@@ -26,11 +26,7 @@
     "snap_getEntropy": {},
     "snap_getBip32Entropy": [
       {
-        "path": [
-          "m",
-          "1852'",
-          "1815'"
-        ],
+        "path": ["m", "1852'", "1815'"],
         "curve": "ed25519Bip32"
       }
     ]

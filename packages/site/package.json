@@ -4,7 +4,6 @@
   "private": true,
   "license": "(MIT-0 OR Apache-2.0)",
   "scripts": {
-    "allow-scripts": "yarn workspace root allow-scripts",
     "build": "GATSBY_TELEMETRY_DISABLED=1 gatsby build",
     "clean": "rimraf public",
     "lint": "yarn lint:eslint && yarn lint:misc --check",
@@ -67,6 +66,8 @@
     "typescript": "4.7.4"
   },
   "engines": {
-    "node": ">=18.6.0"
+    "node": "18.6.0",
+    "npm": "9.5.0",
+    "yarn": "3.2.1"
   }
 }

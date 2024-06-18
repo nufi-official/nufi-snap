@@ -53,7 +53,12 @@ const assertValidNetworkId = (
     assert(txNetworkId === networkId, 'Transaction networkId does not match');
   }
 
-  const outputsAddressNetworkIds = txBody.outputs().map((output) => {
+  const collateralReturn = txBody.collateralReturn();
+
+  const outputsAddressNetworkIds = [
+    ...txBody.outputs(),
+    ...(collateralReturn ? [collateralReturn] : []),
+  ].map((output) => {
     return output.address().getNetworkId();
   });
 

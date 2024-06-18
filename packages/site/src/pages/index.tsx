@@ -228,6 +228,28 @@ const Index = () => {
     console.log('cardano sign unsupported transaction result', res);
   };
 
+  const handleCardanoPlutusTransactionClick = async () => {
+    const res = await invokeSnap({
+      method: 'cardano__signTransaction',
+      params: [
+        {
+          txCborHex:
+            '83a8008182582094461e17271b4a108f679eb7b6947aea29573296a5edca635d583fb40785e05d000181a400583900f3db2225703e4cfbe2227772bdf057f9829449f18ac81e250ceb01ca0a84430507e150f0a06109dc3a7b1956b7a0586ae9078a55ef0e0b03011a000f4240028201d81841a003d8185846820158425840010000332233322222253353004333573466ebc00c00801801440204c98d4c01ccd5ce2481094e6f7420457175616c000084984880084880048004480048004102000b5820853cbe68f7fccdeeeb0fd7b711ea147912190c35ac52d9d94080ae82809b2f840d8182582094461e17271b4a108f679eb7b6947aea29573296a5edca635d583fb40785e05d0110a200583900f3db2225703e4cfbe2227772bdf057f9829449f18ac81e250ceb01ca0a84430507e150f0a06109dc3a7b1956b7a0586ae9078a55ef0e0b030100110a128182582094461e17271b4a108f679eb7b6947aea29573296a5edca635d583fb40785e05d02a0f6',
+          witnessKeysPaths: [["1852'", "1815'", "0'", '2', '0']],
+          networkId: 0,
+          ownAddressParams: [
+            {
+              addressType: 0,
+              stakeDerivationPath: ["1852'", "1815'", "0'", '2', '0'],
+              paymentDerivationPath: ["1852'", "1815'", "0'", '0', '0'],
+            },
+          ],
+        },
+      ],
+    });
+    console.log('cardano sign plutus transaction result', res);
+  };
+
   const handleCardanoVerifyAddressClick = async () => {
     const params = [
       [
@@ -471,6 +493,24 @@ const Index = () => {
             button: (
               <SignCardanoTransactionButton
                 onClick={handleCardanoUnsupportedTransactionClick}
+                disabled={!installedSnap}
+              />
+            ),
+          }}
+          disabled={!installedSnap}
+          fullWidth={
+            isMetaMaskReady &&
+            Boolean(installedSnap) &&
+            !shouldDisplayReconnectButton(installedSnap)
+          }
+        />
+        <Card
+          content={{
+            title: 'Sign PLUTUS cardano transaction',
+            description: 'The result will be logged into console',
+            button: (
+              <SignCardanoTransactionButton
+                onClick={handleCardanoPlutusTransactionClick}
                 disabled={!installedSnap}
               />
             ),

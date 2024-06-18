@@ -10,10 +10,10 @@ import type {
 } from '../cardano__signTransaction/ui';
 import { type CardanoDerivationPath } from '../derivationPath';
 import { parseCertificates } from './certificate';
+import { parseCollateralReturn, parseTotalCollateral } from './collateral';
+import { parseOutputs } from './output';
 import type { TokenList } from './tokenList';
 import { hexToBytes, lovelaceToAda } from './utils';
-import { parseOutputs } from './output';
-import { parseCollateralReturn, parseTotalCollateral } from './collateral';
 
 /**
  * Calculates the hash of a transaction body.
@@ -70,6 +70,18 @@ const assertValidNetworkId = (
   );
 };
 
+// Based on signing mode validations in
+// https://github.com/cardano-foundation/ledgerjs-hw-app-cardano/blob/5e83052fd02c8e3bf88dbc837bb9219d80b41a40/src/parsing/transaction.ts#L341
+export const hasPlutusTxFields = (
+  txBody: Serialization.TransactionBody,
+): boolean =>
+  Boolean(
+    txBody.collateral()?.length ??
+      txBody.collateralReturn() ??
+      txBody.totalCollateral() ??
+      txBody.referenceInputs()?.length,
+  );
+
 type ParseTransactionParams = Pick<
   SignTransactionRequestParams[number],
   'txCborHex' | 'networkId'
@@ -111,21 +123,33 @@ export const parseTransaction = ({
     .validityStartInterval()
     ?.toString();
 
-  const collateralReturn = parseCollateralReturn(
-    parsedTransactionBody.collateralReturn(),
-    ownAddresses,
-  );
-  const totalCollateral = parseTotalCollateral(
-    parsedTransactionBody.totalCollateral(),
-  );
+  if (hasPlutusTxFields(parsedTransactionBody)) {
+    const collateralReturn = parseCollateralReturn(
+      parsedTransactionBody.collateralReturn(),
+      ownAddresses,
+    );
+    const totalCollateral = parseTotalCollateral(
+      parsedTransactionBody.totalCollateral(),
+    );
 
-  const collateral =
-    collateralReturn || totalCollateral
-      ? {
-          collateralReturn,
-          totalCollateral,
-        }
-      : undefined;
+    const collateral =
+      collateralReturn || totalCollateral
+        ? {
+            collateralReturn,
+            totalCollateral,
+          }
+        : undefined;
+
+    return {
+      outputs,
+      fee,
+      certificates,
+      ttl,
+      validityIntervalStart,
+      collateral,
+      txKind: 'plutus' as const,
+    };
+  }
 
   return {
     outputs,
@@ -133,6 +157,7 @@ export const parseTransaction = ({
     certificates,
     ttl,
     validityIntervalStart,
-    collateral,
+    collateral: undefined,
+    txKind: 'ordinary' as const,
   };
 };

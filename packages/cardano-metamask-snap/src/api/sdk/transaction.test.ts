@@ -46,6 +46,7 @@ const parseTxSuccessFixtures = {
       ],
       fee: '0.123456',
       certificates: [],
+      txKind: 'ordinary',
     },
   },
   simpleWithChangeOutput: {
@@ -87,6 +88,7 @@ const parseTxSuccessFixtures = {
       fee: '0.174873',
       certificates: [],
       ttl: '121962385',
+      txKind: 'ordinary',
     },
   },
   multiAsset: {
@@ -124,6 +126,7 @@ const parseTxSuccessFixtures = {
       fee: '0.302121',
       certificates: [],
       ttl: '122915996',
+      txKind: 'ordinary',
     },
   },
   registerStakeAndDelegate: {
@@ -188,6 +191,7 @@ const parseTxSuccessFixtures = {
         },
       ],
       ttl: '123774406',
+      txKind: 'ordinary',
     },
   },
   newRegisterStakeAndUnregister: {
@@ -252,6 +256,7 @@ const parseTxSuccessFixtures = {
         },
       ],
       ttl: '123774406',
+      txKind: 'ordinary',
     },
   },
   voteDelegation: {
@@ -346,6 +351,43 @@ const parseTxSuccessFixtures = {
         },
       ],
       ttl: '123774406',
+      txKind: 'ordinary',
+    },
+  },
+  plutus: {
+    ...transactionsFixture.plutus,
+    ownAddresses: [
+      {
+        ...(accountFixture.addresses.basePaymentKeyStakeKeyAddress
+          .addressParams as AddressParams),
+        address:
+          'addr1qxgcuk5j0q0k2d0s9axvah49aut4ct5a5ertwp67psz3uuejm6ernk539y4mwwzrmny7ducc4d50mf6jfqvu79ghryss0cc0r2',
+      },
+    ],
+    tokenList: {},
+    ownCredentials: [],
+    parsedTransaction: {
+      outputs: [
+        {
+          isChange: false,
+          address:
+            'addr_test1qreakg39wqlye7lzyfmh900s2luc99zf7x9vs839pn4srjs2s3ps2plp2rc2qcgfmsa8kx2kk7s9s6hfq799tmcwpvps36jz6w',
+          coin: '1.000000',
+          tokenBundle: [],
+        },
+      ],
+      fee: '0.000000',
+      certificates: [],
+      collateral: {
+        collateralReturn: {
+          isOwn: false,
+          address:
+            'addr_test1qreakg39wqlye7lzyfmh900s2luc99zf7x9vs839pn4srjs2s3ps2plp2rc2qcgfmsa8kx2kk7s9s6hfq799tmcwpvps36jz6w',
+          coin: '0.000000',
+        },
+        totalCollateral: '0.000010',
+      },
+      txKind: 'plutus',
     },
   },
 };

@@ -1,7 +1,8 @@
-import { Serialization } from '@cardano-sdk/core';
+import type { Serialization } from '@cardano-sdk/core';
+
+import type { OwnAddress } from '../address';
+import type { CollateralReturnOutput } from '../cardano__signTransaction/ui';
 import { lovelaceToAda } from './utils';
-import { OwnAddress } from '../address';
-import { CollateralReturnOutput } from '../cardano__signTransaction/ui';
 
 export const parseCollateralReturn = (
   collateral: Serialization.TransactionOutput | undefined,

@@ -30,13 +30,17 @@ export type ParsedTransaction = {
   fee: string;
   validityIntervalStart: string | undefined;
   ttl: string | undefined;
-  collateral: Collateral | undefined;
-};
+} & (
+  | { collateral: undefined; txKind: 'ordinary' }
+  | { collateral: Collateral | undefined; txKind: 'plutus' }
+);
 
 export const renderSignParsedTransaction = async (
   parsedTransaction: ParsedTransaction,
 ) => {
-  const headingText = 'Sign transaction';
+  const headingText = `Sign${
+    parsedTransaction.txKind === 'plutus' ? ' a Plutus' : ''
+  } transaction`;
 
   const txUiElements = [
     ...renderOutputs(parsedTransaction.outputs),

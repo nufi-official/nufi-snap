@@ -109,6 +109,19 @@ const fixtures = {
     ownAddressParams: [],
     stringifiedUi: `{"type":"confirmation","content":{"type":"Box","props":{"children":[{"type":"Text","props":{"children":{"type":"Bold","props":{"children":"Failed to show transaction details, please proceed with extra caution!"},"key":null}},"key":null},{"type":"Heading","props":{"children":"Sign transaction"},"key":null},{"type":"Box","props":{"children":[{"type":"Divider","props":{},"key":null},{"type":"Divider","props":{},"key":null},{"type":"Text","props":{"children":"Transaction hash:"},"key":null},{"type":"Copyable","props":{"value":"2f8457052618d8f7b4e8656113f0df49adac1404d029d91de2b1b9250afc890d"},"key":null},{"type":"Text","props":{"children":"Raw transaction:"},"key":null},{"type":"Copyable","props":{"value":"83a500818258201af8fa0b754ff99253d983894e63a2b09cbb56c833ba18c3384210163f63dcfc0001818258390140ad326f4014e459230919f9483d9efd379205d07d2ed3efe8f9a0c12e9a8078855e2eec73f65c5cc82ec23c690448f1767acbd9bfc384961a002dd2e802182a030a04818304581cdbfee4665e58c8f8e9b9ff02b17f32e08a42c855476a5d867c2737b7186da0f6"},"key":null}]},"key":null}]},"key":null}}`,
   },
+  plutus: {
+    ...transactionsFixture.plutus,
+    witnesses: [
+      {
+        witnessKeyPath: accountFixture.stakePart.derivationPath,
+        extendedPublicKeyHex: accountFixture.stakePart.extendedPublicKeyHex,
+        signatureHex:
+          'fadc893551b2c20fe42562e8a96e306e09d4572bfad4b7d3072063b04d14218439ae8d17ca9fb517fc362015a7085f82f0dfb1f52c1fd9e9af6fb70b78affd0a',
+      },
+    ],
+    ownAddressParams: [],
+    stringifiedUi: `{"type":"confirmation","content":{"type":"Box","props":{"children":[{"type":"Heading","props":{"children":"Sign a Plutus transaction"},"key":null},{"type":"Box","props":{"children":[{"type":"Divider","props":{},"key":null},{"type":"Divider","props":{},"key":null},{"type":"Heading","props":{"children":"Send"},"key":null},{"type":"Row","props":{"label":"To address","children":{"type":"Text","props":{"children":"addr_test1qreakg39wqlye7lzyfmh900s2luc99zf7x9vs839pn4srjs2s3ps2plp2rc2qcgfmsa8kx2kk7s9s6hfq799tmcwpvps36jz6w"},"key":null}},"key":null},{"type":"Row","props":{"label":"Amount","children":{"type":"Text","props":{"children":{"type":"Bold","props":{"children":"1.000000 ADA"},"key":null}},"key":null}},"key":null}]},"key":null},{"type":"Box","props":{"children":[{"type":"Divider","props":{},"key":null},{"type":"Divider","props":{},"key":null},{"type":"Heading","props":{"children":"Collateral return "},"key":null},{"type":"Row","props":{"label":"To address","children":{"type":"Text","props":{"children":"addr_test1qreakg39wqlye7lzyfmh900s2luc99zf7x9vs839pn4srjs2s3ps2plp2rc2qcgfmsa8kx2kk7s9s6hfq799tmcwpvps36jz6w"},"key":null}},"key":null},{"type":"Row","props":{"label":"Amount","children":{"type":"Text","props":{"children":{"type":"Bold","props":{"children":"0.000000 ADA"},"key":null}},"key":null}},"key":null}]},"key":null},{"type":"Box","props":{"children":[{"type":"Divider","props":{},"key":null},{"type":"Divider","props":{},"key":null},{"type":"Row","props":{"label":"Total collateral","children":{"type":"Text","props":{"children":{"type":"Bold","props":{"children":"0.000010 ADA"},"key":null}},"key":null}},"key":null},{"type":"Row","props":{"label":"Transaction fee","children":{"type":"Text","props":{"children":{"type":"Bold","props":{"children":"0.000000 ADA"},"key":null}},"key":null}},"key":null}]},"key":null}]},"key":null}}`,
+  },
 };
 
 describe('cardano__signTransaction', () => {

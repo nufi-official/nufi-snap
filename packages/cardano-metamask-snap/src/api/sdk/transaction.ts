@@ -4,16 +4,13 @@ import { assert } from '@metamask/snaps-sdk';
 
 import { type OwnAddress } from '../address';
 import type { SignTransactionRequestParams } from '../cardano__signTransaction';
-import type {
-  OwnTxCredential,
-  ParsedTransaction,
-} from '../cardano__signTransaction/ui';
-import { type CardanoDerivationPath } from '../derivationPath';
+import type { ParsedTransaction } from '../cardano__signTransaction/ui';
 import { parseCertificates } from './certificate';
 import { parseCollateralReturn, parseTotalCollateral } from './collateral';
 import { parseOutputs } from './output';
 import type { TokenList } from './tokenList';
 import { hexToBytes, lovelaceToAda } from './utils';
+import { OwnTxCredential } from '../cardano__signTransaction/ui/credential';
 
 /**
  * Calculates the hash of a transaction body.

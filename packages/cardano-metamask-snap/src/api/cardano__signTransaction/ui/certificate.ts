@@ -1,13 +1,13 @@
 import { heading, row, text } from '@metamask/snaps-sdk';
 
-import {
-  getStakePathAccountIndex,
-  type CardanoDerivationPath,
-  type CardanoStakeDerivationPath,
-} from '../../derivationPath';
-import { getUiAccountIndex, section } from '../../ui';
+import { type CardanoStakeDerivationPath } from '../../derivationPath';
+import { section } from '../../ui';
 import { ADA_TICKER, assetValue } from './utils';
-import { TxCredential, renderCredential } from './credential';
+import {
+  TxCredential,
+  renderCredential,
+  renderStakeCredentialAccountIndex,
+} from './credential';
 
 export type DRep =
   | BaseTxCredential
@@ -48,15 +48,6 @@ export type Certificate =
       dRep: DRep;
     };
 
-const renderAccountIndex = (certificate: Certificate) => {
-  if ('derivationPath' in certificate.credential) {
-    return `for ${getUiAccountIndex(
-      getStakePathAccountIndex(certificate.credential.derivationPath),
-    )}`;
-  }
-  return '';
-};
-
 const renderStakeRegistrationCertificate = (
   certificate: Extract<
     Certificate,
@@ -65,7 +56,11 @@ const renderStakeRegistrationCertificate = (
   >,
 ) => {
   return section([
-    heading(`Stake registration ${renderAccountIndex(certificate)}`),
+    heading(
+      `Stake registration ${renderStakeCredentialAccountIndex(
+        certificate.credential,
+      )}`,
+    ),
     ...renderCredential(certificate.credential),
     ...('deposit' in certificate
       ? [row('Deposit', text(assetValue(certificate.deposit, ADA_TICKER)))]
@@ -81,7 +76,11 @@ const renderStakeDeregistrationCertificate = (
   >,
 ) => {
   return section([
-    heading(`Stake deregistration ${renderAccountIndex(certificate)}`),
+    heading(
+      `Stake deregistration ${renderStakeCredentialAccountIndex(
+        certificate.credential,
+      )}`,
+    ),
     ...renderCredential(certificate.credential),
     ...('deposit' in certificate
       ? [
@@ -98,7 +97,11 @@ const renderStakeDelegationCertificate = (
   certificate: Extract<Certificate, { type: 'stake_delegation' }>,
 ) => {
   return section([
-    heading(`Stake delegation ${renderAccountIndex(certificate)}`),
+    heading(
+      `Stake delegation ${renderStakeCredentialAccountIndex(
+        certificate.credential,
+      )}`,
+    ),
     ...renderCredential(certificate.credential),
     row('To pool', text(certificate.poolIdBech32)),
   ]);
@@ -123,7 +126,11 @@ const renderVoteDelegationCertificate = (
   certificate: Extract<Certificate, { type: 'vote_delegation' }>,
 ) => {
   return section([
-    heading(`Vote delegation ${renderAccountIndex(certificate)}`),
+    heading(
+      `Vote delegation ${renderStakeCredentialAccountIndex(
+        certificate.credential,
+      )}`,
+    ),
     ...renderCredential(certificate.credential),
     renderDRep(certificate.dRep),
   ]);

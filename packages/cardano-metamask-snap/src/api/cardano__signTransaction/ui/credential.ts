@@ -1,5 +1,11 @@
 import { row, text } from '@metamask/snaps-sdk';
-import type { CardanoDerivationPath } from 'src/api/derivationPath';
+
+import {
+  getStakePathAccountIndex,
+  type CardanoDerivationPath,
+  type CardanoStakeDerivationPath,
+} from '../../derivationPath';
+import { getUiAccountIndex } from '../../ui';
 
 export type BaseTxCredential =
   | {
@@ -34,4 +40,15 @@ export const renderCredential = (
     return [row('For key', text(credential.keyHashBech32))];
   }
   return [row('For script', text(credential.scriptHashBech32))];
+};
+
+export const renderStakeCredentialAccountIndex = (
+  credential: TxCredential<CardanoStakeDerivationPath>,
+) => {
+  if ('derivationPath' in credential) {
+    return `for ${getUiAccountIndex(
+      getStakePathAccountIndex(credential.derivationPath),
+    )}`;
+  }
+  return '';
 };

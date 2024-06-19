@@ -16,6 +16,7 @@ import { parseOutputs } from './output';
 import type { TokenList } from './tokenList';
 import { hexToBytes, lovelaceToAda } from './utils';
 import { OwnTxCredential } from '../cardano__signTransaction/ui/credential';
+import { parseWithdrawals } from './withdrawal';
 
 /**
  * Calculates the hash of a transaction body.
@@ -123,7 +124,12 @@ export const parseTransaction = ({
 
   const certificates = parseCertificates(
     parsedTransactionBody.certs(),
-    ownCredentials,
+    ownStakeCredentials,
+  );
+
+  const withdrawals = parseWithdrawals(
+    parsedTransactionBody.withdrawals(),
+    ownStakeCredentials,
   );
 
   const validityIntervalStart = parsedTransactionBody
@@ -155,6 +161,7 @@ export const parseTransaction = ({
       validityIntervalStart,
       collateral,
       txKind: 'plutus' as const,
+      withdrawals,
     };
   }
 
@@ -166,5 +173,6 @@ export const parseTransaction = ({
     validityIntervalStart,
     collateral: undefined,
     txKind: 'ordinary' as const,
+    withdrawals,
   };
 };

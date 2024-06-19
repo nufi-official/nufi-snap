@@ -9,6 +9,7 @@ import {
 } from './collateral';
 import { renderOutputs, type Output } from './output';
 import { ADA_TICKER, assetValue } from './utils';
+import { Withdrawal } from './withdrawal';
 
 export const renderTransactionInfo = (parsedTransaction: ParsedTransaction) =>
   section([
@@ -30,6 +31,7 @@ export type ParsedTransaction = {
   fee: string;
   validityIntervalStart: string | undefined;
   ttl: string | undefined;
+  withdrawals: Withdrawal[];
 } & (
   | { collateral: undefined; txKind: 'ordinary' }
   | { collateral: Collateral | undefined; txKind: 'plutus' }

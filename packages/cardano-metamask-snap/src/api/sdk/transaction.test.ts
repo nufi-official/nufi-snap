@@ -47,6 +47,7 @@ const parseTxSuccessFixtures = {
       fee: '0.123456',
       certificates: [],
       txKind: 'ordinary',
+      withdrawals: [],
     },
   },
   simpleWithChangeOutput: {
@@ -89,6 +90,7 @@ const parseTxSuccessFixtures = {
       certificates: [],
       ttl: '121962385',
       txKind: 'ordinary',
+      withdrawals: [],
     },
   },
   multiAsset: {
@@ -127,6 +129,7 @@ const parseTxSuccessFixtures = {
       certificates: [],
       ttl: '122915996',
       txKind: 'ordinary',
+      withdrawals: [],
     },
   },
   registerStakeAndDelegate: {
@@ -192,6 +195,7 @@ const parseTxSuccessFixtures = {
       ],
       ttl: '123774406',
       txKind: 'ordinary',
+      withdrawals: [],
     },
   },
   newRegisterStakeAndUnregister: {
@@ -257,6 +261,7 @@ const parseTxSuccessFixtures = {
       ],
       ttl: '123774406',
       txKind: 'ordinary',
+      withdrawals: [],
     },
   },
   voteDelegation: {
@@ -352,6 +357,7 @@ const parseTxSuccessFixtures = {
       ],
       ttl: '123774406',
       txKind: 'ordinary',
+      withdrawals: [],
     },
   },
   plutus: {
@@ -388,6 +394,49 @@ const parseTxSuccessFixtures = {
         totalCollateral: '0.000010',
       },
       txKind: 'plutus',
+      withdrawals: [],
+    },
+  },
+  withdrawals: {
+    ...transactionsFixture.withdrawals,
+    ownAddresses: [
+      {
+        ...(accountFixture.addresses.basePaymentKeyStakeKeyAddress
+          .addressParams as AddressParams),
+        address:
+          'addr1qxgcuk5j0q0k2d0s9axvah49aut4ct5a5ertwp67psz3uuejm6ernk539y4mwwzrmny7ducc4d50mf6jfqvu79ghryss0cc0r2',
+      },
+    ],
+    tokenList: {},
+    ownCredentials: [],
+    parsedTransaction: {
+      outputs: [
+        {
+          isChange: false,
+          address:
+            'addr_test1qreakg39wqlye7lzyfmh900s2luc99zf7x9vs839pn4srjs2s3ps2plp2rc2qcgfmsa8kx2kk7s9s6hfq799tmcwpvps36jz6w',
+          coin: '7.858356',
+          tokenBundle: [],
+        },
+      ],
+      fee: '0.171573',
+      certificates: [],
+      ttl: '63043682',
+      txKind: 'ordinary',
+      withdrawals: [
+        {
+          rewardAccountBech32:
+            'stake_test1uq9ggsc9qls4pu9qvyyacwnmr9tt0gzcdt5s0zj4au8qkqca7zmjd',
+          amount: '7.029929',
+          isOwn: false,
+        },
+        {
+          rewardAccountBech32:
+            'stake_test17pmqld54t5fp0v037gyd7m294v3unctmpjvy5tf6y2amlwqun8tdp',
+          amount: '12.425116',
+          isOwn: false,
+        },
+      ],
     },
   },
 };

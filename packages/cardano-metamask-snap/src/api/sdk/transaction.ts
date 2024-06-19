@@ -5,6 +5,11 @@ import { assert } from '@metamask/snaps-sdk';
 import { type OwnAddress } from '../address';
 import type { SignTransactionRequestParams } from '../cardano__signTransaction';
 import type { ParsedTransaction } from '../cardano__signTransaction/ui';
+import {
+  CardanoStakeDerivationPath,
+  isStakeDerivationPath,
+  type CardanoDerivationPath,
+} from '../derivationPath';
 import { parseCertificates } from './certificate';
 import { parseCollateralReturn, parseTotalCollateral } from './collateral';
 import { parseOutputs } from './output';
@@ -110,6 +115,11 @@ export const parseTransaction = ({
   const fee = lovelaceToAda(parsedTransactionBody.fee().toString());
 
   const ttl = parsedTransactionBody.ttl()?.toString();
+
+  const ownStakeCredentials = ownCredentials.filter(
+    (credential): credential is OwnTxCredential<CardanoStakeDerivationPath> =>
+      isStakeDerivationPath(credential.derivationPath),
+  );
 
   const certificates = parseCertificates(
     parsedTransactionBody.certs(),

@@ -7,7 +7,6 @@ import type {
   TxCredential,
 } from '../cardano__signTransaction/ui';
 import {
-  isStakeDerivationPath,
   type CardanoDerivationPath,
   type CardanoStakeDerivationPath,
 } from '../derivationPath';
@@ -81,16 +80,11 @@ const parseDRep = (dRep: Serialization.DRep) => {
 
 export const parseCertificates = (
   certificates: Serialization.Certificate[] | undefined,
-  ownCredentials: OwnTxCredential<CardanoDerivationPath>[],
+  ownStakeCredentials: OwnTxCredential<CardanoStakeDerivationPath>[],
 ): ParsedTransaction['certificates'] => {
   if (!certificates) {
     return [];
   }
-
-  const ownStakeCredentials = ownCredentials.filter(
-    (credential): credential is OwnTxCredential<CardanoStakeDerivationPath> =>
-      isStakeDerivationPath(credential.derivationPath),
-  );
 
   return certificates.map((certificate) => {
     switch (certificate.kind()) {

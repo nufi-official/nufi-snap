@@ -1,7 +1,7 @@
 import { heading, row, text, panel, copyable } from '@metamask/snaps-sdk';
 
 import type { NetworkId } from '../../networkId';
-import { section } from '../../ui';
+import { getNetworkNameForId, section } from '../../ui';
 import { renderCertificates, type Certificate } from './certificate';
 import {
   type Collateral,
@@ -15,10 +15,7 @@ import { renderWithdrawals } from './withdrawal';
 
 export const renderTransactionInfo = (parsedTransaction: ParsedTransaction) =>
   section([
-    row(
-      'Network',
-      text(parsedTransaction.networkId === 1 ? 'Mainnet' : 'Testnet'),
-    ),
+    row('Network', text(getNetworkNameForId(parsedTransaction.networkId))),
     ...(parsedTransaction.validityIntervalStart
       ? [row('Valid since slot', text(parsedTransaction.validityIntervalStart))]
       : []),

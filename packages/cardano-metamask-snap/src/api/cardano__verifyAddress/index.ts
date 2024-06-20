@@ -7,7 +7,7 @@ import {
   type AddressParams,
 } from '../address';
 import { cryptoProvider } from '../cryptoProvider';
-import { type NetworkId, isNetworkId, networkIds } from '../networkId';
+import { type NetworkId, isNetworkId } from '../networkId';
 import { assertIsArray, isRecord } from '../utils';
 import { renderVerifyAddress } from './ui';
 
@@ -62,10 +62,6 @@ export const verifyAddress = async ({
   const address = await cryptoProvider.getAddress(param);
   await renderVerifyAddress(
     param,
-    {
-      [networkIds.Testnet]: 'Testnet',
-      [networkIds.Mainnet]: 'Mainnet',
-    },
     {
       [addressTypes.BasePaymentKeyStakeKey]: '',
       [addressTypes.EnterpriseKey]: 'enterprise',

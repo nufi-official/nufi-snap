@@ -2,6 +2,10 @@ import { Serialization, Cardano } from '@cardano-sdk/core';
 import { assert } from '@metamask/snaps-sdk';
 
 import type { ParsedTransaction } from '../cardano__signTransaction/ui';
+import type {
+  OwnTxCredential,
+  TxCredential,
+} from '../cardano__signTransaction/ui/credential';
 import {
   type CardanoDerivationPath,
   type CardanoStakeDerivationPath,
@@ -13,10 +17,6 @@ import {
   drepKeyHashHexToBech32,
 } from './bech32';
 import { lovelaceToAda } from './utils';
-import {
-  OwnTxCredential,
-  TxCredential,
-} from '../cardano__signTransaction/ui/credential';
 
 const parseTransactionCredential = <
   TDerivationPath extends CardanoDerivationPath,

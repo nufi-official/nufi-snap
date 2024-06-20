@@ -9,7 +9,8 @@ import {
 } from './collateral';
 import { renderOutputs, type Output } from './output';
 import { ADA_TICKER, assetValue } from './utils';
-import { Withdrawal } from './withdrawal';
+import type { Withdrawal } from './withdrawal';
+import { renderWithdrawals } from './withdrawal';
 
 export const renderTransactionInfo = (parsedTransaction: ParsedTransaction) =>
   section([
@@ -47,6 +48,7 @@ export const renderSignParsedTransaction = async (
   const txUiElements = [
     ...renderOutputs(parsedTransaction.outputs),
     ...renderCertificates(parsedTransaction.certificates),
+    ...renderWithdrawals(parsedTransaction.withdrawals),
     ...(parsedTransaction.collateral?.collateralReturn
       ? [renderCollateralReturn(parsedTransaction.collateral.collateralReturn)]
       : []),

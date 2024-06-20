@@ -2,12 +2,12 @@ import { heading, row, text } from '@metamask/snaps-sdk';
 
 import { type CardanoStakeDerivationPath } from '../../derivationPath';
 import { section } from '../../ui';
-import { ADA_TICKER, assetValue } from './utils';
+import type { TxCredential } from './credential';
 import {
-  TxCredential,
   renderCredential,
   renderStakeCredentialAccountIndex,
 } from './credential';
+import { ADA_TICKER, assetValue } from './utils';
 
 export type DRep =
   | BaseTxCredential

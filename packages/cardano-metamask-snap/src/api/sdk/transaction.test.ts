@@ -48,6 +48,7 @@ const parseTxSuccessFixtures = {
       certificates: [],
       txKind: 'ordinary',
       withdrawals: [],
+      networkId: 0,
     },
   },
   simpleWithChangeOutput: {
@@ -91,6 +92,7 @@ const parseTxSuccessFixtures = {
       ttl: '121962385',
       txKind: 'ordinary',
       withdrawals: [],
+      networkId: 1,
     },
   },
   multiAsset: {
@@ -130,6 +132,7 @@ const parseTxSuccessFixtures = {
       ttl: '122915996',
       txKind: 'ordinary',
       withdrawals: [],
+      networkId: 1,
     },
   },
   registerStakeAndDelegate: {
@@ -196,6 +199,7 @@ const parseTxSuccessFixtures = {
       ttl: '123774406',
       txKind: 'ordinary',
       withdrawals: [],
+      networkId: 1,
     },
   },
   newRegisterStakeAndUnregister: {
@@ -262,6 +266,7 @@ const parseTxSuccessFixtures = {
       ttl: '123774406',
       txKind: 'ordinary',
       withdrawals: [],
+      networkId: 1,
     },
   },
   voteDelegation: {
@@ -358,6 +363,7 @@ const parseTxSuccessFixtures = {
       ttl: '123774406',
       txKind: 'ordinary',
       withdrawals: [],
+      networkId: 1,
     },
   },
   plutus: {
@@ -395,6 +401,7 @@ const parseTxSuccessFixtures = {
       },
       txKind: 'plutus',
       withdrawals: [],
+      networkId: 0,
     },
   },
   withdrawals: {
@@ -437,6 +444,7 @@ const parseTxSuccessFixtures = {
           isOwn: false,
         },
       ],
+      networkId: 0,
     },
   },
 };

@@ -5,8 +5,9 @@ import { assert } from '@metamask/snaps-sdk';
 import { type OwnAddress } from '../address';
 import type { SignTransactionRequestParams } from '../cardano__signTransaction';
 import type { ParsedTransaction } from '../cardano__signTransaction/ui';
+import type { OwnTxCredential } from '../cardano__signTransaction/ui/credential';
+import type { CardanoStakeDerivationPath } from '../derivationPath';
 import {
-  CardanoStakeDerivationPath,
   isStakeDerivationPath,
   type CardanoDerivationPath,
 } from '../derivationPath';
@@ -15,7 +16,6 @@ import { parseCollateralReturn, parseTotalCollateral } from './collateral';
 import { parseOutputs } from './output';
 import type { TokenList } from './tokenList';
 import { hexToBytes, lovelaceToAda } from './utils';
-import { OwnTxCredential } from '../cardano__signTransaction/ui/credential';
 import { parseWithdrawals } from './withdrawal';
 
 /**
@@ -162,6 +162,7 @@ export const parseTransaction = ({
       collateral,
       txKind: 'plutus' as const,
       withdrawals,
+      networkId,
     };
   }
 
@@ -174,5 +175,6 @@ export const parseTransaction = ({
     collateral: undefined,
     txKind: 'ordinary' as const,
     withdrawals,
+    networkId,
   };
 };

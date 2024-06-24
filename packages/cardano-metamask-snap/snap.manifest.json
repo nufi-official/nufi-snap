@@ -7,7 +7,7 @@
     "url": "https://github.com/nufi-official/nufi-snap"
   },
   "source": {
-    "shasum": "bv6LPBTwvoyQrmkD0HJinRN7QSWxFbouLU0HlGELPY4=",
+    "shasum": "160JtYMUo1v2X8ug3RWFWqxJGcxYNeY+YULFCoCKyzw=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
@@ -26,7 +26,11 @@
     "snap_getEntropy": {},
     "snap_getBip32Entropy": [
       {
-        "path": ["m", "1852'", "1815'"],
+        "path": [
+          "m",
+          "1852'",
+          "1815'"
+        ],
         "curve": "ed25519Bip32"
       }
     ]

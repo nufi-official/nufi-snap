@@ -1,8 +1,8 @@
 import { heading, row, text } from '@metamask/snaps-sdk';
 
-import { getUiAccountIndex, section } from '../../ui';
+import type { OwnAddress } from '../../address';
+import { section } from '../../ui';
 import { ADA_TICKER, assetValue } from './utils';
-import { OwnAddress, getAddressAccountIndex } from '../../address';
 
 export type CollateralReturnOutput = { address: string; coin: string } & (
   | { isOwn: false }
@@ -24,19 +24,13 @@ export const renderCollateralReturn = (
     'Amount',
     text(assetValue(collateralReturnOutput.coin, ADA_TICKER)),
   );
-  const accountIndex = collateralReturnOutput.isOwn
-    ? getAddressAccountIndex(collateralReturnOutput.ownAddress)
-    : undefined;
 
-  if (accountIndex) {
-    return section([
-      heading(`Collateral return to ${getUiAccountIndex(accountIndex)}`),
-      amountRow,
-    ]);
+  if (collateralReturnOutput.isOwn) {
+    return section([heading('Unspent collateral to be returned'), amountRow]);
   }
 
   return section([
-    heading(`Collateral return `),
+    heading('Unspent collateral to be returned'),
     row('To address', text(collateralReturnOutput.address)),
     amountRow,
   ]);

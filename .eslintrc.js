@@ -30,6 +30,10 @@ module.exports = {
     },
   ],
 
+  rules: {
+    'import/no-extraneous-dependencies': ['error'],
+  },
+
   ignorePatterns: [
     '!.prettierrc.js',
     '**/!.eslintrc.js',

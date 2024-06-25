@@ -1,3 +1,7 @@
+import { copyable, heading } from '@metamask/snaps-sdk';
+
+import { section } from '../../ui';
+
 export type Metadatum =
   | {
       key: Metadatum;
@@ -48,4 +52,13 @@ export type AuxiliaryData = {
   plutusV1Scripts: PlutusScript[];
   plutusV2Scripts: PlutusScript[];
   plutusV3Scripts: PlutusScript[];
+};
+
+export const renderAuxiliaryData = (auxiliaryData: AuxiliaryData) => {
+  return [
+    section([
+      heading('Auxiliary data'),
+      copyable(JSON.stringify(auxiliaryData, null, 2)),
+    ]),
+  ];
 };

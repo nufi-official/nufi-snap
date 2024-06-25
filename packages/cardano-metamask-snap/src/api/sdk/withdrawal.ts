@@ -4,7 +4,7 @@ import { assert } from '@metamask/snaps-sdk';
 import type { OwnTxCredential } from '../cardano__signTransaction/ui/credential';
 import type { Withdrawal } from '../cardano__signTransaction/ui/withdrawal';
 import type { CardanoStakeDerivationPath } from '../derivationPath';
-import { keyHashHexToBech32 } from './bech32';
+import { stakeKeyHashHexToBech32 } from './bech32';
 import { lovelaceToAda } from './utils';
 
 export const parseWithdrawals = (
@@ -19,9 +19,8 @@ export const parseWithdrawals = (
     const amount = withdrawals.get(rewardAccount)?.toString();
     assert(amount, 'Reward amount must be defined');
 
-    const rewardAccountKeyHashBech32 = keyHashHexToBech32(
+    const rewardAccountKeyHashBech32 = stakeKeyHashHexToBech32(
       Cardano.RewardAccount.toHash(Cardano.RewardAccount(rewardAccount)),
-      'stake_vkey',
     );
 
     const matchingOwnCredential = ownStakeCredentials.find((ownCredential) => {

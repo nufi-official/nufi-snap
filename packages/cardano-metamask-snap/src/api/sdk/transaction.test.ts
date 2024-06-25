@@ -489,6 +489,84 @@ const parseTxSuccessFixtures = {
       ],
     },
   },
+  // consistent with https://github.com/input-output-hk/cardano-js-sdk/blob/cbbede75349c359688c91c963deab0a8a9c8cd24/packages/core/test/Serialization/AuxiliaryData.test.ts
+  auxiliaryData: {
+    ...transactionsFixture.auxiliaryData,
+    ownAddresses: [],
+    tokenList: {},
+    ownCredentials: [],
+    parsedTransaction: {
+      outputs: [
+        {
+          isChange: false,
+          address:
+            'addr1x92s6rutty2gpljhaqe2hxwkct7rsly0g9atpyueed6ttc0canazv4x0u8wex9pemdz7g06arfe398wt0e9vcumvwe4qx4ar6m',
+          coin: '0.000000',
+          tokenBundle: [],
+        },
+      ],
+      fee: '0.000000',
+      certificates: [],
+      txKind: 'ordinary',
+      withdrawals: [],
+      networkId: 1,
+      mint: [],
+      auxiliaryData: {
+        metadata: [
+          {
+            key: '725',
+            value: [
+              { key: '123', value: '1234' },
+              { key: 'key', value: 'value' },
+              { key: 'key2', value: '000102030405' },
+              {
+                key: [{ key: '567', value: 'eight' }],
+                value: [{ key: '666', value: 'cake' }],
+              },
+            ],
+          },
+        ],
+        nativeScripts: [
+          { kind: 'RequireTimeAfter', slot: 3 },
+          { kind: 'RequireTimeBefore', slot: 9 },
+          {
+            kind: 'RequireAnyOf',
+            nativeScripts: [
+              {
+                kind: 'RequireSignature',
+                keyHash:
+                  '3542acb3a64d80c29302260d62c3b87a742ad14abf855ebc6733081e',
+              },
+            ],
+          },
+          {
+            kind: 'RequireNOfK',
+            requiredNofK: 0,
+            nativeScripts: [
+              {
+                kind: 'RequireSignature',
+                keyHash:
+                  'b5ae663aaea8e500157bdf4baafd6f5ba0ce5759f7cd4101fc132f54',
+              },
+            ],
+          },
+        ],
+        plutusV1Scripts: [
+          '46010000220010',
+          '46010000220011',
+          '46010000220012',
+          '46010000220013',
+        ],
+        plutusV2Scripts: [
+          '46010000220010',
+          '46010000220011',
+          '46010000220012',
+          '46010000220013',
+        ],
+        plutusV3Scripts: [],
+      },
+    },
+  },
 };
 
 describe('parseTransaction success', () => {

@@ -1,6 +1,8 @@
-import { Cardano, Serialization } from '@cardano-sdk/core';
-import { OwnAddress } from '../address';
-import { TokenList } from './tokenList';
+import type { Serialization } from '@cardano-sdk/core';
+import { Cardano } from '@cardano-sdk/core';
+
+import type { OwnAddress } from '../address';
+import type { TokenList } from './tokenList';
 import { applyDecimals, lovelaceToAda } from './utils';
 
 export const parseOutputs = (

@@ -272,6 +272,28 @@ const Index = () => {
     console.log('cardano sign withdrawal transaction result', res);
   };
 
+  const handleCardanoMintTransactionClick = async () => {
+    const res = await invokeSnap({
+      method: 'cardano__signTransaction',
+      params: [
+        {
+          txCborHex:
+            '83a400818258208fe6fb18567f18bb7a3486dd9aa5695cd1f2b8a5c471b36d470d21a042ec231801018182583930167f6dbf610ae030f043adb1f3af78754ed9595ad4ac1f7ed9ff6466760fb6955d1217b1f1f208df6d45ab23c9e17b0c984a2d3a22bbbfb81a0001e91f021a0003050309a1581cd7a7c6999786354b6dbee181a2f562a628a75fce126f4da40ce5d9b2a246546f6b656e313a0098967f46546f6b656e321b7fffffffffffffffa0f6',
+          witnessKeysPaths: [["1852'", "1815'", "0'", '2', '0']],
+          networkId: 0,
+          ownAddressParams: [
+            {
+              addressType: 0,
+              stakeDerivationPath: ["1852'", "1815'", "0'", '2', '0'],
+              paymentDerivationPath: ["1852'", "1815'", "0'", '0', '0'],
+            },
+          ],
+        },
+      ],
+    });
+    console.log('cardano sign mint transaction result', res);
+  };
+
   const handleCardanoVerifyAddressClick = async () => {
     const params = [
       [
@@ -551,6 +573,24 @@ const Index = () => {
             button: (
               <SignCardanoTransactionButton
                 onClick={handleCardanoWithdrawalTransactionClick}
+                disabled={!installedSnap}
+              />
+            ),
+          }}
+          disabled={!installedSnap}
+          fullWidth={
+            isMetaMaskReady &&
+            Boolean(installedSnap) &&
+            !shouldDisplayReconnectButton(installedSnap)
+          }
+        />
+        <Card
+          content={{
+            title: 'Sign MINT cardano transaction',
+            description: 'The result will be logged into console',
+            button: (
+              <SignCardanoTransactionButton
+                onClick={handleCardanoMintTransactionClick}
                 disabled={!installedSnap}
               />
             ),

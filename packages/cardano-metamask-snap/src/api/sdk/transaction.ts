@@ -13,6 +13,7 @@ import {
 } from '../derivationPath';
 import { parseCertificates } from './certificate';
 import { parseCollateralReturn, parseTotalCollateral } from './collateral';
+import { parseMint } from './mint';
 import { parseOutputs } from './output';
 import type { TokenList } from './tokenList';
 import { hexToBytes, lovelaceToAda } from './utils';
@@ -132,6 +133,8 @@ export const parseTransaction = ({
     ownStakeCredentials,
   );
 
+  const mint = parseMint(parsedTransactionBody.mint(), tokenList);
+
   const validityIntervalStart = parsedTransactionBody
     .validityStartInterval()
     ?.toString();
@@ -163,6 +166,7 @@ export const parseTransaction = ({
       txKind: 'plutus' as const,
       withdrawals,
       networkId,
+      mint,
     };
   }
 
@@ -176,5 +180,6 @@ export const parseTransaction = ({
     txKind: 'ordinary' as const,
     withdrawals,
     networkId,
+    mint,
   };
 };

@@ -1,9 +1,9 @@
 import type { Serialization } from '@cardano-sdk/core';
-import { Cardano } from '@cardano-sdk/core';
 
 import type { OwnAddress } from '../address';
 import type { TokenList } from './tokenList';
-import { applyDecimals, lovelaceToAda } from './utils';
+import { parseTokenMap } from './tokenMap';
+import { lovelaceToAda } from './utils';
 
 export const parseOutputs = (
   outputs: Serialization.TransactionOutput[],
@@ -18,22 +18,6 @@ export const parseOutputs = (
       ),
       address,
       coin: lovelaceToAda(output.amount().coin().toString()),
-      tokenBundle: Array.from(
-        output.amount().multiasset()?.entries() ?? [],
-      ).map(([assetId, value]) => {
-        const policyId = Cardano.AssetId.getPolicyId(assetId);
-        const assetName = Cardano.AssetId.getAssetName(assetId);
-        const fingerprint = Cardano.AssetFingerprint.fromParts(
-          policyId,
-          assetName,
-        ).toString();
-        const tokenMetadata = tokenList[fingerprint];
-        return {
-          fingerprint,
-          amount: applyDecimals(value.toString(), tokenMetadata?.decimals ?? 0),
-          name: tokenMetadata?.name,
-          ticker: tokenMetadata?.ticker,
-        };
-      }),
+      tokenBundle: parseTokenMap(output.amount().multiasset(), tokenList),
     };
   });

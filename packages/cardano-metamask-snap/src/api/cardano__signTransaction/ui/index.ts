@@ -8,6 +8,7 @@ import {
   renderCollateralReturn,
   renderTotalCollateral,
 } from './collateral';
+import { renderMint, type Mint } from './mint';
 import { renderOutputs, type Output } from './output';
 import { ADA_TICKER, assetValue } from './utils';
 import type { Withdrawal } from './withdrawal';
@@ -36,6 +37,7 @@ export type ParsedTransaction = {
   ttl: string | undefined;
   withdrawals: Withdrawal[];
   networkId: NetworkId;
+  mint: Mint;
 } & (
   | { collateral: undefined; txKind: 'ordinary' }
   | { collateral: Collateral | undefined; txKind: 'plutus' }
@@ -52,6 +54,7 @@ export const renderSignParsedTransaction = async (
     ...renderOutputs(parsedTransaction.outputs),
     ...renderCertificates(parsedTransaction.certificates),
     ...renderWithdrawals(parsedTransaction.withdrawals),
+    ...renderMint(parsedTransaction.mint),
     ...(parsedTransaction.collateral?.collateralReturn
       ? [renderCollateralReturn(parsedTransaction.collateral.collateralReturn)]
       : []),
@@ -95,3 +98,5 @@ export const renderBlindSignTransaction = async (
 export * from './certificate';
 export * from './output';
 export * from './collateral';
+export * from './token';
+export * from './mint';

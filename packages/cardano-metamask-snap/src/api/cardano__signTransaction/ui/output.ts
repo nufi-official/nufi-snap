@@ -1,7 +1,8 @@
 import { heading, row, text } from '@metamask/snaps-sdk';
 
 import { section, subSection } from '../../ui';
-import { ADA_TICKER, assetValue, bold } from './utils';
+import { renderToken } from './token';
+import { ADA_TICKER, assetValue } from './utils';
 
 export type Output = {
   isChange: boolean;
@@ -25,15 +26,7 @@ export const renderOutputs = (outputs: Output[]) => {
           row('To address', text(output.address)),
           row('Amount', text(assetValue(output.coin, ADA_TICKER))),
           ...output.tokenBundle.map((token) => {
-            const { fingerprint: fingerPrint, amount, name, ticker } = token;
-            return subSection([
-              text(bold(name ?? 'Unknown asset')),
-              row('Asset fingerprint', text(fingerPrint)),
-              row(
-                'Token amount',
-                ticker ? text(assetValue(amount, ticker)) : text(amount),
-              ),
-            ]);
+            return subSection(renderToken(token));
           }),
         ]);
       }),

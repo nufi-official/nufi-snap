@@ -49,6 +49,7 @@ const parseTxSuccessFixtures = {
       txKind: 'ordinary',
       withdrawals: [],
       networkId: 0,
+      mint: [],
     },
   },
   simpleWithChangeOutput: {
@@ -93,6 +94,7 @@ const parseTxSuccessFixtures = {
       txKind: 'ordinary',
       withdrawals: [],
       networkId: 1,
+      mint: [],
     },
   },
   multiAsset: {
@@ -133,6 +135,7 @@ const parseTxSuccessFixtures = {
       txKind: 'ordinary',
       withdrawals: [],
       networkId: 1,
+      mint: [],
     },
   },
   registerStakeAndDelegate: {
@@ -200,6 +203,7 @@ const parseTxSuccessFixtures = {
       txKind: 'ordinary',
       withdrawals: [],
       networkId: 1,
+      mint: [],
     },
   },
   newRegisterStakeAndUnregister: {
@@ -267,6 +271,7 @@ const parseTxSuccessFixtures = {
       txKind: 'ordinary',
       withdrawals: [],
       networkId: 1,
+      mint: [],
     },
   },
   voteDelegation: {
@@ -364,6 +369,7 @@ const parseTxSuccessFixtures = {
       txKind: 'ordinary',
       withdrawals: [],
       networkId: 1,
+      mint: [],
     },
   },
   plutus: {
@@ -402,6 +408,7 @@ const parseTxSuccessFixtures = {
       txKind: 'plutus',
       withdrawals: [],
       networkId: 0,
+      mint: [],
     },
   },
   withdrawals: {
@@ -445,6 +452,41 @@ const parseTxSuccessFixtures = {
         },
       ],
       networkId: 0,
+      mint: [],
+    },
+  },
+  mint: {
+    ...transactionsFixture.mint,
+    ownAddresses: [],
+    tokenList: {},
+    ownCredentials: [],
+    parsedTransaction: {
+      outputs: [
+        {
+          isChange: false,
+          address:
+            'addr_test1xqt87mdlvy9wqv8sgwkmrua00p65ak2ett22c8m7m8lkgenkp7mf2hgjz7clrusgmak5t2ere8shkrycfgkn5g4mh7uqvcq039',
+          coin: '0.125215',
+          tokenBundle: [],
+        },
+      ],
+      fee: '0.197891',
+      certificates: [],
+      txKind: 'ordinary',
+      withdrawals: [],
+      networkId: 0,
+      mint: [
+        {
+          fingerprint: 'asset1pyz25rhhy2l7pvh77wzhh0u2hjcqymut2a35nx',
+          amount: '-10000000',
+          kind: 'burn',
+        },
+        {
+          fingerprint: 'asset1x9sjheecx6qctfxq4hlnh4ed8vcesru5gv2hnq',
+          amount: '9223372036854775807',
+          kind: 'mint',
+        },
+      ],
     },
   },
 };

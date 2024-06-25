@@ -2,7 +2,7 @@ import { heading, row, text } from '@metamask/snaps-sdk';
 
 import { type CardanoStakeDerivationPath } from '../../derivationPath';
 import { section } from '../../ui';
-import type { TxCredential } from './credential';
+import type { BaseTxCredential, TxCredential } from './credential';
 import {
   renderCredential,
   renderStakeCredentialAccountIndex,

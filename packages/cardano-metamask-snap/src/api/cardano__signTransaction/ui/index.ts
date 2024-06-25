@@ -2,7 +2,7 @@ import { heading, row, text, panel, copyable } from '@metamask/snaps-sdk';
 
 import type { NetworkId } from '../../networkId';
 import { getNetworkNameForId, section } from '../../ui';
-import type { AuxiliaryData } from './auxiliaryData';
+import { renderAuxiliaryData, type AuxiliaryData } from './auxiliaryData';
 import { renderCertificates, type Certificate } from './certificate';
 import {
   type Collateral,
@@ -61,6 +61,9 @@ export const renderSignParsedTransaction = async (
       ? [renderCollateralReturn(parsedTransaction.collateral.collateralReturn)]
       : []),
     renderTransactionInfo(parsedTransaction),
+    ...(parsedTransaction.auxiliaryData
+      ? renderAuxiliaryData(parsedTransaction.auxiliaryData)
+      : []),
   ];
 
   return snap.request({

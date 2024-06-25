@@ -2,6 +2,7 @@ import { heading, row, text, panel, copyable } from '@metamask/snaps-sdk';
 
 import type { NetworkId } from '../../networkId';
 import { getNetworkNameForId, section } from '../../ui';
+import type { AuxiliaryData } from './auxiliaryData';
 import { renderCertificates, type Certificate } from './certificate';
 import {
   type Collateral,
@@ -38,6 +39,7 @@ export type ParsedTransaction = {
   withdrawals: Withdrawal[];
   networkId: NetworkId;
   mint: Mint;
+  auxiliaryData: AuxiliaryData | undefined;
 } & (
   | { collateral: undefined; txKind: 'ordinary' }
   | { collateral: Collateral | undefined; txKind: 'plutus' }
@@ -100,3 +102,4 @@ export * from './output';
 export * from './collateral';
 export * from './token';
 export * from './mint';
+export * from './auxiliaryData';

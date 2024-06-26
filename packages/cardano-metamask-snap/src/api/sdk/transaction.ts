@@ -11,9 +11,9 @@ import {
   isStakeDerivationPath,
   type CardanoDerivationPath,
 } from '../derivationPath';
-import { parseAuxiliaryData } from './auxiliaryData';
 import { parseCertificates } from './certificate';
 import { parseCollateralReturn, parseTotalCollateral } from './collateral';
+import { parseMetadata } from './metadata';
 import { parseMint } from './mint';
 import { parseOutputs } from './output';
 import type { TokenList } from './tokenList';
@@ -140,8 +140,10 @@ export const parseTransaction = ({
     .validityStartInterval()
     ?.toString();
 
-  const auxiliaryData = parseAuxiliaryData(
-    Serialization.Transaction.fromCbor(txCborHex as TxCBOR).auxiliaryData(),
+  const metadata = parseMetadata(
+    Serialization.Transaction.fromCbor(txCborHex as TxCBOR)
+      .auxiliaryData()
+      ?.metadata(),
   );
 
   if (hasPlutusTxFields(parsedTransactionBody)) {
@@ -172,7 +174,7 @@ export const parseTransaction = ({
       withdrawals,
       networkId,
       mint,
-      auxiliaryData,
+      metadata,
     };
   }
 
@@ -187,6 +189,6 @@ export const parseTransaction = ({
     withdrawals,
     networkId,
     mint,
-    auxiliaryData,
+    metadata,
   };
 };

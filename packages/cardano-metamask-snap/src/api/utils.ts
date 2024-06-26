@@ -38,3 +38,12 @@ export function isRecord(param: unknown): param is Record<string, unknown> {
       Object.keys(param).every((key) => typeof key === 'string'),
   );
 }
+
+/**
+ * Asserts value is never.
+ *
+ * @param _value - The value to check.
+ */
+export const safeAssertUnreachable = (_value: never): never => {
+  throw new Error(`Unreachable switch case`);
+};

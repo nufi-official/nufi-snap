@@ -2,6 +2,7 @@ import { heading, row, text } from '@metamask/snaps-sdk';
 
 import { type CardanoStakeDerivationPath } from '../../derivationPath';
 import { section } from '../../ui';
+import { safeAssertUnreachable } from '../../utils';
 import type { BaseTxCredential, TxCredential } from './credential';
 import {
   renderCredential,
@@ -118,7 +119,7 @@ const renderDRep = (dRep: DRep) => {
     case 'alwaysAbstain':
       return row('Delegating to', text('Always abstain'));
     default:
-      throw new Error('Unsupported DRep type');
+      return safeAssertUnreachable(dRep);
   }
 };
 
@@ -150,7 +151,7 @@ export const renderCertificates = (certificates: Certificate[]) => {
       case 'vote_delegation':
         return renderVoteDelegationCertificate(certificate);
       default:
-        throw new Error('Unsupported certificate type');
+        return safeAssertUnreachable(certificate);
     }
   });
 };

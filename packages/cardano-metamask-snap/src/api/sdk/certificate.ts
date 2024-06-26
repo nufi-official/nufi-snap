@@ -10,6 +10,7 @@ import {
   type CardanoDerivationPath,
   type CardanoStakeDerivationPath,
 } from '../derivationPath';
+import { safeAssertUnreachable } from '../utils';
 import {
   stakeKeyHashHexToBech32,
   poolIdHexToBech32,
@@ -43,12 +44,13 @@ const parseTransactionCredential = <
         scriptHashBech32: scriptHashHexToBech32(credential.hash, 'script'),
       };
     default:
-      throw new Error('Unsupported credential type');
+      return safeAssertUnreachable(credential.type);
   }
 };
 
 const parseDRep = (dRep: Serialization.DRep) => {
-  switch (dRep.kind()) {
+  const dRepKind = dRep.kind();
+  switch (dRepKind) {
     case Serialization.DRepKind.KeyHash: {
       const keyHash = dRep.toKeyHash();
       assert(keyHash, 'DRep keyHash must be defined');
@@ -74,7 +76,7 @@ const parseDRep = (dRep: Serialization.DRep) => {
         type: 'alwaysNoConfidence' as const,
       };
     default:
-      throw new Error('Unsupported DRep kind');
+      return safeAssertUnreachable(dRepKind);
   }
 };
 

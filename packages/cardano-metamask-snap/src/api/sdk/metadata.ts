@@ -1,6 +1,7 @@
 import { Serialization } from '@cardano-sdk/core';
 
 import type { Metadata, Metadatum } from '../cardano__signTransaction/ui';
+import { safeAssertUnreachable } from '../utils';
 import { bytesToHex } from './utils';
 
 const parseMetadatum = (
@@ -9,7 +10,8 @@ const parseMetadatum = (
   if (!metadatum) {
     return undefined;
   }
-  switch (metadatum.getKind()) {
+  const metadatumKind = metadatum.getKind();
+  switch (metadatumKind) {
     case Serialization.TransactionMetadatumKind.Map: {
       const metadatumMap = metadatum.asMap();
       if (!metadatumMap) {
@@ -53,7 +55,7 @@ const parseMetadatum = (
       return metadatum.asText();
     }
     default:
-      throw new Error('Unsupported metadata kind');
+      return safeAssertUnreachable(metadatumKind);
   }
 };
 

@@ -61,10 +61,10 @@ export const renderSignParsedTransaction = async (
     ...(parsedTransaction.collateral?.collateralReturn
       ? [renderCollateralReturn(parsedTransaction.collateral.collateralReturn)]
       : []),
-    renderTransactionInfo(parsedTransaction),
     ...(parsedTransaction.metadata
       ? renderMetadata(parsedTransaction.metadata)
       : []),
+    renderTransactionInfo(parsedTransaction),
   ];
 
   return snap.request({

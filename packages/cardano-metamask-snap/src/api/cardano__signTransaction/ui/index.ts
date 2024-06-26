@@ -2,13 +2,14 @@ import { heading, row, text, panel, copyable } from '@metamask/snaps-sdk';
 
 import type { NetworkId } from '../../networkId';
 import { getNetworkNameForId, section } from '../../ui';
-import { renderAuxiliaryData, type AuxiliaryData } from './auxiliaryData';
 import { renderCertificates, type Certificate } from './certificate';
 import {
   type Collateral,
   renderCollateralReturn,
   renderTotalCollateral,
 } from './collateral';
+import { renderMetadata } from './metadata';
+import type { Metadata } from './metadata';
 import { renderMint, type Mint } from './mint';
 import { renderOutputs, type Output } from './output';
 import { ADA_TICKER, assetValue } from './utils';
@@ -39,7 +40,7 @@ export type ParsedTransaction = {
   withdrawals: Withdrawal[];
   networkId: NetworkId;
   mint: Mint;
-  auxiliaryData: AuxiliaryData | undefined;
+  metadata: Metadata | undefined;
 } & (
   | { collateral: undefined; txKind: 'ordinary' }
   | { collateral: Collateral | undefined; txKind: 'plutus' }
@@ -61,8 +62,8 @@ export const renderSignParsedTransaction = async (
       ? [renderCollateralReturn(parsedTransaction.collateral.collateralReturn)]
       : []),
     renderTransactionInfo(parsedTransaction),
-    ...(parsedTransaction.auxiliaryData
-      ? renderAuxiliaryData(parsedTransaction.auxiliaryData)
+    ...(parsedTransaction.metadata
+      ? renderMetadata(parsedTransaction.metadata)
       : []),
   ];
 
@@ -105,4 +106,4 @@ export * from './output';
 export * from './collateral';
 export * from './token';
 export * from './mint';
-export * from './auxiliaryData';
+export * from './metadata';

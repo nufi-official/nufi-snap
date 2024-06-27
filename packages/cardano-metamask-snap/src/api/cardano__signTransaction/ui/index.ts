@@ -1,5 +1,6 @@
 import { heading, row, text, panel, copyable } from '@metamask/snaps-sdk';
 
+import type { CardanoDerivationPath } from '../../derivationPath';
 import type { NetworkId } from '../../networkId';
 import { getNetworkNameForId, section } from '../../ui';
 import { renderCertificates, type Certificate } from './certificate';
@@ -8,6 +9,7 @@ import {
   renderCollateralReturn,
   renderTotalCollateral,
 } from './collateral';
+import type { OwnTxCredential } from './credential';
 import { renderMetadata } from './metadata';
 import type { Metadata } from './metadata';
 import { renderMint, type Mint } from './mint';
@@ -16,7 +18,25 @@ import { ADA_TICKER, assetValue } from './utils';
 import type { Withdrawal } from './withdrawal';
 import { renderWithdrawals } from './withdrawal';
 
-export const renderTransactionInfo = (parsedTransaction: ParsedTransaction) =>
+const renderTransactionAdvancedDetails = (
+  txCborHex: string,
+  txBodyHashHex: string,
+  ownCredentials: OwnTxCredential<CardanoDerivationPath>[],
+) => {
+  return section([
+    heading('Advanced info'),
+    copyable(
+      `Transaction hash: ${txBodyHashHex},
+    Raw transaction: ${txCborHex},
+    Signing with: ${ownCredentials
+      .map(({ derivationPath }) => derivationPath.join('/'))
+      .join(', ')}
+    `,
+    ),
+  ]);
+};
+
+const renderTransactionInfo = (parsedTransaction: ParsedTransaction) =>
   section([
     row('Network', text(getNetworkNameForId(parsedTransaction.networkId))),
     ...(parsedTransaction.validityIntervalStart
@@ -48,6 +68,9 @@ export type ParsedTransaction = {
 
 export const renderSignParsedTransaction = async (
   parsedTransaction: ParsedTransaction,
+  txCborHex: string,
+  txBodyHashHex: string,
+  ownCredentials: OwnTxCredential<CardanoDerivationPath>[],
 ) => {
   const headingText = `Sign${
     parsedTransaction.txKind === 'plutus' ? ' a Plutus' : ''
@@ -61,10 +84,11 @@ export const renderSignParsedTransaction = async (
     ...(parsedTransaction.collateral?.collateralReturn
       ? [renderCollateralReturn(parsedTransaction.collateral.collateralReturn)]
       : []),
+    renderTransactionInfo(parsedTransaction),
     ...(parsedTransaction.metadata
       ? renderMetadata(parsedTransaction.metadata)
       : []),
-    renderTransactionInfo(parsedTransaction),
+    renderTransactionAdvancedDetails(txCborHex, txBodyHashHex, ownCredentials),
   ];
 
   return snap.request({
@@ -79,6 +103,7 @@ export const renderSignParsedTransaction = async (
 export const renderBlindSignTransaction = async (
   txCborHex: string,
   txBodyHashHex: string,
+  ownCredentials: OwnTxCredential<CardanoDerivationPath>[],
 ) => {
   const warningText = text(
     '**Failed to show transaction details, please proceed with extra caution!**',
@@ -90,6 +115,12 @@ export const renderBlindSignTransaction = async (
     copyable(txBodyHashHex),
     text('Raw transaction:'),
     copyable(txCborHex),
+    text('Signing with:'),
+    copyable(
+      ownCredentials
+        .map(({ derivationPath }) => derivationPath.join('/'))
+        .join(','),
+    ),
   ]);
 
   return snap.request({

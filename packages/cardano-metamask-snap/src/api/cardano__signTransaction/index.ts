@@ -133,9 +133,18 @@ export const signTransaction = async ({
         ownCredentials,
       });
 
-      return renderSignParsedTransaction(parsedTransaction);
+      return renderSignParsedTransaction(
+        parsedTransaction,
+        txCborHex,
+        txBodyHashHex,
+        ownCredentials,
+      );
     } catch (error) {
-      return renderBlindSignTransaction(txCborHex, txBodyHashHex);
+      return renderBlindSignTransaction(
+        txCborHex,
+        txBodyHashHex,
+        ownCredentials,
+      );
     }
   });
 

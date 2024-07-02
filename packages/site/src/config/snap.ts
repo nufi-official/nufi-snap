@@ -8,4 +8,4 @@
  */
 export const defaultSnapOrigin =
   // eslint-disable-next-line no-restricted-globals
-  process.env.SNAP_ORIGIN ?? `local:http://localhost:8080`;
+  'local:https://audit-2-snap-43aaae0b7ec6.herokuapp.com';

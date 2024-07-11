@@ -185,6 +185,7 @@ const parseTxSuccessFixtures = {
               'stake_vkh196dgq7y9tchwculkt3wvstkz835sgj83weavhkdlcwzfvkc9yt3',
             derivationPath: ["1852'", "1815'", "0'", '2', '0'],
           },
+          deposit: '2.000000',
         },
         {
           type: 'stake_delegation',

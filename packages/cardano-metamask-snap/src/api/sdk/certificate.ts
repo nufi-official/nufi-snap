@@ -19,6 +19,8 @@ import {
 } from './bech32';
 import { lovelaceToAda } from './utils';
 
+const LEGACY_FIXED_STAKE_REGISTRATION_DEPOSIT = '2000000';
+
 const parseTransactionCredential = <
   TDerivationPath extends CardanoDerivationPath,
 >(
@@ -101,6 +103,7 @@ export const parseCertificates = (
         return {
           type: 'stake_registration',
           credential,
+          deposit: lovelaceToAda(LEGACY_FIXED_STAKE_REGISTRATION_DEPOSIT),
         };
       }
       case 1: {
@@ -113,6 +116,7 @@ export const parseCertificates = (
         return {
           type: 'stake_deregistration',
           credential,
+          deposit: lovelaceToAda(LEGACY_FIXED_STAKE_REGISTRATION_DEPOSIT),
         };
       }
       case 2: {

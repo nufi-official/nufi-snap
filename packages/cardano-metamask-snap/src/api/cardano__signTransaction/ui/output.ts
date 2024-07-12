@@ -20,8 +20,9 @@ export const renderOutputs = (outputs: Output[]) => {
   return [
     ...outputs
       .filter(({ isChange }) => !isChange)
-      .map((output) => {
+      .map((output, i) => {
         return section([
+          heading(`Output #${i + 1}`),
           heading('Send'),
           row('To address', text(output.address)),
           row('Amount', text(assetValue(output.coin, ADA_TICKER))),

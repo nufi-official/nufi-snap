@@ -1,4 +1,4 @@
-import { Serialization, type TxCBOR } from '@cardano-sdk/core';
+import { Serialization } from '@cardano-sdk/core';
 import { blake2b } from '@cardano-sdk/crypto';
 import { assert } from '@metamask/snaps-sdk';
 
@@ -27,7 +27,9 @@ import { parseWithdrawals } from './withdrawal';
  * @returns The hash of the transaction body.
  */
 export function getTxHash(txCborHex: string): string {
-  const txBodyCborHex = Serialization.Transaction.fromCbor(txCborHex as TxCBOR)
+  const txBodyCborHex = Serialization.Transaction.fromCbor(
+    txCborHex as Serialization.TxCBOR,
+  )
     .body()
     .toCbor();
   return blake2b(32).update(hexToBytes(txBodyCborHex)).digest('hex');
@@ -41,7 +43,7 @@ export function getTxHash(txCborHex: string): string {
  */
 export function isValidTxCborHex(txCborHex: string): boolean {
   try {
-    Serialization.Transaction.fromCbor(txCborHex as TxCBOR);
+    Serialization.Transaction.fromCbor(txCborHex as Serialization.TxCBOR);
     return true;
   } catch (error) {
     return false;
@@ -81,10 +83,10 @@ export const hasPlutusTxFields = (
   txBody: Serialization.TransactionBody,
 ): boolean =>
   Boolean(
-    txBody.collateral()?.length ??
+    txBody.collateral()?.values()?.length ??
       txBody.collateralReturn() ??
       txBody.totalCollateral() ??
-      txBody.referenceInputs()?.length,
+      txBody.referenceInputs()?.values()?.length,
   );
 
 type ParseTransactionParams = Pick<
@@ -104,7 +106,7 @@ export const parseTransaction = ({
   ownCredentials,
 }: ParseTransactionParams): ParsedTransaction => {
   const parsedTransactionBody = Serialization.Transaction.fromCbor(
-    txCborHex as TxCBOR,
+    txCborHex as Serialization.TxCBOR,
   ).body();
 
   assertValidNetworkId(networkId, parsedTransactionBody);
@@ -125,7 +127,7 @@ export const parseTransaction = ({
   );
 
   const certificates = parseCertificates(
-    parsedTransactionBody.certs(),
+    parsedTransactionBody.certs()?.values() ?? [],
     ownStakeCredentials,
   );
 
@@ -141,7 +143,7 @@ export const parseTransaction = ({
     ?.toString();
 
   const metadata = parseMetadata(
-    Serialization.Transaction.fromCbor(txCborHex as TxCBOR)
+    Serialization.Transaction.fromCbor(txCborHex as Serialization.TxCBOR)
       .auxiliaryData()
       ?.metadata(),
   );

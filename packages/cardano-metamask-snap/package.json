@@ -29,14 +29,15 @@
     "updateTokenRegistry": "node fetchTokenRegistry.js"
   },
   "dependencies": {
-    "@cardano-sdk/core": "0.28.5",
+    "@cardano-sdk/core": "0.39.2",
     "@cardano-sdk/crypto": "0.1.21",
     "@cardano-sdk/util": "0.15.1",
     "@emurgo/cardano-message-signing-asmjs": "1.0.1",
     "@metamask/key-tree": "9.1.1",
     "@metamask/snaps-sdk": "4.3.0",
     "bignumber.js": "9.1.2",
-    "buffer": "6.0.3"
+    "buffer": "6.0.3",
+    "rxjs": "7.8.1"
   },
   "devDependencies": {
     "@emurgo/cardano-message-signing-nodejs": "1.0.1",

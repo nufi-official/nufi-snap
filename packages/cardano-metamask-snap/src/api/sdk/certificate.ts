@@ -83,7 +83,7 @@ const parseDRep = (dRep: Serialization.DRep) => {
 };
 
 export const parseCertificates = (
-  certificates: Serialization.Certificate[] | undefined,
+  certificates: readonly Serialization.Certificate[] | undefined,
   ownStakeCredentials: OwnTxCredential<CardanoStakeDerivationPath>[],
 ): ParsedTransaction['certificates'] => {
   if (!certificates) {

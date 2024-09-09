@@ -528,6 +528,77 @@ const parseTxSuccessFixtures = {
       ],
     },
   },
+  conwayTaggedSet: {
+    ...transactionsFixture.conwayTaggedSet,
+    ownAddresses: [],
+    tokenList: {},
+    ownCredentials: [],
+    parsedTransaction: {
+      outputs: [
+        {
+          isChange: false,
+          address:
+            'addr1zx5d0l6u7nq3wfcz3qmjlxkgu889kav2u9d8s5wyzes6frp0l84r4zkyy4r2g5ymus35xwk0nup7f0wh4gmvnk5tf6eqtq22ql',
+          coin: '6.106001',
+          tokenBundle: [
+            {
+              fingerprint: 'asset1hjwq6smuvr75f3kh8qhm4x29yf5qsq5llg8syp',
+              amount: '1',
+            },
+            {
+              fingerprint: 'asset1266q2ewhgul7jh3xqpvjzqarrepfjuler20akr',
+              amount: '51295168347',
+            },
+          ],
+        },
+        {
+          isChange: false,
+          address:
+            'addr1qx3el0vd5rvwa5kwlda394nnpvezr6lmzgzyypgyghlv3ngkhh2ughen9mzn7lxmemgrt8tcl5xqz3kq5tukfwkl970s50sw6j',
+          coin: '6.437068',
+          tokenBundle: [
+            {
+              fingerprint: 'asset1jdnendeyurwd9jn5hy5s8gy0xlkehj2hxq4wnz',
+              amount: '1',
+            },
+            {
+              fingerprint: 'asset15f3ymkjafxxeunv5gtdl54g5qs8ty9k84tq94x',
+              amount: '1000000',
+            },
+            {
+              fingerprint: 'asset1wwxykes7fly8dqq0kw5y0cvczdyqz5qm6y8ng8',
+              amount: '513193',
+            },
+            {
+              fingerprint: 'asset1266q2ewhgul7jh3xqpvjzqarrepfjuler20akr',
+              amount: '56820129',
+            },
+          ],
+        },
+      ],
+      fee: '0.387383',
+      certificates: [],
+      collateral: {
+        collateralReturn: {
+          isOwn: false,
+          address:
+            'addr1qx3el0vd5rvwa5kwlda394nnpvezr6lmzgzyypgyghlv3ngkhh2ughen9mzn7lxmemgrt8tcl5xqz3kq5tukfwkl970s50sw6j',
+          coin: '4.418925',
+        },
+        totalCollateral: '0.581075',
+      },
+      txKind: 'plutus',
+      withdrawals: [],
+      networkId: 1,
+      mint: [],
+      metadata: [
+        {
+          key: '674',
+          value: [{ key: 'msg', value: ['GeniusYield: Order filled'] }],
+        },
+      ],
+    },
+  },
 };
 
 describe('parseTransaction success', () => {

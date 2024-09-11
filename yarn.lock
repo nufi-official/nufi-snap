@@ -2077,35 +2077,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cardano-sdk/crypto@npm:0.1.21":
-  version: 0.1.21
-  resolution: "@cardano-sdk/crypto@npm:0.1.21"
-  dependencies:
-    "@cardano-sdk/util": ~0.15.0
-    blake2b: ^2.1.4
-    i: ^0.3.7
-    libsodium-wrappers-sumo: ^0.7.5
-    lodash: ^4.17.21
-    npm: ^9.3.0
-    pbkdf2: ^3.1.2
-    ts-custom-error: ^3.2.0
-    ts-log: ^2.2.4
-  peerDependencies:
-    "@dcspark/cardano-multiplatform-lib-asmjs": ^3.1.1
-    "@dcspark/cardano-multiplatform-lib-browser": ^3.1.1
-    "@dcspark/cardano-multiplatform-lib-nodejs": ^3.1.1
-  peerDependenciesMeta:
-    "@dcspark/cardano-multiplatform-lib-asmjs":
-      optional: true
-    "@dcspark/cardano-multiplatform-lib-browser":
-      optional: true
-    "@dcspark/cardano-multiplatform-lib-nodejs":
-      optional: true
-  checksum: 6c5e552f68f8f83a142a73f735252c3b5ad2bd17a5af1e588bd617782d005203a90ded0d2290e8f0d943f50e789a48c7babfc341fac8432adadd8bec78419780
-  languageName: node
-  linkType: hard
-
-"@cardano-sdk/crypto@npm:~0.1.30":
+"@cardano-sdk/crypto@npm:0.1.30, @cardano-sdk/crypto@npm:~0.1.30":
   version: 0.1.30
   resolution: "@cardano-sdk/crypto@npm:0.1.30"
   dependencies:
@@ -2133,35 +2105,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cardano-sdk/util@npm:0.15.1":
-  version: 0.15.1
-  resolution: "@cardano-sdk/util@npm:0.15.1"
-  dependencies:
-    bech32: ^2.0.0
-    lodash: ^4.17.21
-    serialize-error: ^8
-    ts-custom-error: ^3.2.0
-    ts-log: ^2.2.4
-    type-fest: ^2.19.0
-  checksum: e3b82ba6bff2139918f7ceb4edb20bcec748f36048cfaac94516cf140766f2da49c973c822a409756aed745bd67826514c1c4f2b6e76f74fcd55ca1a27d13c3a
-  languageName: node
-  linkType: hard
-
-"@cardano-sdk/util@npm:~0.15.0":
-  version: 0.15.0
-  resolution: "@cardano-sdk/util@npm:0.15.0"
-  dependencies:
-    bech32: ^2.0.0
-    lodash: ^4.17.21
-    serialize-error: ^8
-    ts-custom-error: ^3.2.0
-    ts-log: ^2.2.4
-    type-fest: ^2.19.0
-  checksum: 35fcfdfea55fe1ed69824f3428e4978b22f0fa13a5a19f094ff797b1ceb66f8fc22d593be03158b405ea35a8ecfeeaf5fc3c0583e80b81e928d7b8daa7ed7e93
-  languageName: node
-  linkType: hard
-
-"@cardano-sdk/util@npm:~0.15.5":
+"@cardano-sdk/util@npm:0.15.5, @cardano-sdk/util@npm:~0.15.5":
   version: 0.15.5
   resolution: "@cardano-sdk/util@npm:0.15.5"
   dependencies:
@@ -4320,8 +4264,8 @@ __metadata:
   resolution: "@nufi/cardano-metamask-snap@workspace:packages/cardano-metamask-snap"
   dependencies:
     "@cardano-sdk/core": 0.39.2
-    "@cardano-sdk/crypto": 0.1.21
-    "@cardano-sdk/util": 0.15.1
+    "@cardano-sdk/crypto": 0.1.30
+    "@cardano-sdk/util": 0.15.5
     "@emurgo/cardano-message-signing-asmjs": 1.0.1
     "@emurgo/cardano-message-signing-nodejs": 1.0.1
     "@jest/globals": 29.5.0

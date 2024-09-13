@@ -132,7 +132,7 @@ const Index = () => {
             stakeDerivationPath: ["1852'", "1815'", "0'", '2', '0'],
             paymentDerivationPath: null,
           },
-          payloadHex: '436f6e6e65637420746f20434e4654206d61726b6574706c616365',
+          payloadHex: '546573742075736572206D657373616765',
         },
       ],
     });

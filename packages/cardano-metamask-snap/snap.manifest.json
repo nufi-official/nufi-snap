@@ -1,5 +1,5 @@
 {
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Discover the Cardano universe directly from your Metamask wallet. Seamlessly store, buy, and manage ADA, Cardano tokens, and NFTs, and access a wide range of DeFi applications.",
   "proposedName": "Cardano Wallet",
   "repository": {
@@ -7,7 +7,7 @@
     "url": "https://github.com/nufi-official/nufi-snap"
   },
   "source": {
-    "shasum": "us2GMYuxYPokH8wHM2Rqd0/ogMFta7dh19q1xX1E+uw=",
+    "shasum": "WgxYBu6KhUDuTHS2+FSq9GI45Czosri2NKS1c0xvl1w=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",

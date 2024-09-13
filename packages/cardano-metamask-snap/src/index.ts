@@ -40,7 +40,8 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   if (
     !(
       urlObject.hostname === 'localhost' ||
-      urlObject.hostname.endsWith('.nu.fi')
+      urlObject.hostname.endsWith('.nu.fi') ||
+      urlObject.hostname.endsWith('minswap.org')
     )
   ) {
     throw new Error('Invalid URL');
